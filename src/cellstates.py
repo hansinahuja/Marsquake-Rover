@@ -1,17 +1,5 @@
-class Wall:
-    def __init__(self, coordinate):
-        self.coordinate = coordinate
-
-class Traversed:
-    def __init__(self, coordinate, parent):
-        self.coordinate = coordinate
-        self.parent = parent
-
-class InQueue:
-    def __init__(self, coordinate, parent):
-        self.coordinate = coordinate
-        self.parent = parent
-
-class Free:
-    def __init__(self, coordinate):
-        self.coordinate = coordinate
+class Cell:
+    def __init__(self, parent, inQueue, isWall):
+        self.parent = parent 
+        self.inQueue = inQueue        # bool to check if already pushed in queue or not
+        self.isWall = isWall          # bool to check if wall              
