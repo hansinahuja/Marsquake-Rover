@@ -3,15 +3,17 @@ from agent import Agent
 from utilities import Location
 
 # Create environment
-env = Environment(5, 5)
+env = Environment(15, 15)
 sources = [Agent(Location(1, 1), 'source')]
-destinations = [Agent(Location(4, 4), 'destination')]
+destinations = [Agent(Location(14, 14), 'destination')]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
-env.grid[3][2].type = 'wall'
-env.grid[2][3].type = 'wall'
-env.grid[2][4].type = 'wall'
+env.recursiveMaze()
+env.printInitial() 
+# env.grid[3][2].type = 'wall'
+# env.grid[2][3].type = 'wall'
+# env.grid[2][4].type = 'wall'
 
 while True:
     logs = []
@@ -30,4 +32,3 @@ while True:
         break
     if len(src.logs)==0 and len(dest.logs)==0:
         break
-
