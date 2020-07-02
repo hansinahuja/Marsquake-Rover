@@ -102,7 +102,7 @@ class Environment:
             return 2 * random.randrange(low, high+1) + 1
         def randomEvenNumber(low, high):
             low = low // 2 + low % 2
-            high = high // 2 + high % 2
+            high = high // 2 
             return 2 * random.randrange(low, high+1)
 
         def generate(left, right, top, bottom):
