@@ -44,7 +44,7 @@ class Environment:
             if agent.type=='destination' and cell.destAgent==None:
                 cell.destAgent = agent
 
-            if cell.srcAgent!=None and cell.destAgent!=None:
+            if state=='visited' and cell.srcAgent!=None and cell.destAgent!=None:
                 success.add(cell)
 
         return success
@@ -53,7 +53,7 @@ class Environment:
         paths = []
 
         for cell in success:
-
+            # print(cell.location.x, cell.location.y)
             path1 = []
             agent = cell.srcAgent
             c = cell

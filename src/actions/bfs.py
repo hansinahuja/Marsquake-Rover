@@ -17,6 +17,7 @@ def bfs(self, environment):
 
     nextCell = self.queue.popleft()
     self.logs.append([self, nextCell, 'visited'])
+    # print(nextCell.location.x, nextCell.location.y, 'visited')
 
     for nx, ny in nextCell.location.neighbours:
         if not self.isValidMove(environment, nx, ny):
@@ -26,6 +27,7 @@ def bfs(self, environment):
         self.path[neighbour] = nextCell
         self.visited.add(neighbour)
         self.logs.append([self, neighbour, 'inQueue'])
+        # print(neighbour.location.x, neighbour.location.y, 'inQueue')
 
 
 

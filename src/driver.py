@@ -11,6 +11,7 @@ for agent in sources + destinations:
 
 env.grid[3][2].type = 'wall'
 env.grid[2][3].type = 'wall'
+env.grid[2][4].type = 'wall'
 
 while True:
     logs = []
