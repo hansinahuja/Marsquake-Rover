@@ -1,33 +1,33 @@
 from agent import Agent
-from environment.maze import Environment
+from environment.env import Environment
 from environment.utils import Location
 
 # Create environment
-env = Environment(20, 20)
+env = Environment(5, 5)
 sources = [Agent(Location(1, 1), 'source')]
-destinations = [Agent(Location(14, 14), 'destination')]
+destinations = [Agent(Location(4, 4), 'destination', False)]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
 # walls = env.recursiveMaze()
-env.randomizedPrim()
+# env.randomizedPrim()
 
-env.printInitial() 
-# env.grid[3][2].type = 'wall'
+# env.printInitial() 
+env.grid[2][2].type = 'wall'
 # env.grid[2][3].type = 'wall'
 # env.grid[2][4].type = 'wall'
 
 while True:
     logs = []
     for src in sources:
-        src.bfs(env)
+        src.dfs(env)
         logs.extend(src.logs)
     for dest in destinations:
         if dest.isMovingAgent:
-            dest.bfs(env)
+            dest.dfs(env)
             logs.extend(dest.logs)
     success = env.update(logs)
-    # env.print()
+    env.print()
     if len(success) > 0:
         paths = env.getPaths(success)
         print('Paths:', paths)

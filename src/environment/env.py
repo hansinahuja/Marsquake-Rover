@@ -15,13 +15,16 @@ class Environment:
         else:
             self.grid[x][y].destAgent = agent
 
-    from environment.recursiveMazes import recursiveMaze, randomizedPrim
+    from environment.randomMazes import recursiveMaze, randomizedPrim
 
     # For debugging
     def print(self):
         for row in self.grid:
             for cell in row:
-                print(cell.type[0], end = ' ')
+                if cell.type=='waitList':
+                    print('i', end = ' ')
+                else:
+                    print(cell.type[0], end = ' ')
             print()
         print()
 

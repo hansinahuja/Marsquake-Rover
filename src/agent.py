@@ -3,12 +3,13 @@ class Agent():
         self.location = location
         self.type = _type                       # type = source/destination
         self.isMovingAgent = isMovingAgent      # does this agent move?
-        self.queue = None 
+        self.waitList = None 
         self.visited = set()
         self.path = {}
         self.logs = []
 
     from actions.bfs import bfs
+    from actions.dfs import dfs
     
     def isValidMove(self, environment, x, y):
         if x<0 or x>=environment.length or y<0 or y>=environment.breadth:
