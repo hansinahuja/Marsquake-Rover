@@ -1,6 +1,6 @@
-from environment import Environment, Cell
 from agent import Agent
-from utilities import Location
+from environment.maze import Environment
+from environment.utils import Location
 
 # Create environment
 env = Environment(15, 15)
