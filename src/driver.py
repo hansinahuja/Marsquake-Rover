@@ -3,13 +3,14 @@ from environment.maze import Environment
 from environment.utils import Location
 
 # Create environment
-env = Environment(15, 15)
+env = Environment(20, 20)
 sources = [Agent(Location(1, 1), 'source')]
 destinations = [Agent(Location(14, 14), 'destination')]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
-walls = env.recursiveMaze()
+# walls = env.recursiveMaze()
+env.randomizedPrim()
 
 env.printInitial() 
 # env.grid[3][2].type = 'wall'

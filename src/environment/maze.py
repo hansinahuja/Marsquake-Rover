@@ -15,7 +15,7 @@ class Environment:
         else:
             self.grid[x][y].destAgent = agent
 
-    from environment.recursiveMazes import recursiveMaze
+    from environment.recursiveMazes import recursiveMaze, randomizedPrim
 
     # For debugging
     def print(self):
