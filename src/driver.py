@@ -9,7 +9,8 @@ destinations = [Agent(Location(14, 14), 'destination')]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
-env.recursiveMaze()
+walls = env.recursiveMaze()
+
 env.printInitial() 
 # env.grid[3][2].type = 'wall'
 # env.grid[2][3].type = 'wall'
@@ -25,7 +26,7 @@ while True:
             dest.bfs(env)
             logs.extend(dest.logs)
     success = env.update(logs)
-    env.print()
+    # env.print()
     if len(success) > 0:
         paths = env.getPaths(success)
         print('Paths:', paths)

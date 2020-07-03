@@ -1,6 +1,7 @@
 import random
 
 def recursiveMaze(self):
+        walls = []
 
         def randomOddNumber(low, high):
             low = low // 2 
@@ -30,9 +31,11 @@ def recursiveMaze(self):
                 for i in range(left, right + 1):
                     if self.grid[row][i].type != 'source' and self.grid[row][i].type != 'destination':
                         self.grid[row][i].type = 'wall'
+                        walls.append(self.grid[row][i].location)
                 i = randomOddNumber(left, right)
                 if self.grid[row][i].type != 'source' and self.grid[row][i].type != 'destination':
-                    self.grid[row][i].type = 'free'                         
+                    self.grid[row][i].type = 'free'              
+                    walls.remove(self.grid[row][i].location)           
                 generate(left, right, top, row - 1)
                 generate(left, right, row + 1, bottom)
             
@@ -41,11 +44,14 @@ def recursiveMaze(self):
                 for i in range(top, bottom + 1):
                     if self.grid[i][clm].type != 'source' and self.grid[i][clm].type != 'destination':
                         self.grid[i][clm].type = 'wall'
+                        walls.append(self.grid[i][clm].location)
             
                 i = randomOddNumber(top, bottom)
                 if self.grid[i][clm].type != 'source' and self.grid[i][clm].type != 'destination':
-                    self.grid[i][clm].type = 'free'                         
+                    self.grid[i][clm].type = 'free'        
+                    walls.remove(self.grid[i][clm].location)   
                 generate(left, clm - 1, top, bottom)
                 generate(clm + 1, right, top, bottom)
 
         generate(0, self.length - 1, 0, self.breadth - 1)
+        return walls
