@@ -1,6 +1,6 @@
 from collections import deque
 
-def bfs(self, environment):
+def breadthFirstSearch(self, environment):
 
     self.logs = []
 

@@ -20,11 +20,11 @@ env.grid[2][2].type = 'wall'
 while True:
     logs = []
     for src in sources:
-        src.dfs(env)
+        src.depthFirstSearch(env)
         logs.extend(src.logs)
     for dest in destinations:
         if dest.isMovingAgent:
-            dest.dfs(env)
+            dest.depthFirstSearch(env)
             logs.extend(dest.logs)
     success = env.update(logs)
     env.print()

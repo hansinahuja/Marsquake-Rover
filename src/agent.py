@@ -8,8 +8,8 @@ class Agent():
         self.path = {}
         self.logs = []
 
-    from actions.bfs import bfs
-    from actions.dfs import dfs
+    from actions.breadthFirstSearch import breadthFirstSearch
+    from actions.depthFirstSearch import depthFirstSearch
     
     def isValidMove(self, environment, x, y):
         if x<0 or x>=environment.length or y<0 or y>=environment.breadth:

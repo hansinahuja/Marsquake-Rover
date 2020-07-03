@@ -1,6 +1,6 @@
 from collections import deque
 
-def dfs(self, environment):
+def depthFirstSearch(self, environment):
 
     self.logs = []
 
