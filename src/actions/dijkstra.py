@@ -19,7 +19,7 @@ def dijkstra(self, environment):
     minElement = heapq.heappop(self.waitList)
     nextCell = minElement[1]
     self.visited.add(nextCell)
-    self.logs.append([self, nextCell, 'visited'])
+    self.logs.append([self, nextCell, 'visited']) 
     # print(nextCell.location.x, nextCell.location.y, 'visited')
 
     for nx, ny in nextCell.location.neighbours:
