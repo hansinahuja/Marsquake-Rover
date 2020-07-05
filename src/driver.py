@@ -22,12 +22,14 @@ while True:
     logs = []
     for src in sources:
         # src.dijkstra(env)
-        src.bestFirstSearch(env, destinations)
+        # src.bestFirstSearch(env, destinations)
+        src.aStar(env, destinations)
         logs.extend(src.logs)
     for dest in destinations:
         if dest.isMovingAgent:
             # dest.dijkstra(env)
-            dest.bestFirstSearch(env, sources)
+            # dest.bestFirstSearch(env, sources)
+            src.aStar(env, sources)
             logs.extend(dest.logs)
     success = env.update(logs)
     env.print()
