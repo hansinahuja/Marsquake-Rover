@@ -4,7 +4,7 @@ from environment.utils import Location
 
 # Create environment
 env = Environment(5, 5)
-sources = [Agent(Location(0, 0), 'source')]
+sources = [Agent(Location(1, 3), 'source')]
 destinations = [Agent(Location(4, 0), 'destination', False)]
 for agent in sources + destinations:
     env.placeAgent(agent)
@@ -15,17 +15,19 @@ for agent in sources + destinations:
 # env.printInitial()
 # env.grid[2][2].type = 'wall'
 # env.grid[2][3].type = 'wall'
-env.grid[2][1].type = 'wall'
-env.grid[2][0].weight = 100
+# env.grid[2][1].type = 'wall'
+# env.grid[2][0].weight = 100
 
 while True:
     logs = []
     for src in sources:
-        src.dijkstra(env)
+        # src.dijkstra(env)
+        src.bestFirstSearch(env, destinations)
         logs.extend(src.logs)
     for dest in destinations:
         if dest.isMovingAgent:
-            dest.dijkstra(env)
+            # dest.dijkstra(env)
+            dest.bestFirstSearch(env, sources)
             logs.extend(dest.logs)
     success = env.update(logs)
     env.print()

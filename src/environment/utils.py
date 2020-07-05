@@ -13,6 +13,8 @@ class Cell:
         self.srcAgent = None    # To backtrack for final path
         self.destAgent = None
         self.weight = 1
+        self.costSoFar = None
+        self.heuristic = None
 
     # To make dictionaries, sets & priority queues of Cell objects
 
