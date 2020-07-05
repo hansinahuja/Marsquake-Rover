@@ -20,7 +20,7 @@ def aStar(self, environment, targets):
     self.logs.append([self, nextCell, 'visited'])
 
     for nx, ny in nextCell.location.neighbours:
-        if not self.isValidMove(environment, nx, ny) or environment.grid[nx][ny] in self.visited:   
+        if not self.isValidMove(environment, nx, ny):   
             continue
         neighbour = environment.grid[nx][ny]
         newDistance = self.distances[nextCell] + neighbour.weight
