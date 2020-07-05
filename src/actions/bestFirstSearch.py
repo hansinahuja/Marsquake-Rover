@@ -17,7 +17,7 @@ def bestFirstSearch(self, environment, targets):
     nextCell = minElement[1]
     self.visited.add(nextCell)
     self.logs.append([self, nextCell, 'visited'])
-    print(nextCell.location.x, nextCell.location.y, 'visited')
+    # print(nextCell.location.x, nextCell.location.y, 'visited')
 
     for nx, ny in nextCell.location.neighbours:
         if not self.isValidMove(environment, nx, ny):
@@ -28,4 +28,4 @@ def bestFirstSearch(self, environment, targets):
         self.path[neighbour] = nextCell
         self.visited.add(neighbour)
         self.logs.append([self, neighbour, 'waitList'])
-        print(neighbour.location.x, neighbour.location.y, 'inQueue')
+        # print(neighbour.location.x, neighbour.location.y, 'inQueue')
