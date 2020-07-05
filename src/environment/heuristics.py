@@ -9,28 +9,26 @@ def bestHeuristic(self, source, destinations):
 
 
 def heuristic(cellA, cellB, heuristic):
-    pointA = Location(cellA.location.x, cellA.location.y)
-    pointB = Location(cellB.location.x, cellB.location.y)
+    deltaX = abs(cellA.location.x - cellB.location.x)
+    deltaY = abs(cellA.location.y - cellB.location.y)
     if heuristic == 'manhattan':
-        return manhattanDistance(pointA, pointB)
+        return manhattanDistance(deltaX, deltaY)
     elif heuristic == 'euclidean':
-        return euclideanDistance(pointA, pointB)
+        return euclideanDistance(deltaX, deltaY)
     elif heuristic == 'octile':
-        return octileDistance(pointA, pointB)
+        return octileDistance(deltaX, deltaY)
     elif heuristic == 'chebyshev':
-        return chebyshevDistance(pointA, pointB)
+        return chebyshevDistance(deltaX, deltaY)
 
 
-def manhattanDistance(pointA, pointB):
-    return abs(pointA.x - pointB.x) + abs(pointA.y - pointB.y)
+def manhattanDistance(deltaX, deltaY):
+    return deltaX + deltaY
 
-def euclideanDistance(pointA, pointB):
-    return sqrt((pointA.x - pointB.x)**2 + (pointA.y - pointB.y)**2)
+def euclideanDistance(deltaX, deltaY):
+    return sqrt(deltaX**2 + deltaY**2)
 
-def octileDistance(pointA, pointB):
-    deltaX = abs(pointA.x - pointB.x)
-    deltaY = abs(pointA.y - pointB.y)
-    return 1.414 * min(deltaX, deltaY) + abs(deltaX - deltaY)
+def octileDistance(deltaX, deltaY):
+    return sqrt(2) * min(deltaX, deltaY) + abs(deltaX - deltaY)
     
-def chebyshevDistance(pointA, pointB):
-    return max(abs(pointA.x - pointB.x), abs(pointA.y - pointB.y))
+def chebyshevDistance(deltaX, deltaY):
+    return max(deltaX, deltaY)
