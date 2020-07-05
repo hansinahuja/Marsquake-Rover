@@ -8,7 +8,8 @@ def bestFirstSearch(self, environment, targets):
     # First iteration
     if self.waitList == None:
         sourceCell = environment.grid[self.location.x][self.location.y]
-        self.waitList = [(environment.bestHeuristic(sourceCell, targets), sourceCell)]
+        self.waitList = [(environment.bestHeuristic(
+            sourceCell, targets), sourceCell)]
 
     if len(self.waitList) == 0:
         return
@@ -26,6 +27,6 @@ def bestFirstSearch(self, environment, targets):
         heuristic = environment.bestHeuristic(neighbour, targets)
         heapq.heappush(self.waitList, (heuristic, neighbour))
         self.path[neighbour] = nextCell
-        self.visited.add(neighbour)
+        # self.visited.add(neighbour)
         self.logs.append([self, neighbour, 'waitList'])
         # print(neighbour.location.x, neighbour.location.y, 'inQueue')

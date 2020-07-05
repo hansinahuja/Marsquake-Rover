@@ -19,7 +19,7 @@ def dijkstra(self, environment):
     minElement = heapq.heappop(self.waitList)
     nextCell = minElement[1]
     self.visited.add(nextCell)
-    self.logs.append([self, nextCell, 'visited']) 
+    self.logs.append([self, nextCell, 'visited'])
     # print(nextCell.location.x, nextCell.location.y, 'visited')
 
     for nx, ny in nextCell.location.neighbours:
@@ -32,7 +32,7 @@ def dijkstra(self, environment):
         heapq.heappush(self.waitList, (newDistance, neighbour))
         # self.waitList.put(neighbour)
         self.path[neighbour] = nextCell
-        self.visited.add(neighbour)
+        # self.visited.add(neighbour)
         self.distances[neighbour] = newDistance
         self.logs.append([self, neighbour, 'waitList'])
         # print(neighbour.location.x, neighbour.location.y, 'inQueue')
