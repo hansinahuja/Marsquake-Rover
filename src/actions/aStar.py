@@ -30,5 +30,4 @@ def aStar(self, environment, targets):
         self.distances[neighbour] = newDistance
         heapq.heappush(self.waitList, (fValue, neighbour))
         self.path[neighbour] = nextCell
-        self.visited.add(nextCell)
         self.logs.append([self, neighbour, 'waitList'])
