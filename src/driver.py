@@ -3,7 +3,7 @@ from environment.env import Environment
 from environment.utils import Location
 
 # Create environment
-env = Environment(5, 5)
+env = Environment(10, 10)
 sources = [Agent(Location(1, 3), 'source')]
 destinations = [Agent(Location(4, 0), 'destination', False)]
 for agent in sources + destinations:
