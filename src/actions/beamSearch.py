@@ -1,6 +1,3 @@
-import heapq
-
-
 def switchLevel(level, beamWidth):
     newLevel = []
     fValues = {}
