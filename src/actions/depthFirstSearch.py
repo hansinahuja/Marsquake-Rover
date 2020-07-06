@@ -23,6 +23,7 @@ def depthFirstSearch(self, environment):
             self.visited[nextCell] = 'outOfRecursion'
             self.logs.append([self, nextCell, 'outOfRecursion'])
             # print(nextCell.location.x, nextCell.location.y, 'outOfRecursion')
+        self.logs.append(None)
         return
 
     self.visited[nextCell] = 'inRecursion'

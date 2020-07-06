@@ -3,9 +3,9 @@ from environment.env import Environment
 from environment.utils import Location
 
 # Create environment
-env = Environment(3, 3)
-sources = [Agent(Location(1, 1), 'source')]
-destinations = [Agent(Location(1, 2), 'destination', False)]
+env = Environment(4, 4)
+sources = [Agent(Location(3, 3), 'source')]
+destinations = [Agent(Location(0, 0), 'destination', False)]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
@@ -13,9 +13,9 @@ for agent in sources + destinations:
 # env.randomizedPrim()
 
 # env.printInitial()
-env.grid[2][0].type = 'wall'
-# env.grid[2][3].type = 'wall'
-# env.grid[2][1].type = 'wall'
+env.grid[1][0].type = 'wall'
+env.grid[0][1].type = 'wall'
+env.grid[1][1].type = 'wall'
 # env.grid[2][0].weight = 100
 
 while True:
