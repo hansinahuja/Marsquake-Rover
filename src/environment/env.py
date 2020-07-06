@@ -51,6 +51,7 @@ class Environment:
         updates = {}
         success = set()
         recursiveMode = False
+        logs = list(filter(None, logs))
 
         if len(logs) == 0:
             return success

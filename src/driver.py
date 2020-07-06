@@ -3,9 +3,9 @@ from environment.env import Environment
 from environment.utils import Location
 
 # Create environment
-env = Environment(3, 3)
-sources = [Agent(Location(1, 1), 'source')]
-destinations = [Agent(Location(1, 2), 'destination', False)]
+env = Environment(5, 5)
+sources = [Agent(Location(3, 4), 'source')]
+destinations = [Agent(Location(3, 0), 'destination', False),Agent(Location(0, 0), 'destination', False) ]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
@@ -13,17 +13,55 @@ for agent in sources + destinations:
 # env.randomizedPrim()
 
 # env.printInitial()
-env.grid[2][0].type = 'wall'
+
+env.grid[3][1].type = 'wall'
+env.grid[2][1].type = 'wall'
+env.grid[4][1].type = 'wall'
+env.grid[0][2].type = 'wall'
 # env.grid[2][3].type = 'wall'
 # env.grid[2][1].type = 'wall'
 # env.grid[2][0].weight = 100
 
-while True:
+
+#  ------------- Original Driver
+
+# while True:
+#     logs = []
+#     for src in sources:
+#         src.depthFirstSearch(env)
+#         # src.bestFirstSearch(env, destinations)
+#         # src.aStar(env, destinations)
+#         logs.extend(src.logs)
+#     for dest in destinations:
+#         if dest.isMovingAgent:
+#             dest.depthFirstSearch(env)
+#             # dest.bestFirstSearch(env, sources)
+#             # src.aStar(env, sources)
+#             logs.extend(dest.logs)
+#     success = env.update(logs)
+#     env.print()
+#     if len(success) > 0:
+#         paths = env.getPaths(success)
+#         print('Paths:', paths)
+#         break
+#     if len(src.logs) == 0 and len(dest.logs) == 0:
+#         break
+
+
+
+
+# ----------------------------- Temporary ida* Driver
+
+
+threshold = env.bestHeuristic(sources[0], destinations)
+newThreshold = 50000         # Large Value
+itrCount = 0                 # IterationCount is necessary for tle ( also for dfs ? )
+while True and itrCount < 10:
     logs = []
     for src in sources:
-        src.depthFirstSearch(env)
-        # src.bestFirstSearch(env, destinations)
-        # src.aStar(env, destinations)
+        X = src.idaStar(env, threshold, destinations)
+        if type(X) == int and X > threshold :
+            newThreshold = min(X, newThreshold)
         logs.extend(src.logs)
     for dest in destinations:
         if dest.isMovingAgent:
@@ -37,5 +75,13 @@ while True:
         paths = env.getPaths(success)
         print('Paths:', paths)
         break
-    if len(src.logs) == 0 and len(dest.logs) == 0:
-        break
+    if len(src.logs) == 0 and len(dest.logs) == 0 and len(sources[0].waitList) == 0:
+        threshold = newThreshold
+        itrCount += 1
+        newThreshold = 50000
+        for agent in sources + destinations:
+            agent.visited.clear()
+            agent.waitList = None
+            agent.path = {}
+            agent.logs = []
+            agent.distances = {}
