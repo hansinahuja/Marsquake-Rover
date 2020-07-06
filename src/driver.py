@@ -5,7 +5,7 @@ from environment.utils import Location
 # Create environment
 env = Environment(5, 5)
 sources = [Agent(Location(3, 4), 'source')]
-destinations = [Agent(Location(3, 0), 'destination', False),Agent(Location(0, 0), 'destination', False) ]
+destinations = [Agent(Location(3, 0), 'destination', False), Agent(Location(0, 0), 'destination', False) ]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
