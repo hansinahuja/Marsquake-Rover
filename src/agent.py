@@ -15,6 +15,7 @@ class Agent():
     from actions.bestFirstSearch import bestFirstSearch
     from actions.aStar import aStar
     from actions.idaStar import idaStar
+    from actions.beamSearch import beamSearch
 
     def isValidMove(self, environment, x, y):
         if x < 0 or x >= environment.length or y < 0 or y >= environment.breadth:
