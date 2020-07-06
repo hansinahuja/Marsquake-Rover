@@ -50,17 +50,32 @@ class Environment:
     def update(self, logs):
         updates = {}
         success = set()
+        recursiveMode = False
+
+        if len(logs) == 0:
+            return success
+
+        if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
+            recursiveMode = True
+
         for log in logs:
             agent, cell, state = log
             if cell not in updates:
                 updates[cell] = log
-            elif state == 'visited' and updates[cell][2] != 'visited':
+            elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
+                updates[cell] = log
+            elif recursiveMode and state == 'inRecursion' and updates[cell][2] != 'inRecursion':
                 updates[cell] = log
 
         for log in updates.values():
             agent, cell, state = log
             if cell.type != 'source' and cell.type != 'destination':
                 cell.type = state
+                if recursiveMode:
+                    if state == 'inRecursion':
+                        cell.type = 'visited'
+                    else:
+                        cell.type = 'free'
 
             if agent.type == 'source' and cell.srcAgent == None:
                 cell.srcAgent = agent
@@ -68,7 +83,10 @@ class Environment:
             if agent.type == 'destination' and cell.destAgent == None:
                 cell.destAgent = agent
 
-            if state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
+            if not recursiveMode and state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
+                success.add(cell)
+
+            if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
                 success.add(cell)
 
         return success
