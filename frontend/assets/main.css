@@ -1,0 +1,90 @@
+body, html{
+    padding: 0px;
+    margin: 0px;
+    color: white;
+    font: sans-serif;
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    background: url("../images/bg.jpg") no-repeat;
+    backdrop-filter: blur(3px);
+    background-size: cover;
+    overflow: hidden;
+}
+
+#grid{
+    display: block;
+    height: 100%;
+    width:100%;
+    margin-left: 300px;
+    position: absolute;
+}
+
+
+
+.cell{
+    margin: 0px;
+    display: block;
+    position: absolute;
+    border-style: none solid solid none;
+    border-color: white;
+    border-width: thin;
+    height: 40px;
+    width: 40px;
+}
+
+nav{
+    display: block;
+    position: fixed;
+    top:0px;
+    left: 0px;
+    height: 100%;
+    width: 300px;
+    background-color: #222;
+    color: white;
+    box-shadow: 2px 0px 30px #111;
+}
+
+nav button{
+    padding: 10px 20px 10px 20px;
+    background-color: blue;
+    outline: none;
+    border: none;
+    font-size: larger;
+    color: white;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%,0);
+    border-radius: 10px;
+}
+
+
+nav button:active{
+    background-color: navy;
+}
+
+.start{
+    background-color: darkgreen;
+    opacity: 0.7;
+}
+
+.stop{
+    background-color: orangered;
+    opacity: 0.7;
+}
+
+.draggable{
+    display: block;
+    position: fixed;
+    width: 50px;
+    transform: translate(-35%,-70%);
+    cursor: grab;
+}
+
+.wall{
+    background-color: black;
+    opacity: 0.7;
+}
