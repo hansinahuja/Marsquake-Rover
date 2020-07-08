@@ -3,24 +3,29 @@ from environment.env import Environment
 from environment.utils import Location
 
 # Create environment
-env = Environment(5, 5)
-sources = [Agent(Location(3, 4), 'source')]
-destinations = [Agent(Location(3, 0), 'destination', False),
-                Agent(Location(0, 0), 'destination', False)]
+env = Environment(11, 11)
+sources = [Agent(Location(3, 1), 'source')]
+destinations = [Agent(Location(6, 9), 'destination', False)]
+                # Agent(Location(0, 0), 'destination', False)]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
 # walls = env.recursiveMaze()
-# env.randomizedPrim()
+env.randomizedPrim()
 
-# env.printInitial()
+# env.print()
+# for i in range(1,9):
+    # env.grid[i][6].type = 'wall'
+# env.grid[4][6].type = 'wall'
+# env.grid[2][6].type = 'wall'
+# env.grid[1][6].type = 'wall'
+# env.grid[1][7].type = 'wall'
+# env.grid[1][8].type = 'wall'
+# env.grid[2][1].type = 'wall'
+# env.grid[1][1].type = 'wall'
+# env.grid[0][1].type = 'wall'
 
-# env.grid[3][1].type = 'wall'
-# env.grid[2][1].type = 'wall'
-# env.grid[4][1].type = 'wall'
-# env.grid[0][2].type = 'wall'
-# env.grid[2][3].type = 'wall'
-# env.grid[2][1].type = 'wall'
+env.printInitial()
 # env.grid[2][0].weight = 100
 beamWidth = 2
 
@@ -32,19 +37,22 @@ while True:
         # src.depthFirstSearch(env)
         # src.bestFirstSearch(env, destinations)
         # src.aStar(env, destinations)
-        src.beamSearch(env, destinations, beamWidth)
+        # src.beamSearch(env, destinations, beamWidth)
+        src.jumpPointSearch(env, destinations)
         logs.extend(src.logs)
     for dest in destinations:
         if dest.isMovingAgent:
             # dest.depthFirstSearch(env)
             # dest.bestFirstSearch(env, sources)
             # src.aStar(env, sources)
-            dest.beamSearch(env, destinations, beamWidth)
+            # dest.beamSearch(env, destinations, beamWidth)
+            dest.jumpPointSearch(env, sources)
             logs.extend(dest.logs)
     success = env.update(logs)
-    env.print()
+    # env.print()
     if len(success) > 0:
-        paths = env.getPaths(success)
+        # paths = env.getPaths(success)
+        paths = env.getJpsPaths(success)
         print('Paths:', paths)
         break
     if len(src.logs) == 0 and len(dest.logs) == 0:
