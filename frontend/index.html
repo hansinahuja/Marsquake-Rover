@@ -6,7 +6,7 @@
         <title>MS Engage</title>
         <link rel="stylesheet" href="assets/main.css">
     </head>
-    <body onresize="makeGrid()">
+    <body>
         <img src="images/logo.PNG" id="logo">
         <div id = "grid"></div>
         <div id = "nav" onclick = "showNav()">
@@ -15,10 +15,22 @@
             <div class = "line three"></div>
         </div>
         <nav>
-            <button onclick="hideNav()">Find Route!</button>
+            <div id="close" onclick="hideNav()">
+                <div style="display: block; transition: 0.5s; position: absolute; height: 3px; width: 18px; transform: translate(-50%,-50%) rotate(45deg); background-color: white;"></div>
+                <div style="display: block; transition: 0.5s; position: absolute; height: 3px; width: 18px; transform: translate(-50%,-50%) rotate(-45deg); background-color: white;"></div>
+            </div>
+            <div id="algolabel">Algorithm: </div>
+            <select id="algorithm">
+                <option value="0">BFS</option>
+                <option value="1">A*</option>
+                <option value="2">Dijksta</option>
+                <option value="3">IDA*</option>
+            </select>
+            <button onclick="">Find Route!</button>
         </nav>
         <img class="draggable" id = "start" src="images/green.svg">
         <img class="draggable" id = "stop" src="images/red.svg">
         <script src="assets/main.js"></script>
+        <script src="assets/proc.js"></script>
     </body>
 </html>
