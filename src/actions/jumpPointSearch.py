@@ -100,7 +100,8 @@ def jumpPointSearch(self, environment, targets):
                     if direction == 'down':
                         newDirection = 'right-down'
                     if (forcedNeighbor, newDirection) not in self.visited:
-                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight + forcedNeighbor.weight, forcedNeighbor , newDirection, direction)
+                        self.distances[forcedNeighbor] = weight
+                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight, forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)
                         self.logs.append([self, forcedNeighbor, 'inQueue'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)
@@ -120,7 +121,8 @@ def jumpPointSearch(self, environment, targets):
                         newDirection = 'left-down'
          
                     if (forcedNeighbor, newDirection) not in self.visited:
-                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight + forcedNeighbor.weight, forcedNeighbor , newDirection, direction)
+                        self.distances[forcedNeighbor] = weight
+                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight , forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)    
                         self.logs.append([self, forcedNeighbor, 'inQueue'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)                    
@@ -129,8 +131,9 @@ def jumpPointSearch(self, environment, targets):
             if flag and valid(x+dx1, y+dy1) and environment.grid[x+dx1][y+dy1].type != 'wall':
                 cell = environment.grid[x + dx1][y+dy1]
                 if (cell, direction) not in self.visited:
-                    nxt = (environment.bestHeuristic(cell, targets) + weight + cell.weight, cell , direction, direction)
+                    nxt = (environment.bestHeuristic(cell, targets) + weight, cell , direction, direction)
                     heapq.heappush(self.waitList, nxt)
+                    self.distances[cell] = weight
                     self.logs.append([self, cell, 'inQueue'])
                     self.path[(cell, direction)] = (nextCell, direction)
                     return
@@ -191,7 +194,8 @@ def jumpPointSearch(self, environment, targets):
                     if direction == 'left-down':
                         newDirection = 'left-up'
                     if (forcedNeighbor, newDirection) not in self.visited:
-                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight + forcedNeighbor.weight, forcedNeighbor , newDirection, direction)
+                        self.distances[forcedNeighbor] = weight
+                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight, forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)
                         self.logs.append([self, forcedNeighbor, 'inQueue'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)
@@ -210,7 +214,8 @@ def jumpPointSearch(self, environment, targets):
                     if direction == 'left-down':
                         newDirection = 'right-down'
                     if (forcedNeighbor, newDirection) not in self.visited:
-                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight + forcedNeighbor.weight, forcedNeighbor , newDirection, direction)
+                        self.distances[forcedNeighbor] = weight
+                        nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight, forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)
                         self.logs.append([self, forcedNeighbor, 'inQueue'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)
@@ -219,7 +224,8 @@ def jumpPointSearch(self, environment, targets):
             if flag and valid(x+dx1, y+dy1) and environment.grid[x+dx1][y+dy1].type != 'wall':
                 cell = environment.grid[x+dx1][y+dy1]
                 if (cell, direction) not in self.visited:
-                    nxt = (environment.bestHeuristic(cell, targets) + weight + cell.weight, cell , direction, direction)
+                    self.distances[cell] = weight
+                    nxt = (environment.bestHeuristic(cell, targets) + weight, cell , direction, direction)
                     heapq.heappush(self.waitList, nxt)
                     self.logs.append([self, cell, 'inQueue'])
                     self.path[(cell, direction)] = (nextCell, direction)
@@ -236,6 +242,7 @@ def jumpPointSearch(self, environment, targets):
         self.visited.add(sourceCell)
         x = sourceCell.location.x
         y = sourceCell.location.y
+        self.distances[sourceCell] = 0
         self.waitList = []
         directions = [ 'right', 'left', 'up', 'down', 'right-up', 'right-down', 'left-up', 'left-down']
         for direction in directions:
@@ -248,8 +255,8 @@ def jumpPointSearch(self, environment, targets):
         return
 
     next = heapq.heappop(self.waitList)
-    weight = next[0]
     nextCell = next[1]
+    weight = self.distances[nextCell]
     direction = next[2]
     directionFrom = next[3]
 
