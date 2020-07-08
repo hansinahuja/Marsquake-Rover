@@ -1,41 +1,42 @@
-body, html{
+body,
+html {
     padding: 0px;
     margin: 0px;
     color: white;
-    font: sans-serif;
+    font-family: Verdana, Geneva, sans-serif;
     height: 100%;
     width: 100%;
 }
 
-body{
+body {
     background: url("../images/bg.jpg") no-repeat;
     backdrop-filter: blur(3px);
     background-size: cover;
     overflow: hidden;
 }
 
-#logo{
+#logo {
     display: block;
     position: fixed;
     pointer-events: none;
     top: 0px;
     height: 150px;
-    right: 50px;
+    right: 0px;
     opacity: 0.5;
     z-index: 1;
 }
 
-#grid{
+#grid {
     display: block;
     height: 100%;
-    width:100%;
+    width: 100%;
     margin-left: 0px;
     position: absolute;
 }
 
 
 
-.cell{
+.cell {
     margin: 0px;
     display: block;
     position: absolute;
@@ -46,7 +47,7 @@ body{
     width: 40px;
 }
 
-#nav{
+#nav {
     display: block;
     position: fixed;
     cursor: pointer;
@@ -61,32 +62,36 @@ body{
     z-index: 1001;
 }
 
-@keyframes
-grow{
-    0%, 100%{
+@keyframes grow {
+
+    0%,
+    100% {
         width: 50px;
         left: 20px;
     }
-    50%{
+
+    50% {
         width: 60px;
         left: 15px;
     }
 }
 
-#nav:hover .one{
+#nav:hover .one {
     animation: grow 0.5s ease;
 }
-#nav:hover .two{
+
+#nav:hover .two {
     animation: grow 0.5s ease;
     animation-delay: 0.1s;
 }
-#nav:hover .three{
+
+#nav:hover .three {
     animation: grow 0.5s ease;
     animation-delay: 0.2s;
 }
 
 
-.line{
+.line {
     display: block;
     position: absolute;
     height: 5px;
@@ -97,22 +102,30 @@ grow{
     left: 20px;
 }
 
-.one{
+.one {
     top: 12px;
 }
 
-.two{
+.two {
     top: 27px;
 }
 
-.three{
+.three {
     top: 42px;
 }
 
-nav{
+#close {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+
+nav {
     display: block;
     position: fixed;
-    top:0px;
+    top: 0px;
     left: 0px;
     height: 100%;
     margin-left: -300px;
@@ -124,7 +137,7 @@ nav{
     z-index: 2000;
 }
 
-nav button{
+nav button {
     padding: 10px 20px 10px 20px;
     background-color: blue;
     outline: none;
@@ -133,36 +146,81 @@ nav button{
     font-size: larger;
     color: white;
     position: absolute;
-    bottom: 30px;
+    bottom: 200px;
     left: 50%;
-    transform: translate(-50%,0);
+    transform: translate(-50%, 0);
     border-radius: 10px;
 }
 
 
-nav button:active{
+nav button:active {
     background-color: navy;
 }
 
-.start{
+#algolabel {
+    position: absolute;
+    color: white;
+    font-size: large;
+    left: 15%;
+    top: 20px;
+}
+
+nav select {
+    display: block;
+    position: absolute;
+    background-color: #333;
+    color: white;
+    outline: none;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 40px;
+    text-align: center;
+    width: 85%;
+    top: 45px;
+    border-radius: 10px;
+    font-size: 100%;
+    padding-left: 20px;
+}
+
+.start {
     background-color: darkgreen;
     opacity: 0.7;
 }
 
-.stop{
+.stop {
     background-color: orangered;
     opacity: 0.7;
 }
 
-.draggable{
+.draggable {
     display: block;
     position: fixed;
     width: 50px;
-    transform: translate(-35%,-70%);
+    transform: translate(-35%, -70%);
     cursor: grab;
 }
 
-.wall{
+.wall {
     background-color: black;
     opacity: 0.7;
+}
+
+.inqueue {
+    background-color: teal;
+    opacity: 0.7;
+}
+
+.processed {
+    background-color: turquoise;
+    opacity: 0.7;
+}
+
+.path{
+    display: block;
+    height: 5px;
+    width: 0px;
+    border-radius: 5px;
+    position: absolute;
+    background-color: red;
+    transition: width 0.5s;
 }
