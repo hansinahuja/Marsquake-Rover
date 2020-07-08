@@ -117,3 +117,34 @@ class Environment:
             path = path1 + path2[1:]
             paths.append(path)
         return paths
+
+    def getJpsPaths(self, success):
+        paths = []
+
+        for cell in success:
+            path1 = []
+            agent = cell.srcAgent
+            c = cell
+            directions = [ 'right', 'left', 'up', 'down', 'right-up', 'right-down', 'left-up', 'left-down']
+            for direction in directions:
+                if (c, direction) in agent.path:
+                    s = direction
+            while (c, s) in agent.path:
+                path1.append([c.location.x, c.location.y])
+                tmp = agent.path[(c,s)][0]
+                s = agent.path[(c,s)][1]
+                c = tmp
+            path1.append([agent.location.x, agent.location.y])
+
+            agent = cell.destAgent
+            path2 = []
+            c = cell
+            while c in agent.path:
+                path2.append([c.location.x, c.location.y])
+                c = agent.path[c]
+            path2.append([agent.location.x, agent.location.y])
+
+            path1.reverse()
+            path = path1 + path2[1:]
+            paths.append(path)
+        return paths

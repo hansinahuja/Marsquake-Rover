@@ -40,7 +40,7 @@ def recursiveMaze(self):
                 generate(left, right, row + 1, bottom)
             
             else:                                                           # Vertical division
-                clm = randomEvenNumber(left, right + 1)
+                clm = randomEvenNumber(left, right)
                 for i in range(top, bottom + 1):
                     if self.grid[i][clm].type != 'source' and self.grid[i][clm].type != 'destination':
                         self.grid[i][clm].type = 'wall'
