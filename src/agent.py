@@ -17,6 +17,7 @@ class Agent():
     from actions.idaStar import idaStar
     from actions.beamSearch import beamSearch
     from actions.jumpPointSearch import jumpPointSearch
+    from actions.ida import ida
 
     def isValidMove(self, environment, x, y):
         if x < 0 or x >= environment.length or y < 0 or y >= environment.breadth:

@@ -101,8 +101,39 @@ class Environment:
             agent = cell.srcAgent
             c = cell
             while c in agent.path:
+                print(c.location.x, c.location.y)
                 path1.append([c.location.x, c.location.y])
                 c = agent.path[c]
+            path1.append([agent.location.x, agent.location.y])
+
+            agent = cell.destAgent
+            path2 = []
+            c = cell
+            while c in agent.path:
+                path2.append([c.location.x, c.location.y])
+                c = agent.path[c]
+            path2.append([agent.location.x, agent.location.y])
+
+            path1.reverse()
+            path = path1 + path2[1:]
+            paths.append(path)
+        return paths
+
+    def tmpPaths(self, success, weight):                          # For idaStar and ida
+        paths = []
+
+        for cell in success:
+            # print(cell.location.x, cell.location.y)
+            path1 = []
+            agent = cell.srcAgent
+            c = cell
+            wt = weight
+            while (c, wt) in agent.path:
+                print(c.location.x, c.location.y)
+                path1.append([c.location.x, c.location.y])
+                X = agent.path[(c, wt)]
+                c = X[0]
+                wt = X[1]
             path1.append([agent.location.x, agent.location.y])
 
             agent = cell.destAgent

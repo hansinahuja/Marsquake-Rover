@@ -4,7 +4,7 @@ from collections import deque
 # def reset(self, environment):
 
 
-def idaStar(self, environment, threshold, targets):
+def ida(self, environment, threshold, targets):
     def valid(x, y):
         return x >= 0 and y >= 0 and x < environment.length and y < environment.breadth and environment.grid[x][y].type != 'wall'
 
@@ -24,13 +24,12 @@ def idaStar(self, environment, threshold, targets):
     nextCell = self.waitList[-1][0]
     weight = self.waitList[-1][1]
     self.waitList.pop()
-    fValue = weight + environment.bestHeuristic(nextCell, targets)
     
-    if fValue > threshold:
+    if weight > threshold:
         if nextCell in self.visited and self.visited[nextCell] == 'inRecursion':
             self.visited[nextCell] = 'outOfRecursion'
             self.logs.append([self, nextCell, 'outOfRecursion'])
-        return fValue
+        return weight
     
     self.logs.append([self, nextCell, 'inRecursion'])
     
@@ -43,4 +42,4 @@ def idaStar(self, environment, threshold, targets):
         self.path[(neighbour, weight + neighbour.weight)] = (nextCell, weight)
         self.distances[neighbour] = self.distances[nextCell] + neighbour.weight
     
-    return fValue
+    return weight
