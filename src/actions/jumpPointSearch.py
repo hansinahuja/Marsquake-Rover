@@ -238,9 +238,8 @@ def jumpPointSearch(self, environment, targets):
         y = sourceCell.location.y
         self.waitList = []
         directions = [ 'right', 'left', 'up', 'down', 'right-up', 'right-down', 'left-up', 'left-down']
-        directionFrom = 'All'
         for direction in directions:
-            self.waitList.append ( (environment.bestHeuristic(sourceCell, targets), sourceCell , direction, directionFrom) )
+            self.waitList.append ( (environment.bestHeuristic(sourceCell, targets), sourceCell , direction, direction) )
         
         heapq.heapify(self.waitList)
 
@@ -255,6 +254,6 @@ def jumpPointSearch(self, environment, targets):
     directionFrom = next[3]
 
     if direction == 'right' or direction == 'left' or direction == 'up' or direction == 'down':
-        nonDiagonal(nextCell, direction, weight, direction)
+        nonDiagonal(nextCell, direction, weight, directionFrom)
     else:
         diagonal(nextCell, direction, weight, direction)
