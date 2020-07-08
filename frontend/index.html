@@ -7,9 +7,15 @@
         <link rel="stylesheet" href="assets/main.css">
     </head>
     <body onresize="makeGrid()">
+        <img src="images/logo.PNG" id="logo">
         <div id = "grid"></div>
+        <div id = "nav" onclick = "showNav()">
+            <div class = "line one"></div>
+            <div class = "line two"></div>
+            <div class = "line three"></div>
+        </div>
         <nav>
-            <button>Find Route!</button>
+            <button onclick="hideNav()">Find Route!</button>
         </nav>
         <img class="draggable" id = "start" src="images/green.svg">
         <img class="draggable" id = "stop" src="images/red.svg">

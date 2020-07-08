@@ -14,11 +14,22 @@ body{
     overflow: hidden;
 }
 
+#logo{
+    display: block;
+    position: fixed;
+    pointer-events: none;
+    top: 0px;
+    height: 150px;
+    right: 50px;
+    opacity: 0.5;
+    z-index: 1;
+}
+
 #grid{
     display: block;
     height: 100%;
     width:100%;
-    margin-left: 300px;
+    margin-left: 0px;
     position: absolute;
 }
 
@@ -35,22 +46,89 @@ body{
     width: 40px;
 }
 
+#nav{
+    display: block;
+    position: fixed;
+    cursor: pointer;
+    background-color: #222;
+    top: 20px;
+    left: 40px;
+    height: 60px;
+    width: 90px;
+    box-shadow: 2px 2px 10px #111;
+    border-radius: 10px;
+    transition: all .4s ease-in-out;
+    z-index: 1001;
+}
+
+@keyframes
+grow{
+    0%, 100%{
+        width: 50px;
+        left: 20px;
+    }
+    50%{
+        width: 60px;
+        left: 15px;
+    }
+}
+
+#nav:hover .one{
+    animation: grow 0.5s ease;
+}
+#nav:hover .two{
+    animation: grow 0.5s ease;
+    animation-delay: 0.1s;
+}
+#nav:hover .three{
+    animation: grow 0.5s ease;
+    animation-delay: 0.2s;
+}
+
+
+.line{
+    display: block;
+    position: absolute;
+    height: 5px;
+    width: 50px;
+    border-radius: 5px;
+    background-color: white;
+    transition: 0.5s ease;
+    left: 20px;
+}
+
+.one{
+    top: 12px;
+}
+
+.two{
+    top: 27px;
+}
+
+.three{
+    top: 42px;
+}
+
 nav{
     display: block;
     position: fixed;
     top:0px;
     left: 0px;
     height: 100%;
+    margin-left: -300px;
     width: 300px;
+    transition: 0.5s;
     background-color: #222;
     color: white;
     box-shadow: 2px 0px 30px #111;
+    z-index: 2000;
 }
 
 nav button{
     padding: 10px 20px 10px 20px;
     background-color: blue;
     outline: none;
+    cursor: pointer;
     border: none;
     font-size: larger;
     color: white;
