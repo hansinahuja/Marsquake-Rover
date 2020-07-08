@@ -10,8 +10,8 @@ destinations = [Agent(Location(0, 0), 'destination', False)]
 for agent in sources + destinations:
     env.placeAgent(agent)
 
-walls = env.recursiveMaze()
-# env.randomizedPrim()
+# walls = env.recursiveMaze()
+env.randomizedPrim()
 
 # env.print()
 # for i in range(5):
@@ -24,6 +24,8 @@ walls = env.recursiveMaze()
 # env.grid[1][7].type = 'wall'
 # env.grid[1][8].type = 'wall'
 # env.grid[2][1].type = 'wall'
+# env.grid[1][1].type = 'wall'
+# env.grid[0][1].type = 'wall'
 
 env.printInitial()
 # env.grid[2][0].weight = 100

@@ -145,6 +145,26 @@ class Environment:
             path2.append([agent.location.x, agent.location.y])
 
             path1.reverse()
-            path = path1 + path2[1:]
+            path3 = path1 + path2[1:]
+            path4 = []
+            [path4.append(cell) for cell in path3 if cell not in path4]
+            path = []
+            for cell in path4:
+                if len(path) == 0:
+                    path.append(cell)
+                else:
+                    top = path[len(path) - 1]
+                    steps = max( abs(top[0] - cell[0]) , abs(top[1] - cell[1]) )
+                    for j in range(steps):
+                        x , y = top[0], top[1]
+                        if top[0] > cell[0]:
+                            x = top[0] - 1 - j
+                        if top[1] > cell[1]:
+                            y = top[1] - 1 - j
+                        if top[0] < cell[0]:
+                            x = top[0] + 1 + j
+                        if top[1] < cell[1]:
+                            y = top[1] + 1 + j
+                        path.append([x, y])
             paths.append(path)
         return paths
