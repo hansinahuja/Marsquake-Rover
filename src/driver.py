@@ -65,7 +65,7 @@ beamWidth = 2
 threshold = env.bestHeuristic(sources[0], destinations)
 # threshold = 1                                               
 newThreshold = 50000         # Large Value
-itrCount = 0                 # IterationCount is necessary for tle ( also for dfs ? )
+itrCount = 0                 # IterationCount is necessary for tle 
 while True and itrCount < 1000:
     logs = []
     for src in sources:
@@ -84,12 +84,12 @@ while True and itrCount < 1000:
     success = env.update(logs)
     # env.print()
     if len(success) > 0:
-        paths = env.getPaths(success)
+#         paths = env.getPaths(success)
         paths = env.tmpPaths(success, threshold)
         print('Paths:', paths)
         break
     if len(src.logs) == 0 and len(dest.logs) == 0 and len(sources[0].waitList) == 0:
-        if newThreshold == 50000:   # Path cannot be found
+        if newThreshold == 50000:     # No Path exists
             break; 
         threshold = newThreshold
         print('newThreshold', newThreshold)
