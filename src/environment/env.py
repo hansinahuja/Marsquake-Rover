@@ -8,6 +8,8 @@ class Environment:
         self.grid = [[Cell(Location(x, y)) for y in range(breadth)]
                      for x in range(length)]
         self.heuristic = 'manhattan'
+        self.allowDiagonals = False
+        self.cutCorners = False
 
     def placeAgent(self, agent):
         x = agent.location.x
@@ -156,14 +158,15 @@ class Environment:
             path1 = []
             agent = cell.srcAgent
             c = cell
-            directions = [ 'right', 'left', 'up', 'down', 'right-up', 'right-down', 'left-up', 'left-down']
+            directions = ['right', 'left', 'up', 'down',
+                          'right-up', 'right-down', 'left-up', 'left-down']
             for direction in directions:
                 if (c, direction) in agent.path:
                     s = direction
             while (c, s) in agent.path:
                 path1.append([c.location.x, c.location.y])
-                tmp = agent.path[(c,s)][0]
-                s = agent.path[(c,s)][1]
+                tmp = agent.path[(c, s)][0]
+                s = agent.path[(c, s)][1]
                 c = tmp
             path1.append([agent.location.x, agent.location.y])
 
@@ -185,9 +188,9 @@ class Environment:
                     path.append(cell)
                 else:
                     top = path[len(path) - 1]
-                    steps = max( abs(top[0] - cell[0]) , abs(top[1] - cell[1]) )
+                    steps = max(abs(top[0] - cell[0]), abs(top[1] - cell[1]))
                     for j in range(steps):
-                        x , y = top[0], top[1]
+                        x, y = top[0], top[1]
                         if top[0] > cell[0]:
                             x = top[0] - 1 - j
                         if top[1] > cell[1]:

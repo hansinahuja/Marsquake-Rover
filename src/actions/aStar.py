@@ -7,20 +7,21 @@ def aStar(self, environment, targets):
     # First iteration
     if self.waitList == None:
         sourceCell = environment.grid[self.location.x][self.location.y]
-        self.waitList = [(environment.bestHeuristic(sourceCell, targets), sourceCell)]
+        self.waitList = [(environment.bestHeuristic(
+            sourceCell, targets), sourceCell)]
         self.distances[sourceCell] = 0
 
     # Exhausted all possible moves
     if len(self.waitList) == 0:
         return
-    
+
     minElement = heapq.heappop(self.waitList)
     nextCell = minElement[1]
     self.visited.add(nextCell)
     self.logs.append([self, nextCell, 'visited'])
 
     for nx, ny in nextCell.location.neighbours:
-        if not self.isValidMove(environment, nx, ny):   
+        if not self.isValidMove(environment, nextCell, nx, ny):
             continue
         neighbour = environment.grid[nx][ny]
         newDistance = self.distances[nextCell] + neighbour.weight

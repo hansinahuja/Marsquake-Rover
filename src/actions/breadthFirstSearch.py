@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def breadthFirstSearch(self, environment):
 
     self.logs = []
@@ -12,7 +13,7 @@ def breadthFirstSearch(self, environment):
         self.visited.add(sourceCell)
 
     # Exhausted all possible moves
-    if len(self.waitList)==0:
+    if len(self.waitList) == 0:
         return
 
     nextCell = self.waitList.popleft()
@@ -20,7 +21,7 @@ def breadthFirstSearch(self, environment):
     # print(nextCell.location.x, nextCell.location.y, 'visited')
 
     for nx, ny in nextCell.location.neighbours:
-        if not self.isValidMove(environment, nx, ny):
+        if not self.isValidMove(environment, nextCell, nx, ny):
             continue
         neighbour = environment.grid[nx][ny]
         self.waitList.append(neighbour)

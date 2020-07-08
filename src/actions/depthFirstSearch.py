@@ -31,7 +31,7 @@ def depthFirstSearch(self, environment):
     # print(nextCell.location.x, nextCell.location.y, 'inRecursion')
 
     for nx, ny in nextCell.location.neighbours:
-        if not self.isValidMove(environment, nx, ny):
+        if not self.isValidMove(environment, nextCell, nx, ny):
             continue
         neighbour = environment.grid[nx][ny]
         self.waitList.append(neighbour)
