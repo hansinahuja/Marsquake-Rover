@@ -6,8 +6,8 @@ from environment.utils import Location
 def driver(dict):
     # Create environment
     env = Environment(len(dict['maze']), len(dict['maze'][0]))
-    env.cutCorners = dict['cutCorners']
-    env.allowDiagonals = dict['allowDiagonals']
+    env.cutCorners = int(dict['cutCorners'])
+    env.allowDiagonals = int(dict['allowDiagonals'])
     sources = []
     destinations = []
 
@@ -15,7 +15,7 @@ def driver(dict):
         sources.append(Agent(Location(source['x'], source['y']), 'source'))
     for destination in dict['stop']:
         destinations.append(Agent(Location(
-            destination['x'], destination['y']), 'destination', dict['biDirectional']))
+            destination['x'], destination['y']), 'destination', int(dict['biDirectional'])))
     for checkpoint in dict['checkpoints']:
         destinations.append(
             Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', False))
@@ -28,12 +28,12 @@ def driver(dict):
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
 
-    beamWidth = dict['beamWidth']
+    beamWidth = int(dict['beamWidth'])
     gridChanges = []
     path = []
 
     #  ------------- Original Driver
-    algo = dict['algo']
+    algo = int(dict['algo'])
     if algo != 6 and algo != 7:
         while True:
             logs = []
@@ -71,8 +71,8 @@ def driver(dict):
                         dest.jumpPointSearch(env, sources)
                 logs.extend(dest.logs)
             success, gridChange = env.update(logs)
-            env.print()
-            print(gridChange)
+            # env.print()
+            # print(gridChange)
             gridChanges.extend(gridChange)
             if len(success) > 0:
                 intersection = success.pop()
@@ -89,7 +89,7 @@ def driver(dict):
                 break
 
         output = {'gridChanges': gridChanges, 'path': path}
-        print(output)
+        # print(output)
         return output
 
     # ----------------------------- Temporary ida and ida* Driver
@@ -112,7 +112,7 @@ def driver(dict):
             # env.print()
             if len(success) > 0:
                 paths = env.tmpPaths(success, threshold)
-                print('Paths:', paths)
+                # print('Paths:', paths)
                 break
             if len(src.logs) == 0 and len(sources[0].waitList) == 0:
                 if newThreshold == 50000:     # No Path exists
@@ -128,27 +128,27 @@ def driver(dict):
                     agent.distances = {}
 
 
-dict = {
-    "algo": 5,
-    "start": [{"x": 0, "y": 0}],
-    "stop": [{"x": 4, "y": 4}],
-    "cutCorners": 0,
-    "allowDiagonals": 1,
-    "biDirectional": 0,
-    "beamWidth": 2,
-    "checkpoints": [
-        # {"x":9,"y":7},
-        # {"x":8,"y":7},
-        # {"x":7,"y":7},
-        # {"x":6,"y":7},
-        # {"x":5,"y":7}
-    ],
-    "maze":
-    [[0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0]]
-}
+# dict = {
+#     "algo": 5,
+#     "start": [{"x": 0, "y": 0}],
+#     "stop": [{"x": 4, "y": 4}],
+#     "cutCorners": 0,
+#     "allowDiagonals": 1,
+#     "biDirectional": 0,
+#     "beamWidth": 2,
+#     "checkpoints": [
+#         # {"x":9,"y":7},
+#         # {"x":8,"y":7},
+#         # {"x":7,"y":7},
+#         # {"x":6,"y":7},
+#         # {"x":5,"y":7}
+#     ],
+#     "maze":
+#     [[0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0]]
+# }
 
-driver(dict)
+# print(driver(dict))
