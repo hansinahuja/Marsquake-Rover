@@ -82,7 +82,7 @@ class Environment:
                     else:
                         cell.type = 'free'
                 gridChange = {'x': cell.location.x,
-                              'y': cell.location.x, 'color': colorDict[cell.type]}
+                              'y': cell.location.y, 'color': colorDict[cell.type]}
                 gridChanges.append(gridChange)
 
             if agent.type == 'source' and cell.srcAgent == None:

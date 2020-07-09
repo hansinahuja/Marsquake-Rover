@@ -15,7 +15,7 @@ function makeChanges(changes){
             clearInterval(int);
         }
     }
-    int = setInterval(color, 100);
+    int = setInterval(color, 10);
 }
 
 function drawPath(path){
@@ -95,6 +95,7 @@ function gatherData(){
 }
 
 function find(){
+    showing = true;
     var data = gatherData();
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:5000/api/findpath/",false);
