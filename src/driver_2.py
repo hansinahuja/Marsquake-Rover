@@ -10,13 +10,15 @@ def driver(dict):
     env.allowDiagonals = dict['allowDiagonals']
     sources = []
     destinations = []
-    
+
     for source in dict['start']:
-        sources.append( Agent(Location(source['x'], source['y']), 'source')) 
+        sources.append(Agent(Location(source['x'], source['y']), 'source'))
     for destination in dict['stop']:
-        destinations.append( Agent(Location(destination['x'], destination['y']), 'destination', dict['biDirectional']))
+        destinations.append(Agent(Location(
+            destination['x'], destination['y']), 'destination', dict['biDirectional']))
     for checkpoint in dict['checkpoints']:
-        destinations.append(Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', False))
+        destinations.append(
+            Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', False))
     for agent in sources + destinations:
         env.placeAgent(agent)
 
@@ -25,7 +27,6 @@ def driver(dict):
             # print(' ',cell.location.x, cell.location.y)
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
-
 
     beamWidth = dict['beamWidth']
 
@@ -67,18 +68,18 @@ def driver(dict):
                     if algo == 8:
                         dest.jumpPointSearch(env, sources)
                 logs.extend(dest.logs)
-            success = env.update(logs)
+            success, gridChanges = env.update(logs)
             env.print()
+            print(gridChanges)
             if len(success) > 0:
                 if algo == 8:
                     paths = env.getJpsPaths(success)
-                else:    
+                else:
                     paths = env.getPaths(success)
                 print('Paths:', paths)
                 break
             if len(src.logs) == 0 and len(dest.logs) == 0:
                 break
-
 
     # ----------------------------- Temporary ida and ida* Driver
 
@@ -93,7 +94,7 @@ def driver(dict):
                     X = src.ida(env, threshold, destinations)
                 if algo == 7:
                     X = src.idaStar(env, threshold, destinations)
-                if type(X) == int and X > threshold :
+                if type(X) == int and X > threshold:
                     newThreshold = min(X, newThreshold)
                 logs.extend(src.logs)
             success = env.update(logs)
@@ -115,31 +116,28 @@ def driver(dict):
                     agent.logs = []
                     agent.distances = {}
 
+
 dict = {
-        "algo":7,
-        "start":[{"x":4,"y":7}],
-        "stop":[{"x":3,"y":14}],
-        "cutCorners":0,
-        "allowDiagonals":1,
-        "biDirectional":0,
-        "beamWidth":2,
-        "checkpoints":[
-            # {"x":9,"y":7},
-            # {"x":8,"y":7},
-            # {"x":7,"y":7},
-            # {"x":6,"y":7},
-            # {"x":5,"y":7}
-            ],
-        "maze":[
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-            ]
-    }
+    "algo": 3,
+    "start": [{"x": 1, "y": 1}],
+    "stop": [{"x": 4, "y": 4}],
+    "cutCorners": 0,
+    "allowDiagonals": 1,
+    "biDirectional": 0,
+    "beamWidth": 2,
+    "checkpoints": [
+        # {"x":9,"y":7},
+        # {"x":8,"y":7},
+        # {"x":7,"y":7},
+        # {"x":6,"y":7},
+        # {"x":5,"y":7}
+    ],
+    "maze":
+    [[0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0]]
+}
 
 driver(dict)

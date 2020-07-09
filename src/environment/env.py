@@ -54,9 +54,11 @@ class Environment:
         success = set()
         recursiveMode = False
         logs = list(filter(None, logs))
+        gridChanges = []
+        colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
 
         if len(logs) == 0:
-            return success
+            return success, gridChanges
 
         if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
             recursiveMode = True
@@ -79,6 +81,8 @@ class Environment:
                         cell.type = 'visited'
                     else:
                         cell.type = 'free'
+                gridChanges.append(
+                    (cell.location.x, cell.location.y, colorDict[cell.type]))
 
             if agent.type == 'source' and cell.srcAgent == None:
                 cell.srcAgent = agent
@@ -92,7 +96,7 @@ class Environment:
             if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
                 success.add(cell)
 
-        return success
+        return success, gridChanges
 
     def getPaths(self, success):
         paths = []
