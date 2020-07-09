@@ -72,10 +72,14 @@ def driver(dict):
             env.print()
             print(gridChanges)
             if len(success) > 0:
+                intersection = success.pop()
+                wrapped = set()
+                wrapped.add(intersection)
                 if algo == 8:
-                    paths = env.getJpsPaths(success)
+                    paths = env.getJpsPaths(wrapped)
                 else:
-                    paths = env.getPaths(success)
+                    paths = env.getPaths(wrapped)
+                paths = paths[0]
                 print('Paths:', paths)
                 break
             if len(src.logs) == 0 and len(dest.logs) == 0:
