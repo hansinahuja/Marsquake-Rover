@@ -118,8 +118,8 @@ def driver(dict):
 
 
 dict = {
-    "algo": 3,
-    "start": [{"x": 1, "y": 1}],
+    "algo": 5,
+    "start": [{"x": 0, "y": 0}],
     "stop": [{"x": 4, "y": 4}],
     "cutCorners": 0,
     "allowDiagonals": 1,

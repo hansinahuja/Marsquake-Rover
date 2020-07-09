@@ -81,8 +81,9 @@ class Environment:
                         cell.type = 'visited'
                     else:
                         cell.type = 'free'
-                gridChanges.append(
-                    (cell.location.x, cell.location.y, colorDict[cell.type]))
+                gridChange = {'x': cell.location.x,
+                              'y': cell.location.x, 'color': colorDict[cell.type]}
+                gridChanges.append(gridChange)
 
             if agent.type == 'source' and cell.srcAgent == None:
                 cell.srcAgent = agent
@@ -107,18 +108,21 @@ class Environment:
             agent = cell.srcAgent
             c = cell
             while c in agent.path:
-                print(c.location.x, c.location.y)
-                path1.append([c.location.x, c.location.y])
+                entry = {'x': c.location.x, 'y': c.location.y}
+                path1.append(entry)
                 c = agent.path[c]
-            path1.append([agent.location.x, agent.location.y])
+            entry = {'x': agent.location.x, 'y': agent.location.y}
+            path1.append(entry)
 
             agent = cell.destAgent
             path2 = []
             c = cell
             while c in agent.path:
-                path2.append([c.location.x, c.location.y])
+                entry = {'x': c.location.x, 'y': c.location.y}
+                path2.append(entry)
                 c = agent.path[c]
-            path2.append([agent.location.x, agent.location.y])
+            entry = {'x': agent.location.x, 'y': agent.location.y}
+            path2.append(entry)
 
             path1.reverse()
             path = path1 + path2[1:]
