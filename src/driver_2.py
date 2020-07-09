@@ -29,6 +29,8 @@ def driver(dict):
                 cell.type = 'wall'
 
     beamWidth = dict['beamWidth']
+    gridChanges = []
+    path = []
 
     #  ------------- Original Driver
     algo = dict['algo']
@@ -68,9 +70,10 @@ def driver(dict):
                     if algo == 8:
                         dest.jumpPointSearch(env, sources)
                 logs.extend(dest.logs)
-            success, gridChanges = env.update(logs)
+            success, gridChange = env.update(logs)
             env.print()
-            print(gridChanges)
+            print(gridChange)
+            gridChanges.extend(gridChange)
             if len(success) > 0:
                 intersection = success.pop()
                 wrapped = set()
@@ -79,11 +82,15 @@ def driver(dict):
                     paths = env.getJpsPaths(wrapped)
                 else:
                     paths = env.getPaths(wrapped)
-                paths = paths[0]
-                print('Paths:', paths)
+                path = paths[0]
+                # print('Path:', path)
                 break
             if len(src.logs) == 0 and len(dest.logs) == 0:
                 break
+
+        output = {'gridChanges': gridChanges, 'path': path}
+        print(output)
+        return output
 
     # ----------------------------- Temporary ida and ida* Driver
 
