@@ -9,8 +9,8 @@ html {
 }
 
 body {
-    background: url("../images/bg.jpg") no-repeat;
-    backdrop-filter: blur(3px);
+    background: url("../images/bg2.jpg") no-repeat;
+    backdrop-filter: blur(1px);
     background-size: cover;
     overflow: hidden;
 }
