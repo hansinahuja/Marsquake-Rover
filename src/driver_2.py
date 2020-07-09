@@ -8,21 +8,21 @@ def driver(dict):
     env = Environment(len(dict['maze']), len(dict['maze'][0]))
     env.cutCorners = dict['cutCorners']
     env.allowDiagonals = dict['allowDiagonals']
-    
     sources = []
     destinations = []
     
     for source in dict['start']:
-        sources.append( [Agent(Location(source['x'], source['y']), 'source')]) 
+        sources.append( Agent(Location(source['x'], source['y']), 'source')) 
     for destination in dict['stop']:
-        destinations.append( [Agent(Location(destination['x'], destination['y']), 'destination', dict['biDirectional'])])
+        destinations.append( Agent(Location(destination['x'], destination['y']), 'destination', dict['biDirectional']))
     for checkpoint in dict['checkpoints']:
-        destinations.append([Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', False)])
+        destinations.append(Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', False))
     for agent in sources + destinations:
         env.placeAgent(agent)
 
     for row in env.grid:
         for cell in row:
+            # print(' ',cell.location.x, cell.location.y)
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
 
@@ -47,7 +47,7 @@ def driver(dict):
                     src.depthFirstSearch(env)
                 if algo == 5:
                     src.dijkstra(env)
-                if algo == 9:
+                if algo == 8:
                     src.jumpPointSearch(env, destinations)
                 logs.extend(src.logs)
             for dest in destinations:
@@ -64,13 +64,13 @@ def driver(dict):
                         dest.depthFirstSearch(env)
                     if algo == 5:
                         dest.dijkstra(env)
-                    if algo == 9:
+                    if algo == 8:
                         dest.jumpPointSearch(env, sources)
                 logs.extend(dest.logs)
             success = env.update(logs)
             env.print()
             if len(success) > 0:
-                if algo == 9:
+                if algo == 8:
                     paths = env.getJpsPaths(success)
                 else:    
                     paths = env.getPaths(success)
@@ -92,7 +92,7 @@ def driver(dict):
                 if algo == 6:
                     X = src.ida(env, threshold, destinations)
                 if algo == 7:
-                    X = dest.idaStar(env, threshold, destinations)
+                    X = src.idaStar(env, threshold, destinations)
                 if type(X) == int and X > threshold :
                     newThreshold = min(X, newThreshold)
                 logs.extend(src.logs)
@@ -102,11 +102,10 @@ def driver(dict):
                 paths = env.tmpPaths(success, threshold)
                 print('Paths:', paths)
                 break
-            if len(src.logs) == 0 and len(dest.logs) == 0 and len(sources[0].waitList) == 0:
+            if len(src.logs) == 0 and len(sources[0].waitList) == 0:
                 if newThreshold == 50000:     # No Path exists
                     break
                 threshold = newThreshold
-                # print('newThreshold', newThreshold)
                 itrCount += 1
                 newThreshold = 50000
                 for agent in sources + destinations:
@@ -115,3 +114,32 @@ def driver(dict):
                     agent.path = {}
                     agent.logs = []
                     agent.distances = {}
+
+dict = {
+        "algo":7,
+        "start":[{"x":4,"y":7}],
+        "stop":[{"x":3,"y":14}],
+        "cutCorners":0,
+        "allowDiagonals":1,
+        "biDirectional":0,
+        "beamWidth":2,
+        "checkpoints":[
+            # {"x":9,"y":7},
+            # {"x":8,"y":7},
+            # {"x":7,"y":7},
+            # {"x":6,"y":7},
+            # {"x":5,"y":7}
+            ],
+        "maze":[
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            ]
+    }
+
+driver(dict)
