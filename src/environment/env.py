@@ -139,20 +139,28 @@ class Environment:
             c = cell
             wt = weight
             while (c, wt) in agent.path:
-                print(c.location.x, c.location.y)
-                path1.append([c.location.x, c.location.y])
+                # print(c.location.x, c.location.y)
+                entry = {'x': c.location.x, 'y': c.location.y}
+                path1.append(entry)
+                # path1.append([c.location.x, c.location.y])
                 X = agent.path[(c, wt)]
                 c = X[0]
                 wt = X[1]
-            path1.append([agent.location.x, agent.location.y])
+            entry = {'x': agent.location.x, 'y': agent.location.y}
+            path1.append(entry)
+            # path1.append([.location.x, agent.location.y])
 
             agent = cell.destAgent
             path2 = []
             c = cell
             while c in agent.path:
-                path2.append([c.location.x, c.location.y])
+                entry = {'x': c.location.x, 'y': c.location.y}
+                path2.append(entry)
+                # path2.append([c.location.x, c.location.y])
                 c = agent.path[c]
-            path2.append([agent.location.x, agent.location.y])
+            entry = {'x': agent.location.x, 'y': agent.location.y}
+            path2.append(entry)
+            # path2.append([agent.location.x, agent.location.y])
 
             path1.reverse()
             path = path1 + path2[1:]
@@ -209,4 +217,12 @@ class Environment:
                             y = top[1] + 1 + j
                         path.append([x, y])
             paths.append(path)
-        return paths
+
+        dictPaths = []
+        for path in paths:
+            dictPath = []
+            for cell in path:
+                entry = {'x': cell.location.x, 'y': cell.location.y}
+                dictPath.append(entry)
+            dictPaths.append(dictPath)
+        return dictPaths
