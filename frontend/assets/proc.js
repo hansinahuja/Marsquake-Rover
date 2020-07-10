@@ -34,7 +34,7 @@ function drawPath(path) {
         var dx = point2.y - point1.y;
         var dy = point2.x - point1.x;
         if (dx * dy) {
-            x = document.createElement("div");
+            let x = document.createElement("div");
             x.style.transformOrigin = "left";
             x.className = "path";
             x.style.transform = "rotate(" + ((2 - dx) * dy * 45) + "deg)";
@@ -45,7 +45,7 @@ function drawPath(path) {
                 x.style.width = "59px";
             }, 100);
         } else {
-            x = document.createElement("div");
+            let x = document.createElement("div");
             x.style.transformOrigin = "left";
             x.className = "path";
             if (dx == 1 && dy == 0) {
@@ -70,7 +70,7 @@ function drawPath(path) {
             document.body.style.pointerEvents = "";
         }
     }
-    int = setInterval(drawLine, 200);
+    int = setInterval(drawLine, 10);
 }
 
 function gatherData() {
