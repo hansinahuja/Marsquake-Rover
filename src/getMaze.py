@@ -136,7 +136,7 @@ def randomizedPrim(dict) :
             else:
                 dst = {'x': cell.location.x,
                     'y': cell.location.y}
-                if flag and count > 4:
+                if flag and count > 2:
                     flag = 0
                     src = {'x': cell.location.x,
                         'y': cell.location.y}
