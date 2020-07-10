@@ -4,6 +4,7 @@ import flask
 import json
 from flask import request, jsonify, send_from_directory, render_template
 from driver_2 import driver
+from getMaze import getMaze
 
 template_dir = os.path.abspath('../frontend')
 app = flask.Flask(__name__, template_folder=template_dir)
@@ -32,8 +33,15 @@ def findpath():
         return jsonify(driver(s))
     except Exception as e:
         return jsonify({"error":True, "msg":str(e)})
-# try:
-#     port = os.environ['PORT']
-# except:
-#     port = 5000
-# app.run(host = '0.0.0.0', port = port)
+
+@app.route('/api/generatemaze/', methods=['POST'])
+def generateMaze():
+    s = json.dumps(request.form)
+    s = re.sub("\"\[","[",s)
+    s = re.sub("\]\"","]",s)
+    s = re.sub("\\\\\"","\"",s)
+    s = json.loads(s)
+    # try:
+    return jsonify(getMaze(s))
+    # except Exception as e:
+    #     return jsonify({"error":True, "msg":str(e)})

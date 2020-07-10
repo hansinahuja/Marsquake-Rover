@@ -4,7 +4,7 @@ from environment.env import Environment
 from environment.utils import Location
 
 def recursiveMaze(dict):
-        env = Environment(len(dict['maze']), len(dict['maze'][0]))
+        env = Environment(int(dict['length']), int(dict['breadth']))
         def randomOddNumber(low, high):
             low = low // 2 
             if high % 2:
@@ -73,7 +73,7 @@ def recursiveMaze(dict):
 
 
 def randomizedPrim(dict) :
-    env = Environment(len(dict['maze']), len(dict['maze'][0]))
+    env = Environment(int(dict['length']), int(dict['breadth']))
     def isValid(x, y):
         return x >=0 and y>=0 and x < env.breadth and y < env.length
     def mid(cellA, cellB):
@@ -142,37 +142,14 @@ def randomizedPrim(dict) :
     # env.printInitial()
     return {'walls':gridChanges, 'source':src, 'destination':dst}
 
-dict = {
-    "algo": 7,
-    "start": [{"x": 2, "y": 0}],
-    "stop": [{"x": 2, "y": 4}],
-    "cutCorners": 0,
-    "allowDiagonals": 0,
-    "biDirectional": 0,
-    "beamWidth": 2,
-    "checkpoints": [
-        # {"x":9,"y":7},
-        # {"x":8,"y":7},
-        # {"x":7,"y":7},
-        # {"x":6,"y":7},
-        # {"x":5,"y":7}
-    ],
-    "maze":
-    [[0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0]]
-}
-
-def getMaze(dict, algo):
-    if algo == 0:
-        print(recursiveMaze(dict))
+def getMaze(dict):
+    if int(dict['algo']) == 0:
+        return recursiveMaze(dict)
     else:
-        print(randomizedPrim(dict))
+        return randomizedPrim(dict)
 
-algo = 0
-if algo == 0:
-    print(recursiveMaze(dict))
-else:
-    print(randomizedPrim(dict))
+# algo = 0
+# if algo == 0:
+#     print(recursiveMaze(dict))
+# else:
+#     print(randomizedPrim(dict))
