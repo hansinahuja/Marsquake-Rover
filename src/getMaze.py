@@ -51,11 +51,13 @@ def recursiveMaze(dict):
                 generate(left, clm - 1, top, bottom)
                 generate(clm + 1, right, top, bottom)
 
-        generate(0, env.length - 1, 0, env.breadth - 1)
+        generate(0, env.breadth - 1, 0, env.length - 1)
         gridChanges = []
         flag = 1
         for row in env.grid:
+            count = 0
             for cell in row:
+                count += 1
                 if cell.type == 'wall':
                     gridChange = {'x': cell.location.x,
                                 'y': cell.location.y}
@@ -63,7 +65,7 @@ def recursiveMaze(dict):
                 else:
                     dst = {'x': cell.location.x,
                         'y': cell.location.y}
-                    if flag:
+                    if flag and count > 2:
                         flag = 0
                         src = {'x': cell.location.x,
                             'y': cell.location.y}
