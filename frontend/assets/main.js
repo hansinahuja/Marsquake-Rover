@@ -16,20 +16,20 @@ function hideNav() {
     nav.style.marginLeft = "-300px";
 }
 
-function clearGrid(){
+function clearGrid() {
     var inqueue = document.getElementsByClassName("inqueue");
     var l = inqueue.length
-    for(var i=0; i<l; i++){
+    for (var i = 0; i < l; i++) {
         inqueue[0].classList.remove("inqueue");
     }
     var processed = document.getElementsByClassName("processed");
     var l = processed.length
-    for(var i=0; i<l; i++){
+    for (var i = 0; i < l; i++) {
         processed[0].classList.remove("processed");
     }
     var path = document.getElementsByClassName("path");
     var l = path.length
-    for(var i=0; i<l; i++){
+    for (var i = 0; i < l; i++) {
         document.body.removeChild(path[0])
     }
 }
@@ -56,7 +56,7 @@ function makeGrid() {
         }
         box.push(temp);
     }
-    if(!showing){
+    if (!showing) {
         start = document.getElementById("start");
         stop = document.getElementById("stop");
 
@@ -71,13 +71,19 @@ function makeGrid() {
         stop.style.left = margin + 40 * Math.floor(3 * n / 4) + 20 + "px";
         stop.style.top = 40 * Math.floor(m / 2) + 20 + "px";
         stop.style.zIndex = Math.floor(m / 2);
-    }else{
+    } else {
         start = document.getElementById("start");
-        start = {x:Math.floor((start.offsetLeft-margin)/40), y:Math.floor(start.offsetTop/40)};
+        start = {
+            x: Math.floor((start.offsetLeft - margin) / 40),
+            y: Math.floor(start.offsetTop / 40)
+        };
         stop = document.getElementById("stop");
-        stop = {x:Math.floor((stop.offsetLeft-margin)/40), y:Math.floor(stop.offsetTop/40)};
+        stop = {
+            x: Math.floor((stop.offsetLeft - margin) / 40),
+            y: Math.floor(stop.offsetTop / 40)
+        };
         box[start.y][start.x] = 1;
-        box[stop.y][stop.x] = 1;   
+        box[stop.y][stop.x] = 1;
     }
 }
 
@@ -86,7 +92,7 @@ makeGrid();
 
 function addCheckpoint(id) {
     function addCheckpoint() {
-        if(showing){
+        if (showing) {
             clearGrid();
             showing = false;
         }
@@ -116,7 +122,7 @@ function addCheckpoint(id) {
 
 function removeCheckpoint(id) {
     function remove(e) {
-        if(showing){
+        if (showing) {
             clearGrid();
             showing = false;
         }
@@ -153,7 +159,7 @@ function dragElement(elmnt) {
     elmnt.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
-        if(showing){
+        if (showing) {
             clearGrid();
             showing = false;
         }
@@ -221,7 +227,7 @@ function drawingElement(elmnt) {
     elmnt.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
-        if(showing){
+        if (showing) {
             clearGrid();
             showing = false;
         }
@@ -274,3 +280,22 @@ function drawingElement(elmnt) {
         document.onmousemove = null;
     }
 }
+
+x = document.createElement("img")
+x.src = "images/yellow1.svg";
+x = document.createElement("img")
+x.src = "images/yellow2.svg";
+x = document.createElement("img")
+x.src = "images/yellow3.svg";
+x = document.createElement("img")
+x.src = "images/yellow4.svg";
+x = document.createElement("img")
+x.src = "images/yellow5.svg";
+
+
+window.onload = ()=> {
+    document.getElementById("loading").style.opacity = 0;
+    setTimeout(()=>{
+        document.getElementById("loading").style.display = "none";
+    }, 300);
+};

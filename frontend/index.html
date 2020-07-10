@@ -1,42 +1,79 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, user-scalable=no" />
-        <link rel="icon" type="image/svg" href="#"/>
-        <title>MS Engage</title>
-        <link rel="stylesheet" href="assets/main.css">
-    </head>
-    <body>
-        <img src="images/logo.PNG" id="logo">
-        <div id = "grid"></div>
-        <div id = "nav" onclick = "showNav()">
-            <div class = "line one"></div>
-            <div class = "line two"></div>
-            <div class = "line three"></div>
-        </div>
-        <nav>
-            <div id="close" onclick="hideNav()">
-                <div style="display: block; transition: 0.5s; position: absolute; height: 3px; width: 18px; transform: translate(-50%,-50%) rotate(45deg); background-color: white;"></div>
-                <div style="display: block; transition: 0.5s; position: absolute; height: 3px; width: 18px; transform: translate(-50%,-50%) rotate(-45deg); background-color: white;"></div>
+
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <link rel="icon" type="image/svg" href="#" />
+    <title>MS Engage</title>
+    <link rel="stylesheet" href="assets/main.css">
+</head>
+
+<body>
+    <div id="loading">
+        <div class="boxes">
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
-            <div id="algolabel">Algorithm: </div>
-            <select id="algorithm">
-                <option value="0">A*</option>
-                <option value="1">Beam Search</option>
-                <option value="2">Best First Search</option>
-                <option value="3">Breadth First Search</option>
-                <option value="4">Depth First Search</option>
-                <option value="5">Dijksta</option>
-                <option value="6">IDA</option>
-                <option value="7">IDA*</option>
-                <option value="8">Jump Point Search</option>
-                
-            </select>
-            <button onclick="find()">Find Route!</button>
-        </nav>
-        <img class="draggable" id = "start" src="images/green.svg">
-        <img class="draggable" id = "stop" src="images/red.svg">
-        <script src="assets/main.js"></script>
-        <script src="assets/proc.js"></script>
-    </body>
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <img src="images/logo.PNG" id="logo">
+    <div id="grid"></div>
+    <div id="nav" onclick="showNav()">
+        <div class="line one"></div>
+        <div class="line two"></div>
+        <div class="line three"></div>
+    </div>
+    <nav>
+        <div id="close" onclick="hideNav()">
+            <div
+                style="display: block; transition: 0.5s; position: absolute; height: 3px; width: 18px; transform: translate(-50%,-50%) rotate(45deg); background-color: white;">
+            </div>
+            <div
+                style="display: block; transition: 0.5s; position: absolute; height: 3px; width: 18px; transform: translate(-50%,-50%) rotate(-45deg); background-color: white;">
+            </div>
+        </div>
+        <div id="algolabel">Algorithm: </div>
+        <select id="algorithm">
+            <option value="0">A*</option>
+            <option value="1">Beam Search</option>
+            <option value="2">Best First Search</option>
+            <option value="3">Breadth First Search</option>
+            <option value="4">Depth First Search</option>
+            <option value="5">Dijksta</option>
+            <option value="6">IDA</option>
+            <option value="7">IDA*</option>
+            <option value="8">Jump Point Search</option>
+
+        </select>
+        <button onclick="randomMaze()" style="bottom: 250px;">Random Maze</button>
+        <button onclick="find()">Find Route!</button>
+    </nav>
+    <img class="draggable" id="start" src="images/green.svg">
+    <img class="draggable" id="stop" src="images/red.svg">
+    <script src="assets/main.js"></script>
+    <script src="assets/proc.js"></script>
+    <script src="assets/mazebuilder.js"></script>
+</body>
+
 </html>
