@@ -16,6 +16,24 @@ function hideNav() {
     nav.style.marginLeft = "-300px";
 }
 
+function clearGrid(){
+    var inqueue = document.getElementsByClassName("inqueue");
+    var l = inqueue.length
+    for(var i=0; i<l; i++){
+        inqueue[0].classList.remove("inqueue");
+    }
+    var processed = document.getElementsByClassName("processed");
+    var l = processed.length
+    for(var i=0; i<l; i++){
+        processed[0].classList.remove("processed");
+    }
+    var path = document.getElementsByClassName("path");
+    var l = path.length
+    for(var i=0; i<l; i++){
+        document.body.removeChild(path[0])
+    }
+}
+
 
 function makeGrid() {
     box = [];
@@ -69,7 +87,7 @@ makeGrid();
 function addCheckpoint(id) {
     function addCheckpoint() {
         if(showing){
-            makeGrid();
+            clearGrid();
             showing = false;
         }
         i = id.split("x");
@@ -99,7 +117,7 @@ function addCheckpoint(id) {
 function removeCheckpoint(id) {
     function remove(e) {
         if(showing){
-            makeGrid();
+            clearGrid();
             showing = false;
         }
         e.preventDefault();
@@ -136,7 +154,7 @@ function dragElement(elmnt) {
 
     function dragMouseDown(e) {
         if(showing){
-            makeGrid();
+            clearGrid();
             showing = false;
         }
         e = e || window.event;
@@ -204,7 +222,7 @@ function drawingElement(elmnt) {
 
     function dragMouseDown(e) {
         if(showing){
-            makeGrid();
+            clearGrid();
             showing = false;
         }
         e = e || window.event;

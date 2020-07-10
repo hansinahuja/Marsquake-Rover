@@ -1,4 +1,4 @@
-function makeChanges(changes){
+function makeChanges(resp,changes){
     var i = 0, int = 0;
     function color(){
         change = changes[i];
@@ -13,6 +13,7 @@ function makeChanges(changes){
         i++;
         if(i==changes.length){
             clearInterval(int);
+            drawPath(resp.path);
         }
     }
     int = setInterval(color, 10);
@@ -23,17 +24,17 @@ function drawPath(path){
     function drawLine(){
         point1 = path[i];
         point2 = path[i+1];
-        var dx = point2.x - point1.x;
-        var dy = point2.y - point1.y;
+        var dx = point2.y - point1.y;
+        var dy = point2.x - point1.x;
         if(dx*dy){
             x = document.createElement("div");
             x.style.transformOrigin = "left";
             x.className = "path";
             x.style.transform = "rotate("+((2-dx)*dy*45)+"deg)";
-            x.style.top = 40*point1.y+20+"px";
-            x.style.left = 40*point1.x+margin+20+"px";
+            x.style.top = 40*point1.x+20+"px";
+            x.style.left = 40*point1.y+margin+20+"px";
             document.body.appendChild(x);
-            setTimeout(()=>{x.style.width = "57px";}, 100);
+            setTimeout(()=>{x.style.width = "59px";}, 100);
         }else{
             x = document.createElement("div");
             x.style.transformOrigin = "left";
@@ -47,16 +48,18 @@ function drawPath(path){
             }else if(dx==0 && dy==-1){
                 x.style.transform = "rotate(270deg)";
             }
-            x.style.top = 40*point1.y+20+"px";
-            x.style.left = 40*point1.x+margin+20+"px";
+            x.style.top = 40*point1.x+20+"px";
+            x.style.left = 40*point1.y+margin+20+"px";
             document.body.appendChild(x);
-            setTimeout(()=>{x.style.width = "40px";}, 100);
+            setTimeout(()=>{x.style.width = "42px";}, 10);
         }
+        i++;
         if(i==path.length-1){
             clearInterval(int);
+            document.body.style.pointerEvents = "";
         }
     }
-    int = setInterval(drawLine, 500);
+    int = setInterval(drawLine, 300);
 }
 
 function gatherData(){
@@ -95,12 +98,15 @@ function gatherData(){
 }
 
 function find(){
+    hideNav();
+    clearGrid();
     showing = true;
     var data = gatherData();
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:5000/api/findpath/",false);
     xhr.send(data);
     resp = JSON.parse(xhr.response);
-    makeChanges(resp.gridChanges);
+    document.body.style.pointerEvents = "none";
+    makeChanges(resp, resp.gridChanges);
     console.log(resp);
 }
