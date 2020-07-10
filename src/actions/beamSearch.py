@@ -36,6 +36,10 @@ def beamSearch(self, environment, targets, beamWidth):
             self.logs.append([self, cell, 'waitList'])
             # print(cell.location.x, cell.location.y, 'waitList')
 
+    if len(currentLevel) == 0:
+        self.waitList = [currentLevel, nextLevel]
+        return
+
     minElement = currentLevel.pop()
     nextCell = minElement[1]
     self.visited.add(nextCell)
