@@ -5,18 +5,6 @@ from environment.utils import Location
 
 def recursiveMaze(dict):
         env = Environment(len(dict['maze']), len(dict['maze'][0]))
-        sources = []
-        destinations = []
-
-        for source in dict['start']:
-            sources.append(Agent(Location(source['x'], source['y']), 'source'))
-        for destination in dict['stop']:
-            destinations.append(Agent(Location(
-                destination['x'], destination['y']), 'destination', int(dict['biDirectional'])))
-        for checkpoint in dict['checkpoints']:
-            destinations.append(
-                Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', False))
-
         def randomOddNumber(low, high):
             low = low // 2 
             if high % 2:
@@ -65,30 +53,27 @@ def recursiveMaze(dict):
 
         generate(0, env.length - 1, 0, env.breadth - 1)
         gridChanges = []
+        flag = 1
         for row in env.grid:
             for cell in row:
                 if cell.type == 'wall':
                     gridChange = {'x': cell.location.x,
                                 'y': cell.location.y}
-                    gridChanges.extend(gridChange)
-        env.printInitial()
-        return gridChanges
+                    gridChanges.append(gridChange)
+                else:
+                    dst = {'x': cell.location.x,
+                        'y': cell.location.y}
+                    if flag:
+                        flag = 0
+                        src = {'x': cell.location.x,
+                            'y': cell.location.y}
+        
+        # env.printInitial()
+        return {'walls':gridChanges, 'source':src, 'destination':dst}
 
 
 def randomizedPrim(dict) :
     env = Environment(len(dict['maze']), len(dict['maze'][0]))
-    sources = []
-    destinations = []
-
-    for source in dict['start']:
-        sources.append(Agent(Location(source['x'], source['y']), 'source'))
-    for destination in dict['stop']:
-        destinations.append(Agent(Location(
-            destination['x'], destination['y']), 'destination', int(dict['biDirectional'])))
-    for checkpoint in dict['checkpoints']:
-        destinations.append(
-            Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', False))
-    
     def isValid(x, y):
         return x >=0 and y>=0 and x < env.breadth and y < env.length
     def mid(cellA, cellB):
@@ -118,14 +103,12 @@ def randomizedPrim(dict) :
                 ret.add( env.grid[X][Y] )
         return ret.pop()
 
-    
     for row in env.grid:
         for cell in row:
             if cell.type != 'source' and cell.type != 'destination':
                 cell.type = 'wall'
-            else:
                 src = cell
-    
+    cell.type = 'free'
     blocked = getBlockedCells(src)
     
     while len(blocked) :
@@ -141,14 +124,23 @@ def randomizedPrim(dict) :
             blocked.add(i)
     
     gridChanges = []
+    flag = 1
     for row in env.grid:
         for cell in row:
             if cell.type == 'wall':
                 gridChange = {'x': cell.location.x,
                             'y': cell.location.y}
-                gridChanges.extend(gridChange)
-    env.printInitial()
-    return gridChanges
+                gridChanges.append(gridChange)
+            else:
+                dst = {'x': cell.location.x,
+                    'y': cell.location.y}
+                if flag:
+                    flag = 0
+                    src = {'x': cell.location.x,
+                        'y': cell.location.y}
+
+    # env.printInitial()
+    return {'walls':gridChanges, 'source':src, 'destination':dst}
 
 dict = {
     "algo": 7,
@@ -167,13 +159,19 @@ dict = {
     ],
     "maze":
     [[0, 0, 0, 0, 0],
-     [0, 1, 1, 0, 0],
-     [0, 0, 1, 0, 0],
-     [0, 0, 1, 0, 0],
+     [0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0]]
 }
+
+def getMaze(dict, algo):
+    if algo == 0:
+        print(recursiveMaze(dict))
+    else:
+        print(randomizedPrim(dict))
+
 algo = 0
-    # def getMaze(dict, algo):
 if algo == 0:
     print(recursiveMaze(dict))
 else:

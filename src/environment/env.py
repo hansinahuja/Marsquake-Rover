@@ -20,7 +20,7 @@ class Environment:
         else:
             self.grid[x][y].destAgent = agent
 
-    from environment.randomMazes import recursiveMaze, randomizedPrim
+    # from environment.randomMazes import recursiveMaze, randomizedPrim
     from environment.heuristics import bestHeuristic
 
     # For debugging
