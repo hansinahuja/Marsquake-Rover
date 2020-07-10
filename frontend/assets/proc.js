@@ -103,7 +103,7 @@ function find(){
     showing = true;
     var data = gatherData();
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:5000/api/findpath/",false);
+    xhr.open("POST", "/api/findpath/",false);
     xhr.send(data);
     resp = JSON.parse(xhr.response);
     document.body.style.pointerEvents = "none";
