@@ -103,7 +103,7 @@ def jumpPointSearch(self, environment, targets):
                         self.distances[forcedNeighbor] = weight
                         nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight, forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)
-                        self.logs.append([self, forcedNeighbor, 'inQueue'])
+                        self.logs.append([self, forcedNeighbor, 'waitList'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)
                         flag = 1
 
@@ -124,7 +124,7 @@ def jumpPointSearch(self, environment, targets):
                         self.distances[forcedNeighbor] = weight
                         nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight , forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)    
-                        self.logs.append([self, forcedNeighbor, 'inQueue'])
+                        self.logs.append([self, forcedNeighbor, 'waitList'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)                    
                         flag = 1
             
@@ -134,7 +134,7 @@ def jumpPointSearch(self, environment, targets):
                     nxt = (environment.bestHeuristic(cell, targets) + weight, cell , direction, direction)
                     heapq.heappush(self.waitList, nxt)
                     self.distances[cell] = weight
-                    self.logs.append([self, cell, 'inQueue'])
+                    self.logs.append([self, cell, 'waitList'])
                     self.path[(cell, direction)] = (nextCell, direction)
                     return
             weight += 1
@@ -197,7 +197,7 @@ def jumpPointSearch(self, environment, targets):
                         self.distances[forcedNeighbor] = weight
                         nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight, forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)
-                        self.logs.append([self, forcedNeighbor, 'inQueue'])
+                        self.logs.append([self, forcedNeighbor, 'waitList'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)
                         flag = 1
             
@@ -217,7 +217,7 @@ def jumpPointSearch(self, environment, targets):
                         self.distances[forcedNeighbor] = weight
                         nxt = (environment.bestHeuristic(forcedNeighbor, targets) + weight, forcedNeighbor , newDirection, direction)
                         heapq.heappush(self.waitList, nxt)
-                        self.logs.append([self, forcedNeighbor, 'inQueue'])
+                        self.logs.append([self, forcedNeighbor, 'waitList'])
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)
                         flag = 1
             
@@ -227,7 +227,7 @@ def jumpPointSearch(self, environment, targets):
                     self.distances[cell] = weight
                     nxt = (environment.bestHeuristic(cell, targets) + weight, cell , direction, direction)
                     heapq.heappush(self.waitList, nxt)
-                    self.logs.append([self, cell, 'inQueue'])
+                    self.logs.append([self, cell, 'waitList'])
                     self.path[(cell, direction)] = (nextCell, direction)
                     return 
             y += dy1
