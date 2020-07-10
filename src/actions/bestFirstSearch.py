@@ -10,6 +10,7 @@ def bestFirstSearch(self, environment, targets):
         sourceCell = environment.grid[self.location.x][self.location.y]
         self.waitList = [(environment.bestHeuristic(
             sourceCell, targets), sourceCell)]
+        self.distances[sourceCell] = 0
 
     if len(self.waitList) == 0:
         return
@@ -24,9 +25,14 @@ def bestFirstSearch(self, environment, targets):
         if not self.isValidMove(environment, nextCell, nx, ny):
             continue
         neighbour = environment.grid[nx][ny]
+        newDistance = self.distances[nextCell] + neighbour.weight
+        if neighbour in self.distances and self.distances[neighbour] <= newDistance:
+            continue
+        
         heuristic = environment.bestHeuristic(neighbour, targets)
         heapq.heappush(self.waitList, (heuristic, neighbour))
         self.path[neighbour] = nextCell
+        self.distances[neighbour] = newDistance
         # self.visited.add(neighbour)
         self.logs.append([self, neighbour, 'waitList'])
         # print(neighbour.location.x, neighbour.location.y, 'inQueue')
