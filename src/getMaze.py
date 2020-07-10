@@ -126,7 +126,9 @@ def randomizedPrim(dict) :
     gridChanges = []
     flag = 1
     for row in env.grid:
+        count = 0
         for cell in row:
+            count += 1
             if cell.type == 'wall':
                 gridChange = {'x': cell.location.x,
                             'y': cell.location.y}
@@ -134,7 +136,7 @@ def randomizedPrim(dict) :
             else:
                 dst = {'x': cell.location.x,
                     'y': cell.location.y}
-                if flag:
+                if flag and count > 4:
                     flag = 0
                     src = {'x': cell.location.x,
                         'y': cell.location.y}
