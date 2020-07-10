@@ -70,7 +70,7 @@ function drawPath(path) {
             document.body.style.pointerEvents = "";
         }
     }
-    int = setInterval(drawLine, 300);
+    int = setInterval(drawLine, 200);
 }
 
 function gatherData() {

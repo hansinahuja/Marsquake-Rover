@@ -1,4 +1,4 @@
-function recursiveMaze(startx, starty, endx, endy, prevx, prevy){
+function recursiveMaze(startx, starty, endx, endy, prevx, prevy, prevx1, prevy1){
     if(endx-startx<3 || endy-starty<3){
         return true;
     }
@@ -20,28 +20,28 @@ function recursiveMaze(startx, starty, endx, endy, prevx, prevy){
     }
     if(Math.random()>0.5){
         var x = startx+ 1 + Math.floor((endx-startx-1)*Math.random());
-        while(x==prevx){
+        while(x==prevx || x==prevx1){
             x = startx+ 1 + Math.floor((endx-startx-1)*Math.random());
         }
         var y = starty + Math.floor(Math.random()*(endy-starty));
-        while(y==prevy){
+        while(y==prevy || y==prevy1){
             y = starty + Math.floor(Math.random()*(endy-starty));
         }
         buildWall(x,y,1,startx, starty, endx, endy);
-        recursiveMaze(startx, starty, x-1, endy, prevx, y);
-        recursiveMaze(x+1, starty, endx, endy, prevx, y);
+        recursiveMaze(startx, starty, x-1, endy, prevx, prevy, prevx1, y);
+        recursiveMaze(x+1, starty, endx, endy, prevx, y, prevx1, prevy1);
     }else{
         var x = startx + Math.floor((endx-startx)*Math.random());
-        while(x==prevx){
+        while(x==prevx || x==prevx1){
             x = startx+ 1 + Math.floor((endx-startx)*Math.random());
         }
         var y = starty + 1 + Math.floor(Math.random()*(endy-starty-1));
-        while(y==prevy){
+        while(y==prevy || y==prevy1){
             y = starty + 1 + Math.floor(Math.random()*(endy-starty-1));
         }
         buildWall(x,y,0,startx, starty, endx, endy);
-        recursiveMaze(startx, y+1, endx, endy, x, prevy);
-        recursiveMaze(startx, starty, endx, y-1, x, prevy);
+        recursiveMaze(startx, y+1, endx, endy, x, prevy, prevx1, prevy1);
+        recursiveMaze(startx, starty, endx, y-1, prevx, prevy, x, prevy1);
     }
 }
 
@@ -49,7 +49,7 @@ function recursiveMaze(startx, starty, endx, endy, prevx, prevy){
 function randomMaze(){
     clearGrid();
     makeGrid();
-    recursiveMaze(0,0,box[0].length-2, box.length-1,-1,-1);
+    recursiveMaze(0,0,box[0].length-2, box.length-1,-1,-1,-1,-1);
     var x, y, flag = false;
     for(x=6; x<box[0].length; x++){
         for(y=1; y<box.length; y++){
