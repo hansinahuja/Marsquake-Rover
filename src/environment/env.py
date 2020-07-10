@@ -222,7 +222,7 @@ class Environment:
         for path in paths:
             dictPath = []
             for cell in path:
-                entry = {'x': cell.location.x, 'y': cell.location.y}
+                entry = {'x': cell[0], 'y': cell[1]}
                 dictPath.append(entry)
             dictPaths.append(dictPath)
         return dictPaths
