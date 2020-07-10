@@ -119,6 +119,8 @@ function gatherData() {
 }
 
 function find() {
+    over = document.getElementById("overlay");
+    over.style.display = "block";
     hideNav();
     clearGrid();
     showing = true;
@@ -127,6 +129,7 @@ function find() {
     xhr.open("POST", "/api/findpath/", false);
     xhr.send(data);
     resp = JSON.parse(xhr.response);
+    over.style.display = "none";
     document.body.style.pointerEvents = "none";
     makeChanges(resp, resp.gridChanges);
     console.log(resp);

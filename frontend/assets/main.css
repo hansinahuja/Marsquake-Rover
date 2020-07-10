@@ -378,3 +378,35 @@ nav select {
         transform: translate(100%, 100%);
     }
 }
+
+.overlay{
+    background-color: black;
+    opacity: 0.7;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 2009;
+}
+
+#overlay{
+    display: none;
+}
+
+.loader {
+    position: fixed;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #db3434;
+    border-right: 16px solid #db3434;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    left: 50%;
+    animation: spin 1s ease-in-out infinite;
+    z-index: 2010;
+  }
+  
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }

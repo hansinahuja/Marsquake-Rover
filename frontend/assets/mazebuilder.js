@@ -1,95 +1,69 @@
-function recursiveMaze(startx, starty, endx, endy, prevx, prevy, prevx1, prevy1){
-    if(endx-startx<3 || endy-starty<3){
-        return true;
-    }
-    function buildWall(x,y,a,startx, starty, endx, endy){
-        if(a){
-            for(var i=starty; i<=endy; i++){
-                if(i==y) continue;
-                document.getElementById(i+"x"+x).classList.add("wall");
-                box[i][x] = 2;
-            }
-        }else{
-            for(var i=startx; i<=endx; i++){
-                if(i!=x){
-                    document.getElementById(y+"x"+i).classList.add("wall");
-                    box[y][i] = 2;
-                }
-            }
+function setMaze(walls){
+    var i = 0, int = 0;
+    function setWall(){
+        wall = walls[i];
+        var x = wall.x, y = wall.y;
+        cell = document.getElementById(y+'x'+x);
+        cell.classList.add("wall");
+        box[y][x] = 2;
+        i++;
+        if(i==walls.length){
+            clearInterval(int);
+            document.body.style.pointerEvents="";
         }
     }
-    if(Math.random()>0.5){
-        var x = startx+ 1 + Math.floor((endx-startx-1)*Math.random());
-        while(x==prevx || x==prevx1){
-            x = startx+ 1 + Math.floor((endx-startx-1)*Math.random());
-        }
-        var y = starty + Math.floor(Math.random()*(endy-starty));
-        while(y==prevy || y==prevy1){
-            y = starty + Math.floor(Math.random()*(endy-starty));
-        }
-        buildWall(x,y,1,startx, starty, endx, endy);
-        recursiveMaze(startx, starty, x-1, endy, prevx, prevy, prevx1, y);
-        recursiveMaze(x+1, starty, endx, endy, prevx, y, prevx1, prevy1);
-    }else{
-        var x = startx + Math.floor((endx-startx)*Math.random());
-        while(x==prevx || x==prevx1){
-            x = startx+ 1 + Math.floor((endx-startx)*Math.random());
-        }
-        var y = starty + 1 + Math.floor(Math.random()*(endy-starty-1));
-        while(y==prevy || y==prevy1){
-            y = starty + 1 + Math.floor(Math.random()*(endy-starty-1));
-        }
-        buildWall(x,y,0,startx, starty, endx, endy);
-        recursiveMaze(startx, y+1, endx, endy, x, prevy, prevx1, prevy1);
-        recursiveMaze(startx, starty, endx, y-1, prevx, prevy, x, prevy1);
-    }
+    int = setInterval(setWall, 50);
 }
 
-
 function randomMaze(){
+    document.body.style.pointerEvents = "none";
+    over = document.getElementById("overlay");
+    over.style.display = "block";
+
     clearGrid();
     makeGrid();
-    recursiveMaze(0,0,box[0].length-2, box.length-1,-1,-1,-1,-1);
-    var x, y, flag = false;
-    for(x=6; x<box[0].length; x++){
-        for(y=1; y<box.length; y++){
-            if(!box[y][x]){
-                flag = true;
-                break;
-            }
-        }
-        if(flag) break;
-    }
+    
+    var data = new FormData();
+    data.append('algo', 0);
+    data.append('length',box.length);
+    data.append('breadth',box[0].length);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api/generatemaze/", false);
+    xhr.send(data);
+    resp = JSON.parse(xhr.response);
+    console.log(resp);
+
+    over.style.display = "none";
+    var x = resp.source.x, y = resp.source.y;
     start = document.getElementById("start");
     t = parseInt(start.style.top.substr(0,start.style.top.length-2));
     l = parseInt(start.style.left.substr(0,start.style.left.length-2));
     t = Math.floor(t/40);
     l = Math.floor((l-margin)/40);
+    box[t][l] = 0;
+    box[y][x] = 1;
     document.getElementById(t+"x"+l).classList.remove("start");
     document.getElementById(y+"x"+x).classList.add("start");
     start.style.transition = "0.7s";
     setTimeout(()=>start.style.transition = "", 700);
     start.style.top = 40*y+20+"px";
     start.style.left = 40*x+20+margin+"px";
-    flag = false;
-    for(x=box[0].length-3; x>=0; x--){
-        for(y=box.length-3; y>=0; y--){
-            if(!box[y][x]){
-                flag = true;
-                break;
-            }
-        }
-        if(flag) break;
-    }
+    
+    x = resp.destination.x, y = resp.destination.y;
     stop = document.getElementById("stop");
     t = parseInt(stop.style.top.substr(0,stop.style.top.length-2));
     l = parseInt(stop.style.left.substr(0,stop.style.left.length-2));
     t = Math.floor(t/40);
     l = Math.floor((l-margin)/40);
+    box[t][l] = 0;
+    box[y][x] = 1;
     document.getElementById(t+"x"+l).classList.remove("stop");
     document.getElementById(y+"x"+x).classList.add("stop");
     stop.style.transition = "0.7s";
     setTimeout(()=>stop.style.transition = "", 700);
     stop.style.top = 40*y+20+"px";
     stop.style.left = 40*x+20+margin+"px";
+
+    setMaze(resp.walls);
 }
