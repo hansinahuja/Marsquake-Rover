@@ -151,13 +151,13 @@ def getMaze(dict):
         return recursiveMaze(dict)
     else:
         return randomizedPrim(dict)
-dict = {
-"algo":1,
-"length":33,
-"breadth":15
-}
-algo = 1
-if algo == 0:
-    print(recursiveMaze(dict))
-else:
-    print(randomizedPrim(dict))
+# dict = {
+# "algo":1,
+# "length":33,
+# "breadth":15
+# }
+# algo = 1
+# if algo == 0:
+#     print(recursiveMaze(dict))
+# else:
+#     print(randomizedPrim(dict))

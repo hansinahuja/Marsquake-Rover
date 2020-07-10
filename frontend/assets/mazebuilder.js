@@ -10,12 +10,14 @@ function setMaze(walls){
         if(i==walls.length){
             clearInterval(int);
             document.body.style.pointerEvents="";
+            showNav();
         }
     }
-    int = setInterval(setWall, 50);
+    int = setInterval(setWall, 10);
 }
 
 function randomMaze(){
+    hideNav();
     document.body.style.pointerEvents = "none";
     over = document.getElementById("overlay");
     over.style.display = "block";
@@ -25,8 +27,8 @@ function randomMaze(){
     
     var data = new FormData();
     data.append('algo', 0);
-    data.append('length',box.length);
-    data.append('breadth',box[0].length);
+    data.append('length',box[0].length-1);
+    data.append('breadth',box.length-1);
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/generatemaze/", false);
