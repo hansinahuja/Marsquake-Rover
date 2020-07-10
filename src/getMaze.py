@@ -75,7 +75,7 @@ def recursiveMaze(dict):
 def randomizedPrim(dict) :
     env = Environment(int(dict['length']), int(dict['breadth']))
     def isValid(x, y):
-        return x >=0 and y>=0 and x < env.breadth and y < env.length
+        return x >=0 and y>=0 and x < env.length and y < env.breadth
     def mid(cellA, cellB):
         return env.grid[ (cellA.location.x + cellB.location.x) // 2][ (cellA.location.y + cellB.location.y) // 2 ]
     def getBlockedCells(cell):
@@ -139,7 +139,7 @@ def randomizedPrim(dict) :
                     src = {'x': cell.location.x,
                         'y': cell.location.y}
 
-    # env.printInitial()
+    env.printInitial()
     return {'walls':gridChanges, 'source':src, 'destination':dst}
 
 def getMaze(dict):
@@ -147,9 +147,13 @@ def getMaze(dict):
         return recursiveMaze(dict)
     else:
         return randomizedPrim(dict)
-
-# algo = 0
-# if algo == 0:
-#     print(recursiveMaze(dict))
-# else:
-#     print(randomizedPrim(dict))
+dict = {
+"algo":1,
+"length":33,
+"breadth":15
+}
+algo = 1
+if algo == 0:
+    print(recursiveMaze(dict))
+else:
+    print(randomizedPrim(dict))
