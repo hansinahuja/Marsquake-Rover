@@ -46,11 +46,17 @@ function makeGrid() {
         for (var i = 0; i <= n; i++) {
             cell = document.createElement("div");
             cell.classList = ["cell"];
+            cell.style.left = 40 * i + "px";
+            cell.style.top = 40 * j + "px";
+            if(i==n || j==m){
+                cell.classList.add("wall");
+                temp.push(2);
+                grid.appendChild(cell);
+                continue;
+            }
             cell.id = j + "x" + i;
             drawingElement(cell);
             cell.oncontextmenu = addCheckpoint(cell.id);
-            cell.style.left = 40 * i + "px";
-            cell.style.top = 40 * j + "px";
             grid.appendChild(cell);
             temp.push(0);
         }
