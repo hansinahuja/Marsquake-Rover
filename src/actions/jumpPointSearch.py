@@ -40,10 +40,10 @@ def jumpPointSearch(self, environment, targets):
         if direction == 'right-up':
             dx1 = -1
             dy1 = 1
-            dx2 = [0, 1]
-            dy2 = [-1, 0]
-            dx3 = [-1, 1]
-            dy3 = [-1, 1]
+            dx2 = [1, 0]
+            dy2 = [0, -1]
+            dx3 = [1, -1]
+            dy3 = [1, -1]
         if direction == 'left-up':
             dx1 = -1
             dy1 = -1
@@ -89,7 +89,7 @@ def jumpPointSearch(self, environment, targets):
             flag = 0
             X1 , Y1 , X2 , Y2 = x+dx2[0] , y+dy2[0] , x+dx3[0] , y+dy3[0] 
             if valid(X1, Y1) and valid(X2, Y2):
-                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall':
+                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall' and environment.grid[x+dx1][y+dy1].type != 'wall':
                     forcedNeighbor = environment.grid[X2][Y2]
                     if direction == 'right':
                         newDirection = 'right-down'
@@ -109,7 +109,7 @@ def jumpPointSearch(self, environment, targets):
 
             X1 , Y1 , X2 , Y2 = x+dx2[1] , y+dy2[1] , x+dx3[1] , y+dy3[1]
             if valid(X1, Y1) and valid(X2, Y2):
-                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall':
+                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall' and environment.grid[x+dx1][y+dy1].type != 'wall':
                     forcedNeighbor = environment.grid[X2][Y2]
                     if direction == 'right':
                         newDirection = 'right-up'
@@ -128,7 +128,7 @@ def jumpPointSearch(self, environment, targets):
                         self.path[(forcedNeighbor, newDirection)] = (environment.grid[x][y], direction)                    
                         flag = 1
             
-            if flag and valid(x+dx1, y+dy1) and environment.grid[x+dx1][y+dy1].type != 'wall':
+            if flag:
                 cell = environment.grid[x + dx1][y+dy1]
                 if (cell, direction) not in self.visited:
                     nxt = (environment.bestHeuristic(cell, targets) + weight, cell , direction, direction)
@@ -183,10 +183,10 @@ def jumpPointSearch(self, environment, targets):
             flag = 0
             X1 , Y1 , X2 , Y2 = x + dx2[0] , y + dy2[0] , x + dx3[0] , y + dy3[0]
             if valid(X1, Y1) and valid(X2, Y2):
-                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall':
+                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall' and environment.grid[x][y+dy1].type != 'wall':
                     forcedNeighbor = environment.grid[X2][Y2]
                     if direction == 'right-up':
-                        newDirection = 'left-up'
+                        newDirection = 'right-down'
                     if direction == 'left-up':
                         newDirection = 'left-down'
                     if direction == 'right-down':
@@ -203,10 +203,10 @@ def jumpPointSearch(self, environment, targets):
             
             X1 , Y1 , X2 , Y2 = x + dx2[1] , y + dy2[1] , x + dx3[1] , y + dy3[1]
             if valid(X1, Y1) and valid(X2, Y2):
-                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall':
+                if environment.grid[X1][Y1].type == 'wall' and environment.grid[X2][Y2].type != 'wall' and environment.grid[x+dx1][y].type != 'wall':
                     forcedNeighbor = environment.grid[X2][Y2]
                     if direction == 'right-up':
-                        newDirection = 'right-down'
+                        newDirection = 'left-up'
                     if direction == 'left-up':
                         newDirection = 'right-up'
                     if direction == 'right-down':
@@ -230,6 +230,8 @@ def jumpPointSearch(self, environment, targets):
                     self.logs.append([self, cell, 'waitList'])
                     self.path[(cell, direction)] = (nextCell, direction)
                     return 
+            if valid(x+dx1, y) and valid(x, y+dy1) and environment.grid[x+dx1][y].type == 'wall' and environment.grid[x+dx1][y].type == 'wall':
+                return
             y += dy1
             x += dx1
             weight += 1
