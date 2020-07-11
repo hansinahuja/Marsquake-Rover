@@ -98,6 +98,90 @@ class Environment:
                 success.add(cell)
 
         return success, gridChanges
+    
+    def tmpPaths(self, success, weight):                          # For idaStar and ida
+        paths = []
+        for cell in success:
+            path1 = []
+            agent = cell.srcAgent
+            c = cell
+            wt = weight
+            while (c, wt) in agent.path:
+                entry = {'x': c.location.x, 'y': c.location.y}
+                path1.append(entry)
+                X = agent.path[(c, wt)]
+                c = X[0]
+                wt = X[1]
+            entry = {'x': agent.location.x, 'y': agent.location.y}
+            path1.append(entry)
+            path1.reverse()
+            paths.append(path1)
+        return paths
+    
+    
+    def idaupdate(self, logs, weight, prevPath):
+        updates = {}
+        success = set()
+        recursiveMode = False
+        logs = list(filter(None, logs))
+        gridChanges = []
+        colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
+
+        if len(logs) == 0:
+            return success , gridChanges, [[]]
+        
+        
+        for log in logs:
+            agent, cell, state = log
+            if cell not in updates:
+                updates[cell] = log
+            elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
+                updates[cell] = log
+            elif recursiveMode and state == 'inRecursion' and updates[cell][2] != 'inRecursion':
+                updates[cell] = log
+
+        for log in updates.values():
+            agent, cell, state = log
+
+            if agent.type == 'source' and cell.srcAgent == None:
+                cell.srcAgent = agent
+
+            if agent.type == 'destination' and cell.destAgent == None:
+                cell.destAgent = agent
+
+            # if not recursiveMode and state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
+            #     success.add(cell)
+            if cell.type == 'destination':
+                success.add(cell)
+
+            if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
+                success.add(cell)
+        
+        current = set()
+        current.add(logs[0][1])
+        newPath = self.tmpPaths(current, weight)
+        lenNew = len(newPath[0])
+        lenPrv = len(prevPath[0])
+        itr = 0
+        for i in range(min(lenNew, lenPrv)):
+            if prevPath[0][i] != newPath[0][i]:
+                break
+            itr += 1
+        if prevPath[0] != newPath[0]:
+            for i in range(itr, lenPrv):
+                gridChange = {'x': prevPath[0][i]['x'],
+                            'y': prevPath[0][i]['y'], 'color': 0}
+                gridChanges.append(gridChange)
+        for i in range(itr, lenNew):
+            gridChange = {'x': newPath[0][i]['x'],
+                        'y': newPath[0][i]['y'], 'color': 2}
+            gridChanges.append(gridChange)
+
+        if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
+            recursiveMode = True
+        
+        return success , gridChanges, newPath
+
 
     def getActivatedCells(self):
         activatedCells = []
@@ -138,43 +222,7 @@ class Environment:
             paths.append(path)
         return paths
 
-    def tmpPaths(self, success, weight):                          # For idaStar and ida
-        paths = []
-
-        for cell in success:
-            # print(cell.location.x, cell.location.y)
-            path1 = []
-            agent = cell.srcAgent
-            c = cell
-            wt = weight
-            while (c, wt) in agent.path:
-                # print(c.location.x, c.location.y)
-                entry = {'x': c.location.x, 'y': c.location.y}
-                path1.append(entry)
-                # path1.append([c.location.x, c.location.y])
-                X = agent.path[(c, wt)]
-                c = X[0]
-                wt = X[1]
-            entry = {'x': agent.location.x, 'y': agent.location.y}
-            path1.append(entry)
-            # path1.append([.location.x, agent.location.y])
-
-            agent = cell.destAgent
-            path2 = []
-            c = cell
-            while c in agent.path:
-                entry = {'x': c.location.x, 'y': c.location.y}
-                path2.append(entry)
-                # path2.append([c.location.x, c.location.y])
-                c = agent.path[c]
-            entry = {'x': agent.location.x, 'y': agent.location.y}
-            path2.append(entry)
-            # path2.append([agent.location.x, agent.location.y])
-
-            path1.reverse()
-            path = path1 + path2[1:]
-            paths.append(path)
-        return paths
+    
 
     def getJpsPaths(self, success):
         paths = []

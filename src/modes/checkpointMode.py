@@ -26,5 +26,6 @@ def checkpointMode(dict):
             gridChanges.extend(result['activatedCells'])
             if i < len(points)-2:
                 path.pop()
+    # gridChanges = []
     output = {'gridChages': gridChanges, 'path': path}
     return output

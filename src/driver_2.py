@@ -7,7 +7,7 @@ from modes.nonCheckpointMode import nonCheckpointMode
 
 def driver(dict):
 
-    if int(dict['multistart']) or int(dict['multidest']):
+    if int(dict['multistart']) == 0 and int(dict['multidest']) == 0:
         return nonCheckpointMode(dict)
 
     else:
@@ -15,21 +15,24 @@ def driver(dict):
 
 
 dict = {
-    "algo": 0,
-    "start": [{"x": 0, "y": 0}],
-    "stop": [{"x": 0, "y": 1}],
-    "checkpoints": [{"x": 4, "y": 4}],
+    "algo": 7,
+    "start": [{"x": 5, "y": 0}],
+    "stop": [{"x": 2, "y": 3}],
+    "checkpoints": [
+        # {"x": 4, "y": 4}
+        ],
     "multistart": '0',
     "multidest": '0',
     "cutCorners": 0,
-    "allowDiagonals": 1,
+    "allowDiagonals": 0,
     "biDirectional": 0,
     "beamWidth": 2,
     "maze":
     [[0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0],
+     [0, 1, 1, 0, 0],
+     [0, 1, 0, 0, 0],
+     [0, 1, 0, 0, 0],
+     [0, 1, 1, 1, 1],
      [0, 0, 0, 0, 0]
      ]
 }

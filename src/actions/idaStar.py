@@ -25,14 +25,16 @@ def idaStar(self, environment, threshold, targets):
     weight = self.waitList[-1][1]
     self.waitList.pop()
     fValue = weight + environment.bestHeuristic(nextCell, targets)
-    
     if fValue > threshold:
         if nextCell in self.visited and self.visited[nextCell] == 'inRecursion':
             self.visited[nextCell] = 'outOfRecursion'
             self.logs.append([self, nextCell, 'outOfRecursion'])
-        return fValue
+        if nextCell in self.visited and self.visited[nextCell] == 'visited':
+            self.visited[nextCell] = 'free'
+            self.logs.append([self, nextCell, 'free'])
+        return fValue, weight
     
-    self.logs.append([self, nextCell, 'inRecursion'])
+    self.logs.append([self, nextCell, 'visited'])
     
     for nx, ny in nextCell.location.neighbours:
         if not valid(nx, ny):
@@ -43,4 +45,4 @@ def idaStar(self, environment, threshold, targets):
         self.path[(neighbour, weight + neighbour.weight)] = (nextCell, weight)
         self.distances[neighbour] = self.distances[nextCell] + neighbour.weight
     
-    return fValue
+    return fValue, weight

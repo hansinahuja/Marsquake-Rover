@@ -29,7 +29,10 @@ def ida(self, environment, threshold, targets):
         if nextCell in self.visited and self.visited[nextCell] == 'inRecursion':
             self.visited[nextCell] = 'outOfRecursion'
             self.logs.append([self, nextCell, 'outOfRecursion'])
-        return weight
+        if nextCell in self.visited and self.visited[nextCell] == 'visited':
+            self.visited[nextCell] = 'free'
+            self.logs.append([self, nextCell, 'free'])
+        return weight, weight
     
     self.logs.append([self, nextCell, 'inRecursion'])
     
@@ -42,4 +45,4 @@ def ida(self, environment, threshold, targets):
         self.path[(neighbour, weight + neighbour.weight)] = (nextCell, weight)
         self.distances[neighbour] = self.distances[nextCell] + neighbour.weight
     
-    return weight
+    return weight, weight

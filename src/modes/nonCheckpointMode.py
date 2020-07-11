@@ -106,21 +106,22 @@ def nonCheckpointMode(dict):
         threshold = env.bestHeuristic(sources[0], destinations)
         newThreshold = 50000         # Large Value
         itrCount = 0                 # IterationCount is necessary for tle
+        prevPath = [[]]
         while True and itrCount < 1000:
             logs = []
             for src in sources:
                 if algo == 6:
-                    X = src.ida(env, threshold, destinations)
+                    X, Y = src.ida(env, threshold, destinations)
                 if algo == 7:
-                    X = src.idaStar(env, threshold, destinations)
-                if type(X) == int and X > threshold:
-                    newThreshold = min(X, newThreshold)
+                    X, Y = src.idaStar(env, threshold, destinations)
                 logs.extend(src.logs)
-            success = env.update(logs)
-            # env.print()
+                if type(X) == int and  X > threshold :
+                    newThreshold = min(X, newThreshold)
+                else:
+                    success, gridChange, prevPath = env.idaupdate(logs, Y, prevPath)        
+            gridChanges.extend(gridChange)
             if len(success) > 0:
                 paths = env.tmpPaths(success, threshold)
-                # print('Paths:', paths)
                 break
             if len(src.logs) == 0 and len(sources[0].waitList) == 0:
                 if newThreshold == 50000:     # No Path exists
@@ -134,3 +135,9 @@ def nonCheckpointMode(dict):
                     agent.path = {}
                     agent.logs = []
                     agent.distances = {}
+
+        activatedCells = env.getActivatedCells()
+        output = {'gridChanges': gridChanges,
+                  'path': paths[0], 'activatedCells': activatedCells}
+        # print(gridChanges)
+        return output
