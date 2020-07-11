@@ -128,7 +128,7 @@ function find() {
     showing = true;
     var data = gatherData();
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/findpath/", false);
+    xhr.open("POST", "/api/findpath/");
     xhr.onload = ()=>{
         resp = JSON.parse(xhr.response);
         over.style.display = "none";

@@ -31,7 +31,7 @@ function randomMaze(){
     data.append('breadth',box.length-1);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/generatemaze/", false);
+    xhr.open("POST", "/api/generatemaze/");
     xhr.onload = ()=>{
         resp = JSON.parse(xhr.response);
         console.log(resp);
