@@ -145,13 +145,10 @@ nav button {
     border: none;
     font-size: larger;
     color: white;
-    position: absolute;
-    bottom: 200px;
-    left: 50%;
-    transform: translate(-50%, 0);
+    margin-top: 20px;
     border-radius: 10px;
+    transform: translate(-50px,0px);
 }
-
 
 nav button:active {
     background-color: navy;
@@ -180,6 +177,17 @@ nav select {
     border-radius: 10px;
     font-size: 100%;
     padding-left: 20px;
+}
+
+nav b{
+    display: block;
+    margin-top: 40px;
+    margin-left: -20px;
+    color: #999;
+}
+
+nav b:nth-child(1){
+    margin-top: 0px;
 }
 
 .start {
@@ -236,7 +244,7 @@ nav select {
     justify-content: center;
     align-items: center;
     background: #222;
-    z-index: 2000;  
+    z-index: 2000;
     opacity: 1;
     transition: 0.3s;
 }
@@ -253,6 +261,7 @@ nav select {
     -webkit-transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
     transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
 }
+
 .boxes .box {
     width: 32px;
     height: 32px;
@@ -271,18 +280,21 @@ nav select {
     -webkit-animation: box1 1s linear infinite;
     animation: box1 1s linear infinite;
 }
+
 .boxes .box:nth-child(2) {
     -webkit-transform: translate(0, 100%);
     transform: translate(0, 100%);
     -webkit-animation: box2 1s linear infinite;
     animation: box2 1s linear infinite;
 }
+
 .boxes .box:nth-child(3) {
     -webkit-transform: translate(100%, 100%);
     transform: translate(100%, 100%);
     -webkit-animation: box3 1s linear infinite;
     animation: box3 1s linear infinite;
 }
+
 .boxes .box:nth-child(4) {
     -webkit-transform: translate(200%, 0);
     transform: translate(200%, 0);
@@ -292,7 +304,7 @@ nav select {
 
 
 
-.boxes .box > div {
+.boxes .box>div {
     background: rgb(246, 92, 92);
     --translateZ: 15.5px;
     --rotateY: 0deg;
@@ -309,21 +321,24 @@ nav select {
     transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) translateZ(var(--translateZ));
 }
 
-.boxes .box > div:nth-child(1) {
+.boxes .box>div:nth-child(1) {
     top: 0;
     left: 0;
     background: rgb(246, 92, 92);
 }
-.boxes .box > div:nth-child(2) {
+
+.boxes .box>div:nth-child(2) {
     background: #f53232;
     right: 0;
     --rotateY: 90deg;
 }
-.boxes .box > div:nth-child(3) {
+
+.boxes .box>div:nth-child(3) {
     background: #f54444;
     --rotateX: -90deg;
 }
-.boxes .box > div:nth-child(4) {
+
+.boxes .box>div:nth-child(4) {
     background: #191919;
     top: 0;
     left: 0;
@@ -336,50 +351,58 @@ nav select {
 
 
 @keyframes box1 {
+
     0%,
     50% {
         transform: translate(100%, 0);
     }
+
     100% {
         transform: translate(200%, 0);
     }
 }
 
 @keyframes box2 {
-    0%{
+    0% {
         transform: translate(0, 100%);
     }
+
     50% {
         transform: translate(0, 0);
     }
+
     100% {
         transform: translate(100%, 0);
     }
 }
 
 @keyframes box3 {
+
     0%,
     50% {
         transform: translate(100%, 100%);
     }
+
     100% {
         transform: translate(0, 100%);
     }
 }
 
 @keyframes box4 {
-    0%{
+    0% {
         transform: translate(200%, 0);
     }
+
     50% {
         transform: translate(200%, 100%);
     }
+
     100% {
         transform: translate(100%, 100%);
     }
 }
 
-.overlay{
+.overlay {
     background-color: black;
     opacity: 0.7;
     position: fixed;
@@ -388,13 +411,14 @@ nav select {
     z-index: 2009;
 }
 
-#overlay{
+#overlay {
     display: none;
 }
 
 .loader {
     position: fixed;
-    border: 16px solid #f3f3f3; /* Light grey */
+    border: 16px solid #f3f3f3;
+    /* Light grey */
     border-top: 16px solid #db3434;
     border-right: 16px solid #db3434;
     border-radius: 50%;
@@ -404,9 +428,106 @@ nav select {
     left: 50%;
     animation: spin 1s ease-in-out infinite;
     z-index: 2010;
-  }
-  
-  @keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-  }
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+
+input {
+    padding: 0;
+    height: initial;
+    width: initial;
+    margin-bottom: 0;
+    display: none;
+    cursor: pointer;
+}
+
+.checklabel {
+    position: relative;
+    display: block;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.checklabel:before {
+    content: '';
+    -webkit-appearance: none;
+    border-radius: 5px;
+    background-color: #333;
+    padding: 10px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+input:checked+.checklabel:before {
+    background-color: blue;
+}
+
+input:checked+.checklabel:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 6px;
+    width: 5px;
+    height: 13px;
+    border: solid #FFF;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+}
+
+.navcont{
+    display: block;
+    width: 100%;
+    padding-left: 50px;
+    position: absolute;
+    top: 120px;
+}
+
+.radiolabel{
+    position: relative;
+    display: block;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.radiolabel:before{
+    content: '';
+    -webkit-appearance: none;
+    border-radius: 50%;
+    background-color: #333;
+    padding: 10px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 5px;
+}
+input:checked+.radiolabel:before{
+    background-color: white;
+}
+
+input:checked+.radiolabel:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: blue;
+    transform: rotate(45deg);
+}

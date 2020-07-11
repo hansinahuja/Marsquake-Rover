@@ -5,6 +5,95 @@ var box = [];
 var chid = 0;
 var margin = 0;
 var showing = false;
+var multidest = false;
+var multistart = false;
+
+algoChange();
+function algoChange(){
+    algo = document.getElementById("algorithm").value;
+    if(algo!="1"){
+        document.getElementById("beamwidth").disabled = true;
+        document.getElementById("beamwidthl").style.color = "#555";
+    }else{
+        document.getElementById("beamwidth").disabled = false;
+        document.getElementById("beamwidthl").style.color = "#FFF";
+    }
+    if(algo=="8"){
+        document.getElementById("cutcorners").checked = true;
+        document.getElementById("cutcorners").disabled = true;
+        document.getElementById("cutcornersl").style.opacity = "0.3";
+        document.getElementById("allowdiag").checked = true;
+        document.getElementById("allowdiag").disabled = true;
+        document.getElementById("allowdiagl").style.opacity = "0.3";
+    }else{
+        document.getElementById("cutcorners").disabled = false;
+        document.getElementById("cutcornersl").style.opacity = "1";
+        document.getElementById("allowdiag").disabled = false;
+        document.getElementById("allowdiagl").style.opacity = "1";
+    }
+}
+
+function multiDest(){
+    if(!document.getElementById("multidest").checked){
+        if(document.getElementById("multistart").checked){
+            document.getElementById("multistart").checked = false;
+        }
+        multistart = false;
+        multidest = true;
+        for(let elmnt of document.getElementsByClassName("checkpoint")){
+            t = Math.floor(elmnt.offsetTop/40);
+            l = Math.floor(elmnt.offsetLeft/40-margin/40);
+            document.getElementById(t+"x"+l).classList.remove("start");
+            document.getElementById(t+"x"+l).classList.add("stop");
+            elmnt.src = "images/red.svg";
+        }
+    }else{
+        multistart = false;
+        multidest = false;
+        let i=0;
+        for(let elmnt of document.getElementsByClassName("checkpoint")){
+            t = Math.floor(elmnt.offsetTop/40);
+            l = Math.floor(elmnt.offsetLeft/40-margin/40);
+            document.getElementById(t+"x"+l).classList.remove("stop");
+            elmnt.src = "images/yellow"+(i+1)+".svg";
+            i++;
+        }
+    }
+}
+
+
+function multiSource(){
+    if(!document.getElementById("multistart").checked){
+        if(document.getElementById("multidest").checked){
+            document.getElementById("multidest").checked = false;
+        }
+        multistart = true;
+        multidest = false;
+        for(let elmnt of document.getElementsByClassName("checkpoint")){
+            t = Math.floor(elmnt.offsetTop/40);
+            l = Math.floor(elmnt.offsetLeft/40-margin/40);
+            document.getElementById(t+"x"+l).classList.remove("stop");
+            document.getElementById(t+"x"+l).classList.add("start");
+            elmnt.src = "images/green.svg";
+        }
+    }else{
+        multistart = false;
+        multidest = false;
+        let i=0;
+        for(let elmnt of document.getElementsByClassName("checkpoint")){
+            t = Math.floor(elmnt.offsetTop/40);
+            l = Math.floor(elmnt.offsetLeft/40-margin/40);
+            document.getElementById(t+"x"+l).classList.remove("start");
+            elmnt.src = "images/yellow"+(i+1)+".svg";
+            i++;
+        }
+    }
+}
+
+function changeSlider(){
+    document.getElementById("beamwidthl").innerText="Beam Width: "+document.getElementById("beamwidth").value;
+}
+
 
 function showNav() {
     nav = document.getElementsByTagName("nav")[0];
@@ -110,7 +199,15 @@ function addCheckpoint(id) {
             return false;
         }
         ch = document.createElement("img");
-        ch.src = "images/yellow" + (chid + 1) + ".svg";
+        if(multistart){
+            ch.src = "images/green.svg";
+            document.getElementById(id).classList.add("start");
+        }else if(multidest){
+            ch.src = "images/red.svg";
+            document.getElementById(id).classList.add("stop");
+        }else{
+            ch.src = "images/yellow" + (chid + 1) + ".svg";
+        }
         ch.classList = "draggable checkpoint";
         ch.id = "checkpoint" + chid;
         ch.oncontextmenu = removeCheckpoint(chid);
@@ -142,12 +239,18 @@ function removeCheckpoint(id) {
         j = Math.floor(j / 40);
         box[j][i] = 0;
         ch.parentNode.removeChild(ch);
+        if(multistart){
+            document.getElementById(j+'x'+i).classList.remove("start");
+        }else if(multidest){
+            document.getElementById(j+'x'+i).classList.remove("stop");
+        }
         chid--;
         for (var i = id + 1; i < chid + 1; i++) {
             ch = document.getElementById("checkpoint" + i);
             ch.id = "checkpoint" + (i - 1);
             ch.oncontextmenu = removeCheckpoint(i - 1);
-            ch.src = "images/yellow" + i + ".svg";
+            if(!multistart && !multidest)
+                ch.src = "images/yellow" + i + ".svg";
         }
         return false;
     }

@@ -58,7 +58,7 @@
             </div>
         </div>
         <div id="algolabel">Algorithm: </div>
-        <select id="algorithm">
+        <select id="algorithm" onchange="algoChange()">
             <option value="0">A*</option>
             <option value="1">Beam Search</option>
             <option value="2">Best First Search</option>
@@ -68,10 +68,33 @@
             <option value="6">IDA</option>
             <option value="7">IDA*</option>
             <option value="8">Jump Point Search</option>
-
         </select>
-        <button onclick="randomMaze()" style="bottom: 250px;">Random Maze</button>
-        <button onclick="find()">Find Route!</button>
+        <div class="navcont">
+            <b>Configuration:</b>
+            <input type="checkbox" id="cutcorners">
+            <label class="checklabel" for="cutcorners" id="cutcornersl">Cut Corners</label>
+            <input type="checkbox" id="allowdiag">
+            <label class="checklabel" for="allowdiag" id="allowdiagl">Allow Diagonals</label>
+            <input type="checkbox" id="bidirec">
+            <label class="checklabel" for="bidirec" id="bidirecl">Bidirectional</label>
+            <input type="checkbox" id="multidest">
+            <label onclick="multiDest()" class="checklabel" for="multidest" id="multidestl">Multiple Destinations</label>
+            <input type="checkbox" id="multistart">
+            <label onclick="multiSource()" class="checklabel" for="multistart" id="multistartl">Multiple Sources</label>
+            <label for="beamwidth" id="beamwidthl">Beam Width: 5</label>
+            <input onmousemove="changeSlider();" type="range" min="1" max="10" value="5" style="display: block; width: 180px; margin-top: 10px;" id="beamwidth">
+
+            <b>Maze Generation Algorithm:</b>
+            <input type="radio" id="mazealgo0" value="0" name="mazealgo" checked>
+            <label for="mazealgo0" class="radiolabel">Recursive Maze</label>
+            <input type="radio" id="mazealgo1" value="1" name="mazealgo">
+            <label for="mazealgo1" class="radiolabel">Randomized Prim</label>
+            
+            <center>
+                <button onclick="randomMaze()" style="bottom: 250px;">Random Maze</button>
+                <button onclick="find()">Find Route!</button>
+            </center>
+        </div>
     </nav>
     <img class="draggable" id="start" src="images/green.svg">
     <img class="draggable" id="stop" src="images/red.svg">

@@ -109,10 +109,12 @@ function gatherData() {
     data.append('algo', parseInt(document.getElementById("algorithm").value))
     data.append('start', JSON.stringify([start]));
     data.append('stop', JSON.stringify([stop]));
-    data.append('cutCorners', 0);
-    data.append('allowDiagonals', 1);
-    data.append('biDirectional', 0);
-    data.append('beamWidth', 2);
+    data.append('cutCorners', 1*document.getElementById("cutcorners").checked);
+    data.append('allowDiagonals', 1*document.getElementById("allowdiag").checked);
+    data.append('biDirectional', 1*document.getElementById("bidirec").checked);
+    data.append('multistart', 1*document.getElementById("multistart").checked);
+    data.append('multidest', 1*document.getElementById("multidest").checked);
+    data.append('beamWidth', document.getElementById("beamwidth").value);
     data.append('checkpoints', JSON.stringify(checkpoints));
     data.append('maze', JSON.stringify(maze));
     return data;
@@ -127,10 +129,12 @@ function find() {
     var data = gatherData();
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/findpath/", false);
+    xhr.onload = ()=>{
+        resp = JSON.parse(xhr.response);
+        over.style.display = "none";
+        document.body.style.pointerEvents = "none";
+        makeChanges(resp, resp.gridChanges);
+        console.log(resp);
+    }
     xhr.send(data);
-    resp = JSON.parse(xhr.response);
-    over.style.display = "none";
-    document.body.style.pointerEvents = "none";
-    makeChanges(resp, resp.gridChanges);
-    console.log(resp);
 }

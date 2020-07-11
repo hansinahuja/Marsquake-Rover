@@ -26,46 +26,48 @@ function randomMaze(){
     makeGrid();
     
     var data = new FormData();
-    data.append('algo', 0);
+    data.append('algo', 1*document.getElementById("mazealgo1").checked);
     data.append('length',box[0].length-1);
     data.append('breadth',box.length-1);
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/generatemaze/", false);
+    xhr.onload = ()=>{
+        resp = JSON.parse(xhr.response);
+        console.log(resp);
+
+        over.style.display = "none";
+        var x = resp.source.x, y = resp.source.y;
+        start = document.getElementById("start");
+        t = parseInt(start.style.top.substr(0,start.style.top.length-2));
+        l = parseInt(start.style.left.substr(0,start.style.left.length-2));
+        t = Math.floor(t/40);
+        l = Math.floor((l-margin)/40);
+        box[t][l] = 0;
+        box[y][x] = 1;
+        document.getElementById(t+"x"+l).classList.remove("start");
+        document.getElementById(y+"x"+x).classList.add("start");
+        start.style.transition = "0.7s";
+        setTimeout(()=>start.style.transition = "", 700);
+        start.style.top = 40*y+20+"px";
+        start.style.left = 40*x+20+margin+"px";
+        
+        x = resp.destination.x, y = resp.destination.y;
+        stop = document.getElementById("stop");
+        t = parseInt(stop.style.top.substr(0,stop.style.top.length-2));
+        l = parseInt(stop.style.left.substr(0,stop.style.left.length-2));
+        t = Math.floor(t/40);
+        l = Math.floor((l-margin)/40);
+        box[t][l] = 0;
+        box[y][x] = 1;
+        document.getElementById(t+"x"+l).classList.remove("stop");
+        document.getElementById(y+"x"+x).classList.add("stop");
+        stop.style.transition = "0.7s";
+        setTimeout(()=>stop.style.transition = "", 700);
+        stop.style.top = 40*y+20+"px";
+        stop.style.left = 40*x+20+margin+"px";
+
+        setMaze(resp.walls);   
+    }
     xhr.send(data);
-    resp = JSON.parse(xhr.response);
-    console.log(resp);
-
-    over.style.display = "none";
-    var x = resp.source.x, y = resp.source.y;
-    start = document.getElementById("start");
-    t = parseInt(start.style.top.substr(0,start.style.top.length-2));
-    l = parseInt(start.style.left.substr(0,start.style.left.length-2));
-    t = Math.floor(t/40);
-    l = Math.floor((l-margin)/40);
-    box[t][l] = 0;
-    box[y][x] = 1;
-    document.getElementById(t+"x"+l).classList.remove("start");
-    document.getElementById(y+"x"+x).classList.add("start");
-    start.style.transition = "0.7s";
-    setTimeout(()=>start.style.transition = "", 700);
-    start.style.top = 40*y+20+"px";
-    start.style.left = 40*x+20+margin+"px";
-    
-    x = resp.destination.x, y = resp.destination.y;
-    stop = document.getElementById("stop");
-    t = parseInt(stop.style.top.substr(0,stop.style.top.length-2));
-    l = parseInt(stop.style.left.substr(0,stop.style.left.length-2));
-    t = Math.floor(t/40);
-    l = Math.floor((l-margin)/40);
-    box[t][l] = 0;
-    box[y][x] = 1;
-    document.getElementById(t+"x"+l).classList.remove("stop");
-    document.getElementById(y+"x"+x).classList.add("stop");
-    stop.style.transition = "0.7s";
-    setTimeout(()=>stop.style.transition = "", 700);
-    stop.style.top = 40*y+20+"px";
-    stop.style.left = 40*x+20+margin+"px";
-
-    setMaze(resp.walls);
 }
