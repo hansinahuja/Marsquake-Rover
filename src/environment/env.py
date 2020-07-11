@@ -99,6 +99,15 @@ class Environment:
 
         return success, gridChanges
 
+    def getActivatedCells(self):
+        activatedCells = []
+        for row in self.grid:
+            for cell in row:
+                if cell.type == 'visited' or cell.type == 'waitList':
+                    activatedCells.append(
+                        {'x': cell.location.x, 'y': cell.location.y, 'color': 0})
+        return activatedCells
+
     def getPaths(self, success):
         paths = []
 
