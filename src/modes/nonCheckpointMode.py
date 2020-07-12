@@ -5,6 +5,9 @@ from environment.utils import Location
 
 def nonCheckpointMode(dict):
     # Create environment
+    # print("IN")
+    # print(dict)
+    # print("=======================================")
     env = Environment(len(dict['maze']), len(dict['maze'][0]))
     env.cutCorners = int(dict['cutCorners'])
     env.allowDiagonals = int(dict['allowDiagonals'])
@@ -18,13 +21,15 @@ def nonCheckpointMode(dict):
             destination['x'], destination['y']), 'destination', int(dict['biDirectional'])))
 
     for checkpoint in dict['checkpoints']:
-        if dict['multistart']:
+        if int(dict['multistart'])==1:
             sources.append(
-                Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', True))
+                Agent(Location(checkpoint['x'], checkpoint['y']), 'source', True))
         else:
             destinations.append(
                 Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', int(dict['biDirectional'])))
 
+    # print(sources)
+    # print(destinations)
     for agent in sources + destinations:
         env.placeAgent(agent)
 
@@ -98,6 +103,7 @@ def nonCheckpointMode(dict):
         output = {'gridChanges': gridChanges,
                   'path': path, 'activatedCells': activatedCells}
         # print(output)
+        print(path)
         return output
 
     # ----------------------------- Temporary ida and ida* Driver

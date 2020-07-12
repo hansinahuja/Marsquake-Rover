@@ -7,11 +7,11 @@ from modes.nonCheckpointMode import nonCheckpointMode
 
 def driver(dict):
 
-    if int(dict['multistart']) == 0 and int(dict['multidest']) == 0:
-        return nonCheckpointMode(dict)
+    if (int(dict['multistart']) == 0 and int(dict['multidest']) == 0):
+        return checkpointMode(dict)
 
     else:
-        return checkpointMode(dict)
+        return nonCheckpointMode(dict)
 
 
 dict = {

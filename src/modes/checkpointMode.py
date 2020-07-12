@@ -2,6 +2,9 @@ from modes.nonCheckpointMode import nonCheckpointMode
 
 
 def checkpointMode(dict):
+    # print("IN")
+    # print(dict)
+    # print("===================================================")
     points = []
     for point in dict['start']:
         points.append(point)
@@ -28,4 +31,5 @@ def checkpointMode(dict):
                 path.pop()
     # gridChanges = []
     output = {'gridChages': gridChanges, 'path': path}
+    print(path)
     return output
