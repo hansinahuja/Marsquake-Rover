@@ -146,7 +146,7 @@ def nonCheckpointMode(dict):
                     agent.logs = []
                     agent.distances = {}
 
-        activatedCells = env.getActivatedCells()
+        activatedCells = env.getActivatedCells_IDA(paths[0])
         output = {'gridChanges': gridChanges,
                   'path': paths[0], 'activatedCells': activatedCells}
         # print(gridChanges)

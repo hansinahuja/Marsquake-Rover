@@ -191,6 +191,12 @@ class Environment:
                     activatedCells.append(
                         {'x': cell.location.x, 'y': cell.location.y, 'color': 0})
         return activatedCells
+    def getActivatedCells_IDA(self, path):
+        activatedCells = []
+        for c in path:
+            activatedCells.append(
+                {'x': c['x'], 'y': c['y'], 'color': 0})
+        return activatedCells
 
     def getPaths(self, success):
         paths = []
