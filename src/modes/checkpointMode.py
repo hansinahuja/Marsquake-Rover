@@ -18,6 +18,7 @@ def checkpointMode(dict):
     dict['biDirectional'] = '0'
     dict['checkpoints'] = []
     for i in range(len(points)-1):
+        # print(i)
         dict['start'] = [points[i]]
         dict['stop'] = [points[i+1]]
         result = nonCheckpointMode(dict)
@@ -30,6 +31,8 @@ def checkpointMode(dict):
             if i < len(points)-2:
                 path.pop()
     # gridChanges = []
-    output = {'gridChages': gridChanges, 'path': path}
-    print(path)
+    output = {'gridChanges': gridChanges, 'path': path}
+    # print(path)
+    # print("===================")
+    # print(gridChanges)
     return output

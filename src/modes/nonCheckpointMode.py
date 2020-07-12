@@ -39,6 +39,10 @@ def nonCheckpointMode(dict):
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
 
+    # for wormhole in dict['wormholes']:
+    #     x1, y1, x2, y2 = wormhole['x1'], wormhole['y1'], wormhole['x2'], wormhole['y2']
+    #     env.grid[x1][y1] = env.grid[x2][y2]
+
     beamWidth = int(dict['beamWidth'])
     gridChanges = []
     path = []
@@ -103,7 +107,7 @@ def nonCheckpointMode(dict):
         output = {'gridChanges': gridChanges,
                   'path': path, 'activatedCells': activatedCells}
         # print(output)
-        print(path)
+        # print(path)
         return output
 
     # ----------------------------- Temporary ida and ida* Driver

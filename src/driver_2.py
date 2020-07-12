@@ -14,27 +14,27 @@ def driver(dict):
         return nonCheckpointMode(dict)
 
 
-dict = {
-    "algo": 7,
-    "start": [{"x": 5, "y": 0}],
-    "stop": [{"x": 2, "y": 3}],
-    "checkpoints": [
-        # {"x": 4, "y": 4}
-        ],
-    "multistart": '0',
-    "multidest": '0',
-    "cutCorners": 0,
-    "allowDiagonals": 0,
-    "biDirectional": 0,
-    "beamWidth": 2,
-    "maze":
-    [[0, 0, 0, 0, 0],
-     [0, 1, 1, 0, 0],
-     [0, 1, 0, 0, 0],
-     [0, 1, 0, 0, 0],
-     [0, 1, 1, 1, 1],
-     [0, 0, 0, 0, 0]
-     ]
-}
+# dict = {
+#     "algo": 0,
+#     "start": [{"x": 0, "y": 0}],
+#     "stop": [{"x": 4, "y": 4}],
+#     "checkpoints": [
+#         # {"x": 4, "y": 4}
+#         ],
+#     "wormholes": [{'x1': 2, 'y1': 0, 'x2': 4, 'y2': 3}],
+#     "multistart": '0',
+#     "multidest": '0',
+#     "cutCorners": 0,
+#     "allowDiagonals": 0,
+#     "biDirectional": 0,
+#     "beamWidth": 2,
+#     "maze":
+#     [[0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      ]
+# }
 
-print(driver(dict))
+# print(driver(dict))
