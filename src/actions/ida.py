@@ -40,6 +40,12 @@ def ida(self, environment, threshold, targets):
         if not valid(nx, ny):
             continue
         neighbour = environment.grid[nx][ny]
+        parent = nextCell
+        if (nextCell, weight) in self.path:
+            parent = self.path[(nextCell, weight)][0]
+        neighbour = environment.grid[nx][ny]
+        if neighbour == parent:
+            continue
         self.visited[nextCell] = 'inRecursion'
         self.waitList.append( (neighbour, weight + neighbour.weight) )
         self.path[(neighbour, weight + neighbour.weight)] = (nextCell, weight)

@@ -99,7 +99,7 @@ class Environment:
 
         return success, gridChanges
     
-    def tmpPaths(self, success, weight):                          # For idaStar and ida
+    def idaPaths(self, success, weight):                          # For idaStar and ida
         paths = []
         for cell in success:
             path1 = []
@@ -159,7 +159,7 @@ class Environment:
         
         current = set()
         current.add(logs[0][1])
-        newPath = self.tmpPaths(current, weight)
+        newPath = self.idaPaths(current, weight)
         lenNew = len(newPath[0])
         lenPrv = len(prevPath[0])
         itr = 0
@@ -172,10 +172,10 @@ class Environment:
                 gridChange = {'x': prevPath[0][i]['x'],
                             'y': prevPath[0][i]['y'], 'color': 0}
                 gridChanges.append(gridChange)
-        for i in range(itr, lenNew):
-            gridChange = {'x': newPath[0][i]['x'],
-                        'y': newPath[0][i]['y'], 'color': 2}
-            gridChanges.append(gridChange)
+            for i in range(lenNew):
+                gridChange = {'x': newPath[0][i]['x'],
+                            'y': newPath[0][i]['y'], 'color': 2}
+                gridChanges.append(gridChange)
 
         if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
             recursiveMode = True

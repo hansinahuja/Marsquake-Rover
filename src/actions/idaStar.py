@@ -39,7 +39,12 @@ def idaStar(self, environment, threshold, targets):
     for nx, ny in nextCell.location.neighbours:
         if not valid(nx, ny):
             continue
+        parent = nextCell
+        if (nextCell, weight) in self.path:
+            parent = self.path[(nextCell, weight)][0]
         neighbour = environment.grid[nx][ny]
+        if neighbour == parent:
+            continue
         self.visited[nextCell] = 'inRecursion'
         self.waitList.append( (neighbour, weight + neighbour.weight) )
         self.path[(neighbour, weight + neighbour.weight)] = (nextCell, weight)

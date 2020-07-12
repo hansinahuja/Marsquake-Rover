@@ -121,7 +121,7 @@ def nonCheckpointMode(dict):
                     success, gridChange, prevPath = env.idaupdate(logs, Y, prevPath)        
             gridChanges.extend(gridChange)
             if len(success) > 0:
-                paths = env.tmpPaths(success, threshold)
+                paths = env.idaPaths(success, threshold)
                 break
             if len(src.logs) == 0 and len(sources[0].waitList) == 0:
                 if newThreshold == 50000:     # No Path exists
