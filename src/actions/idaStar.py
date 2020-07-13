@@ -33,7 +33,7 @@ def idaStar(self, environment, threshold, targets):
 
     # Exhausted all possible moves
     if len(self.waitList) == 0:
-        return -1
+        return -1, -1
     nextCell = self.waitList[-1][0]
     weight = self.waitList[-1][1]
     self.waitList.pop()
