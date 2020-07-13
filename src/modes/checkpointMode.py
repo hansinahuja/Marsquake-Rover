@@ -27,7 +27,8 @@ def checkpointMode(dict):
             break
         else:
             path.extend(result['path'])
-            gridChanges.extend(result['activatedCells'])
+            if(len(points)>2):
+                gridChanges.extend(result['activatedCells'])
             if i < len(points)-2:
                 path.pop()
     # gridChanges = []
