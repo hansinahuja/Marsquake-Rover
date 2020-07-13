@@ -24,6 +24,10 @@ function randomMaze(){
 
     clearGrid();
     makeGrid();
+    document.getElementById("bidirec").disabled = false;
+    document.getElementById("bidirecl").style.opacity = "1";
+    
+    deleteCheckpoints();
     
     var data = new FormData();
     data.append('algo', 1*document.getElementById("mazealgo1").checked);

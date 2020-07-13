@@ -1,5 +1,4 @@
 .vscode/
-src/__pycache__/
-src/actions/__pycache__/
-src/environment/__pycache__/
-
+__pycache__
+*.pyc
+*.pyo

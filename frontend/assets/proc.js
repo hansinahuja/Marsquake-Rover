@@ -1,3 +1,5 @@
+var AnimationTime = 10;
+
 function makeChanges(resp, changes) {
     var i = 0,
         int = 0;
@@ -18,7 +20,7 @@ function makeChanges(resp, changes) {
             drawPath(resp.path);
         }
     }
-    int = setInterval(color, 10);
+    int = setInterval(color, AnimationTime);
 }
 
 function drawPath(path) {
@@ -31,6 +33,8 @@ function drawPath(path) {
     function drawLine() {
         point1 = path[i];
         point2 = path[i + 1];
+        if(i)
+            document.getElementById(point1.x+"x"+point1.y).classList.add("final");
         var dx = point2.y - point1.y;
         var dy = point2.x - point1.x;
         if (dx * dy) {
