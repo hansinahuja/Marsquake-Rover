@@ -5,8 +5,21 @@ from collections import deque
 
 
 def idaStar(self, environment, threshold, targets):
-    def valid(x, y):
-        return x >= 0 and y >= 0 and x < environment.length and y < environment.breadth and environment.grid[x][y].type != 'wall'
+    def valid(currentCell, x2, y2):
+        x1, y1 = currentCell.location.x, currentCell.location.y
+        if x2 < 0 or x2 >= environment.length or y2 < 0 or y2 >= environment.breadth:
+            return False
+        nextCell = environment.grid[x2][y2]
+        if nextCell.type == 'wall':
+            return False
+        manhattanDistance = abs(x1-x2) + abs(y1-y2)
+        if manhattanDistance == 2:
+            if not environment.allowDiagonals:
+                return False
+            if not environment.cutCorners:
+                if environment.grid[x1][y2].type == 'wall' or environment.grid[x2][y1].type == 'wall':
+                    return False
+        return True
 
     self.logs = []
 
@@ -37,7 +50,7 @@ def idaStar(self, environment, threshold, targets):
     self.logs.append([self, nextCell, 'visited'])
     
     for nx, ny in nextCell.location.neighbours:
-        if not valid(nx, ny):
+        if not valid(nextCell, nx, ny):
             continue
         parent = nextCell
         if (nextCell, weight) in self.path:
