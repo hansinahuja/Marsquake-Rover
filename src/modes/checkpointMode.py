@@ -15,7 +15,7 @@ def checkpointMode(dict):
 
     gridChanges = []
     path = []
-    dict['biDirectional'] = '0'
+    # dict['biDirectional'] = '0'
     dict['checkpoints'] = []
     for i in range(len(points)-1):
         # print(i)
