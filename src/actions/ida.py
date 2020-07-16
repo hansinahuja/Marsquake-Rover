@@ -60,8 +60,8 @@ def ida(self, environment, threshold, targets):
         if neighbour == parent:
             continue
         self.visited[nextCell] = 'inRecursion'
-        self.waitList.append( (neighbour, weight + neighbour.weight) )
-        self.path[(neighbour, weight + neighbour.weight)] = (nextCell, weight)
-        self.distances[neighbour] = self.distances[nextCell] + neighbour.weight
+        self.waitList.append( (neighbour, weight + environment.distance(nextCell, neighbour)) )
+        self.path[(neighbour, weight + environment.distance(nextCell, neighbour))] = (nextCell, weight)
+        self.distances[neighbour] = self.distances[nextCell] + environment.distance(nextCell, neighbour)
     
     return weight, weight

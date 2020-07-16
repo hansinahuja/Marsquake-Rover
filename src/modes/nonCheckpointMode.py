@@ -125,13 +125,13 @@ def nonCheckpointMode(dict):
                 if algo == 7:
                     X, Y = src.idaStar(env, threshold, destinations)
                 logs.extend(src.logs)
-                if type(X) == int and  X > threshold :
+                if X > threshold :
                     newThreshold = min(X, newThreshold)
                 else:
                     success, gridChange, prevPath = env.idaupdate(logs, Y, prevPath)        
             gridChanges.extend(gridChange)
             if len(success) > 0:
-                paths = env.idaPaths(success, threshold)
+                paths = env.idaPaths(success, X)
                 break
             if len(src.logs) == 0 and len(sources[0].waitList) == 0:
                 if newThreshold == 50000:     # No Path exists

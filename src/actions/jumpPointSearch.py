@@ -234,7 +234,7 @@ def jumpPointSearch(self, environment, targets):
                 return
             y += dy1
             x += dx1
-            weight += 1
+            weight += 1.414
             Flg1 = 1
 
 
