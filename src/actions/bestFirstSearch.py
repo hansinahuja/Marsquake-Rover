@@ -25,7 +25,8 @@ def bestFirstSearch(self, environment, targets):
         if not self.isValidMove(environment, nextCell, nx, ny):
             continue
         neighbour = environment.grid[nx][ny]
-        newDistance = self.distances[nextCell] + neighbour.weight
+        # newDistance = self.distances[nextCell] + neighbour.weight
+        newDistance = self.distances[nextCell] + environment.distance(nextCell, neighbour)
         if neighbour in self.distances and self.distances[neighbour] <= newDistance:
             continue
         

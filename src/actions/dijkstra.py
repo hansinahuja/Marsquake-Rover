@@ -26,7 +26,8 @@ def dijkstra(self, environment):
         if not self.isValidMove(environment, nextCell, nx, ny):
             continue
         neighbour = environment.grid[nx][ny]
-        newDistance = self.distances[nextCell] + neighbour.weight
+        newDistance = self.distances[nextCell] + environment.distance(nextCell, neighbour)
+        # newDistance = self.distances[nextCell] + neighbour.weight
         if neighbour in self.distances and self.distances[neighbour] <= newDistance:
             continue
         heapq.heappush(self.waitList, (newDistance, neighbour))

@@ -1,5 +1,6 @@
 from environment.utils import Location, Cell
-
+from environment.heuristics import manhattanDistance
+from math import sqrt
 
 class Environment:
     def __init__(self, length, breadth):
@@ -10,6 +11,11 @@ class Environment:
         self.heuristic = 'manhattan'
         self.allowDiagonals = False
         self.cutCorners = False
+
+    def distance(self, src, dest):
+        deltaX = abs(src.location.x - dest.location.x)
+        deltaY = abs(src.location.y - dest.location.y)
+        return dest.weight * sqrt(manhattanDistance(deltaX, deltaY))
 
     def placeAgent(self, agent):
         x = agent.location.x
