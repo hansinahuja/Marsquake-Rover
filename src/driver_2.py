@@ -15,11 +15,11 @@ def driver(dict):
 
 
 dict = {
-    "algo": 4,
+    "algo": 5,
     "start": [{"x": 0, "y": 0}],
     "stop": [{"x": 0, "y": 4}],
     "checkpoints": [ ],
-    "wormholes": [{'x1': 4, 'y1': 0, 'x2': 4, 'y2': 4}],
+    # "wormholes": [{'x1': 4, 'y1': 0, 'x2': 4, 'y2': 4}],
     "multistart": '0',
     "multidest": '0',
     "cutCorners": 1,
@@ -29,7 +29,7 @@ dict = {
     "maze":
     [[0, 0, 1, 0, 0],
      [0, 0, 1, 0, 0],
-     [0, 0, 1, 0, 0],
+     [0, 0, 0, 0, 0],
      [0, 0, 1, 0, 0],
      [0, 0, 1, 0, 0],
      ]

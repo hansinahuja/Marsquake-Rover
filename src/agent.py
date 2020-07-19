@@ -19,14 +19,14 @@ class Agent():
     from actions.jumpPointSearch import jumpPointSearch
     from actions.ida import ida
 
-    def isValidMove(self, environment, currentCell, x2, y2):
+    def isValidMove(self, environment, currentCell, x2, y2, checkVisited = True):
         x1, y1 = currentCell.location.x, currentCell.location.y
         if x2 < 0 or x2 >= environment.length or y2 < 0 or y2 >= environment.breadth:
             return False
         nextCell = environment.grid[x2][y2]
         if nextCell.type == 'wall':
             return False
-        if nextCell in self.visited:
+        if checkVisited and nextCell in self.visited:
             return False
         manhattanDistance = abs(x1-x2) + abs(y1-y2)
         if manhattanDistance == 2:
