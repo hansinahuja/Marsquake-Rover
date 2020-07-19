@@ -18,6 +18,7 @@ class Agent():
     from actions.beamSearch import beamSearch
     from actions.jumpPointSearch import jumpPointSearch
     from actions.ida import ida
+    from actions.uniformCostSearch import uniformCostSearch
 
     def isValidMove(self, environment, currentCell, x2, y2, checkVisited = True):
         x1, y1 = currentCell.location.x, currentCell.location.y

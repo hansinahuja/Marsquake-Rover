@@ -39,6 +39,7 @@ def nonCheckpointMode(dict):
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
 
+    # Remove if statement later
     if 'wormholes' in dict:
         for wormhole in dict['wormholes']:
             x1, y1, x2, y2 = wormhole['x1'], wormhole['y1'], wormhole['x2'], wormhole['y2']
