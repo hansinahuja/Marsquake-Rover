@@ -1,13 +1,13 @@
 import heapq
 
 
-def aStar(self, environment, targets):
+def staticAStar(self, environment, targets, relaxation):
     self.logs = []
 
     # First iteration
     if self.waitList == None:
         sourceCell = environment.grid[self.location.x][self.location.y]
-        self.waitList = [(environment.bestHeuristic(
+        self.waitList = [((1 + relaxation) * environment.bestHeuristic(
             sourceCell, targets), sourceCell)]
         self.distances[sourceCell] = 0
 
@@ -26,7 +26,7 @@ def aStar(self, environment, targets):
         neighbour = environment.grid[nx][ny]
         # newDistance = self.distances[nextCell] + neighbour.weight
         newDistance = self.distances[nextCell] + environment.distance(nextCell, neighbour)
-        fValue = newDistance + environment.bestHeuristic(neighbour, targets)
+        fValue = newDistance + (1 + relaxation) * environment.bestHeuristic(neighbour, targets)
         if neighbour in self.distances and self.distances[neighbour] <= newDistance:
             continue
         self.distances[neighbour] = newDistance

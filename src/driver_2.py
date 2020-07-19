@@ -15,12 +15,13 @@ def driver(dict):
 
 
 dict = {
-    "algo": 5,
-    "start": [{"x": 0, "y": 0}],
-    "stop": [{"x": 0, "y": 4}],
+    "algo": 10,
+    "start": [{"x": 4, "y": 1}],
+    "stop": [{"x": 0, "y": 3}],
     "checkpoints": [ ],
-    # "wormholes": [{'x1': 4, 'y1': 0, 'x2': 4, 'y2': 4}],
+    # "wormholes": [{'x1': 4, 'y1': 0, 'x2': 0, 'y2': 4}],
     "multistart": '0',
+    "relaxation": '3',
     "multidest": '0',
     "cutCorners": 1,
     "allowDiagonals": 1,

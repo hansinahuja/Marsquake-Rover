@@ -50,6 +50,7 @@ def nonCheckpointMode(dict):
             wormholeExit.type = 'wormholeExit'
 
     beamWidth = int(dict['beamWidth'])
+    relaxation = int(dict['relaxation'])
     gridChanges = []
     path = []
 
@@ -60,7 +61,7 @@ def nonCheckpointMode(dict):
             logs = []
             for src in sources:
                 if algo == 0:
-                    src.aStar(env, destinations)
+                    src.staticAStar(env, destinations, 0)
                 if algo == 1:
                     src.beamSearch(env, destinations, beamWidth)
                 if algo == 2:
@@ -73,6 +74,10 @@ def nonCheckpointMode(dict):
                     src.dijkstra(env)
                 if algo == 8:
                     src.jumpPointSearch(env, destinations)
+                if algo == 9:
+                    src.staticAStar(env, destinations, relaxation)
+                if algo == 10:
+                    src.uniformCostSearch(env)
                 logs.extend(src.logs)
             for dest in destinations:
                 if dest.isMovingAgent:

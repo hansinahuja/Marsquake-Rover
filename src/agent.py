@@ -13,7 +13,7 @@ class Agent():
     from actions.depthFirstSearch import depthFirstSearch
     from actions.dijkstra import dijkstra
     from actions.bestFirstSearch import bestFirstSearch
-    from actions.aStar import aStar
+    from actions.staticAStar import staticAStar
     from actions.idaStar import idaStar
     from actions.beamSearch import beamSearch
     from actions.jumpPointSearch import jumpPointSearch
