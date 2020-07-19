@@ -14,25 +14,25 @@ def driver(dict):
         return nonCheckpointMode(dict)
 
 
-# dict = {
-#     "algo": 0,
-#     "start": [{"x": 0, "y": 0}],
-#     "stop": [{"x": 0, "y": 4}],
-#     "checkpoints": [ ],
-#     "wormholes": [{'x1': 2, 'y1': 0, 'x2': 4, 'y2': 3}],
-#     "multistart": '0',
-#     "multidest": '0',
-#     "cutCorners": 1,
-#     "allowDiagonals": 1,
-#     "biDirectional": 0,
-#     "beamWidth": 2,
-#     "maze":
-#     [[0, 0, 0, 0, 0],
-#      [1, 1, 0, 1, 1],
-#      [0, 0, 0, 0, 0],
-#      [0, 0, 0, 0, 0],
-#      [0, 0, 0, 0, 0],
-#      ]
-# }
+dict = {
+    "algo": 4,
+    "start": [{"x": 0, "y": 0}],
+    "stop": [{"x": 0, "y": 4}],
+    "checkpoints": [ ],
+    "wormholes": [{'x1': 4, 'y1': 0, 'x2': 4, 'y2': 4}],
+    "multistart": '0',
+    "multidest": '0',
+    "cutCorners": 1,
+    "allowDiagonals": 1,
+    "biDirectional": 0,
+    "beamWidth": 2,
+    "maze":
+    [[0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     ]
+}
 
-# print(driver(dict))
+print(driver(dict)['path'])

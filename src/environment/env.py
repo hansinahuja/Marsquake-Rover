@@ -13,6 +13,10 @@ class Environment:
         self.cutCorners = False
 
     def distance(self, src, dest):
+
+        if src.type == 'wormholeEntry' and dest.type=='wormholeExit':
+            return 0
+
         deltaX = abs(src.location.x - dest.location.x)
         deltaY = abs(src.location.y - dest.location.y)
         return dest.weight * sqrt(manhattanDistance(deltaX, deltaY))
@@ -71,6 +75,8 @@ class Environment:
 
         for log in logs:
             agent, cell, state = log
+            if cell.type == 'wormholeEntry' or cell.type == 'wormholeExit':
+                continue
             if cell not in updates:
                 updates[cell] = log
             elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
