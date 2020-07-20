@@ -61,7 +61,7 @@ def nonCheckpointMode(dict):
             logs = []
             for src in sources:
                 if algo == 0:
-                    src.staticAStar(env, destinations, 0)
+                    src.aStar(env, destinations)
                 if algo == 1:
                     src.beamSearch(env, destinations, beamWidth)
                 if algo == 2:

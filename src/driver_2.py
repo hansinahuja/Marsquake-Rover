@@ -15,7 +15,7 @@ def driver(dict):
 
 
 dict = {
-    "algo": 10,
+    "algo": 0,
     "start": [{"x": 4, "y": 1}],
     "stop": [{"x": 0, "y": 3}],
     "checkpoints": [ ],
