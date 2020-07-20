@@ -4,10 +4,7 @@ from environment.utils import Location
 
 
 def nonCheckpointMode(dict):
-    # Create environment
-    # print("IN")
-    # print(dict)
-    # print("=======================================")
+    algo = int(dict['algo'])
     env = Environment(len(dict['maze']), len(dict['maze'][0]))
     env.cutCorners = int(dict['cutCorners'])
     env.allowDiagonals = int(dict['allowDiagonals'])
@@ -28,36 +25,41 @@ def nonCheckpointMode(dict):
             destinations.append(
                 Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', int(dict['biDirectional'])))
 
-    # print(sources)
-    # print(destinations)
     for agent in sources + destinations:
         env.placeAgent(agent)
 
+    # print(dict['weights'])
     for row in env.grid:
         for cell in row:
-            # print(' ',cell.location.x, cell.location.y)
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
+            else:
+                pass
+                # cell.weight = 100 - dict['weights'][cell.location.x][cell.location.y]
+
+    # for row in env.grid:
+    #     for cell in row:
+    #         print(cell.weight, end = ' ')
+    #     print()
 
     # Remove if statement later
-    if 'wormholes' in dict:
-        for wormhole in dict['wormholes']:
-            x1, y1, x2, y2 = wormhole['x1'], wormhole['y1'], wormhole['x2'], wormhole['y2']
+    if 'wormhole' in dict:
+        wormhole = dict['wormhole']
+        x1, y1, x2, y2 = wormhole[0]['x'], wormhole[0]['y'], wormhole[1]['x'], wormhole[1]['y']
+        if x1!=x2 or y1!=y2:
             wormholeEntry = env.grid[x1][y1]
             wormholeExit = env.grid[x2][y2]
             wormholeEntry.location.neighbours = [[x2, y2]]
             wormholeEntry.type = 'wormholeEntry'
             wormholeExit.type = 'wormholeExit'
 
-    beamWidth = int(dict['beamWidth'])
-    relaxation = int(dict['relaxation'])
-#     maxDepth = int(dict['maxDepth'])
+    
     maxDepth = 1000
     gridChanges = []
     path = []
 
     #  ------------- Original Driver
-    algo = int(dict['algo'])
+    
     if algo != 6 and algo != 7:
         while True:
             logs = []
@@ -65,11 +67,11 @@ def nonCheckpointMode(dict):
                 if algo == 0:
                     src.aStar(env, destinations)
                 if algo == 1:
-                    src.staticAStar(env, destinations, relaxation)
+                    src.staticAStar(env, destinations, float(dict['relaxation']))
                 if algo == 2:
-                    src.dynamicAStar(env, destinations, relaxation, maxDepth)
+                    src.dynamicAStar(env, destinations, float(dict['relaxation']), maxDepth)
                 if algo == 3:
-                    src.beamSearch(env, destinations, beamWidth)
+                    src.beamSearch(env, destinations, int(dict['beamWidth']))
                 if algo == 4:
                     src.bestFirstSearch(env, destinations)
                 if algo == 5:
@@ -88,11 +90,11 @@ def nonCheckpointMode(dict):
                     if algo == 0:
                         dest.aStar(env, sources)
                     if algo == 1:
-                        dest.staticAStar(env, sources, relaxation)
+                        dest.staticAStar(env, sources, float(dict['relaxation']))
                     if algo == 2:
-                        dest.dynamicAStar(env, destinations, relaxation, maxDepth)
+                        dest.dynamicAStar(env, destinations, float(dict['relaxation']), maxDepth)
                     if algo == 3:
-                        dest.beamSearch(env, sources, beamWidth)
+                        dest.beamSearch(env, sources, int(dict['beamWidth']))
                     if algo == 4:
                         dest.bestFirstSearch(env, sources)
                     if algo == 5:
