@@ -51,6 +51,7 @@ def nonCheckpointMode(dict):
 
     beamWidth = int(dict['beamWidth'])
     relaxation = int(dict['relaxation'])
+    maxDepth = int(dict['maxDepth'])
     gridChanges = []
     path = []
 
@@ -64,8 +65,8 @@ def nonCheckpointMode(dict):
                     src.aStar(env, destinations)
                 if algo == 1:
                     src.staticAStar(env, destinations, relaxation)
-                # if algo == 2:
-                #     src.dynamicAStar()
+                if algo == 2:
+                    src.dynamicAStar(env, destinations, relaxation, maxDepth)
                 if algo == 3:
                     src.beamSearch(env, destinations, beamWidth)
                 if algo == 4:
@@ -87,8 +88,8 @@ def nonCheckpointMode(dict):
                         dest.aStar(env, sources)
                     if algo == 1:
                         dest.staticAStar(env, sources, relaxation)
-                    # if algo == 2:
-                    #     dest.dynamicAStar()
+                    if algo == 2:
+                        dest.dynamicAStar(env, destinations, relaxation, maxDepth)
                     if algo == 3:
                         dest.beamSearch(env, sources, beamWidth)
                     if algo == 4:
