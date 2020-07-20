@@ -458,8 +458,8 @@ function drawingElement(elmnt) {
         document.onmouseup = closeDragElement;
         let i = elmnt.id.split('x');
         if(intensityMode){
-            weights[Number(i[0])][Number(i[1])] = val;
-            elmnt.style.background = parseInt(document.getElementById("intensity").value);
+            weights[Number(i[0])][Number(i[1])] = parseInt(document.getElementById("intensity").value);
+            elmnt.style.background = val;
             elmnt.style.opacity = Math.abs(document.getElementById("intensity").value-50)/50;
             if(elmnt.style.opacity<0.1){
                 elmnt.style.background = "";
@@ -485,7 +485,7 @@ function drawingElement(elmnt) {
         let i = Math.floor((pos3 - margin) / 40);
         let j = Math.floor(pos4 / 40);
         let elmnt = document.getElementById(j + 'x' + i);
-        weights[j][i] = val;
+        weights[j][i] = parseInt(document.getElementById("intensity").value);
         elmnt.style.background = val;
         elmnt.style.opacity = Math.abs(document.getElementById("intensity").value-50)/50;
         if(elmnt.style.opacity<0.1){
