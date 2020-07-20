@@ -133,6 +133,7 @@ function gatherData() {
     data.append('start', JSON.stringify([start]));
     data.append('stop', JSON.stringify([stop]));
     data.append('wormhole', JSON.stringify([portal1, portal2]));
+    data.append('wormholeAllowed', document.getElementById("wormhole").checked);
     data.append('cutCorners', 1*document.getElementById("cutcorners").checked);
     data.append('allowDiagonals', 1*document.getElementById("allowdiag").checked);
     data.append('biDirectional', 1*document.getElementById("bidirec").checked);
