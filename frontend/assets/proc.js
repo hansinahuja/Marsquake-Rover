@@ -153,6 +153,7 @@ function find() {
     clearGrid();
     showing = true;
     var data = gatherData();
+    console.log(data.entries());
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/findpath/");
     xhr.onload = ()=>{

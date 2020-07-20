@@ -529,7 +529,7 @@ function drawingElement(elmnt) {
 function scrollBar(cont){
     track = cont.querySelector('.scrolltrack');
     thumb = cont.querySelector('.scrollthumb');
-    h = cont.offsetHeight;
+    h = cont.offsetHeight-1;
     track.style.height = h+"px";
     thumb.style.height = Math.floor(h*h/(cont.scrollHeight))+"px";
     track.style.top = cont.scrollTop+'px';
