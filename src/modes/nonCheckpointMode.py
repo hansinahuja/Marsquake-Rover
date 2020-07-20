@@ -29,18 +29,28 @@ def nonCheckpointMode(dict):
         env.placeAgent(agent)
 
     # print(dict['weights'])
+    # print(dict)
+    maxWeight = 0
     for row in env.grid:
         for cell in row:
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
             else:
-                pass
-                # cell.weight = 100 - dict['weights'][cell.location.x][cell.location.y]
+                maxWeight = max(maxWeight, 100 - dict['weights'][cell.location.x][cell.location.y])
+            # print(dict['weights'][cell.location.x][cell.location.y], end = ' ')
+        # print()
 
-    # for row in env.grid:
-    #     for cell in row:
-    #         print(cell.weight, end = ' ')
-    #     print()
+    # print(dict['weights'])
+    # print("EHy")
+    # print(dict)
+    for row in env.grid:
+        for cell in row:
+            if dict['maze'][cell.location.x][cell.location.y] != 1:
+                cell.weight = (100 - dict['weights'][cell.location.x][cell.location.y]) / maxWeight
+                cell.weight *= 2
+            # print(cell.weight, end = ' ')
+        # print()
+
 
     # Remove if statement later
     if 'wormhole' in dict:

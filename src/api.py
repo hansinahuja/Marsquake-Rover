@@ -30,6 +30,7 @@ def findpath():
     s = re.sub("\\\\\"","\"",s)
     s = json.loads(s)
     try:
+        # print(s)
         return jsonify(driver(s))
     except Exception as e:
         return jsonify({"error":True, "msg":str(e)})
