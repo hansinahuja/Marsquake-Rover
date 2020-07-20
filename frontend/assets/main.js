@@ -459,7 +459,7 @@ function drawingElement(elmnt) {
         let i = elmnt.id.split('x');
         if(intensityMode){
             weights[Number(i[0])][Number(i[1])] = val;
-            elmnt.style.background = val;
+            elmnt.style.background = parseInt(document.getElementById("intensity").value);
             elmnt.style.opacity = Math.abs(document.getElementById("intensity").value-50)/50;
             if(elmnt.style.opacity<0.1){
                 elmnt.style.background = "";
