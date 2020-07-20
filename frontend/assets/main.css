@@ -114,8 +114,9 @@ body {
     top: 42px;
 }
 
-#close {
+.close {
     display: block;
+    cursor: pointer;
     position: absolute;
     top: 20px;
     right: 20px;
@@ -125,6 +126,7 @@ body {
 nav {
     display: block;
     position: fixed;
+    overflow: hidden;
     top: 0px;
     left: 0px;
     height: 100%;
@@ -187,18 +189,18 @@ nav b{
     color: #999;
 }
 
-nav b:nth-child(1){
+nav b:nth-child(2){
     margin-top: 0px;
 }
 
 .start {
-    background-color: darkgreen;
-    opacity: 0.7;
+    background-color: darkgreen !important;
+    opacity: 0.7 !important;
 }
 
 .stop {
-    background-color: orangered;
-    opacity: 0.7;
+    background-color: orangered !important;
+    opacity: 0.7 !important;
 }
 
 .draggable {
@@ -210,23 +212,24 @@ nav b:nth-child(1){
 }
 
 .wall {
-    background-color: black;
-    opacity: 0.7;
+    background-color: black !important;
+    opacity: 0.7 !important;
 }
 
-.final{
-    background-color: yellow;
-    opacity: 0.7;
-}
 
 .inqueue {
-    background-color: turquoise;
-    opacity: 0.7;
+    background-color: turquoise !important;
+    opacity: 0.7 !important;
 }
 
 .processed {
-    background-color: teal;
-    opacity: 0.7;
+    background-color: teal !important;
+    opacity: 0.7 !important;
+}
+
+.final{
+    background-color: yellow !important;
+    opacity: 0.7 !important;
 }
 
 .path {
@@ -414,7 +417,7 @@ nav b:nth-child(1){
     position: fixed;
     height: 100%;
     width: 100%;
-    z-index: 2009;
+    z-index: 10009;
 }
 
 #overlay {
@@ -433,7 +436,7 @@ nav b:nth-child(1){
     top: 50%;
     left: 50%;
     animation: spin 1s ease-in-out infinite;
-    z-index: 2010;
+    z-index: 10010;
 }
 
 @keyframes spin {
@@ -496,10 +499,33 @@ input:checked+.checklabel:after {
 
 .navcont{
     display: block;
+    position: relative;
     width: 100%;
     padding-left: 50px;
+    overflow-y: scroll;
+}
+.navcont:nth-child(4){
+    margin-top: 120px;
+    max-height: calc(100% - 350px);
+}
+
+.scrolltrack{
+    display: block;
     position: absolute;
-    top: 120px;
+    left: 0;
+    top: 0px;
+    background-color: #444;
+    width: 10px;
+    height: 300px;
+}
+
+.scrollthumb{
+    display: block;
+    position: absolute;
+    height: 25px;
+    width: 10px;
+    /* border-radius: 0px 5px 5px 0px; */
+    background-color: #666;
 }
 
 .radiolabel{
@@ -536,4 +562,25 @@ input:checked+.radiolabel:after {
     border-radius: 50%;
     background-color: blue;
     transform: rotate(45deg);
+}
+
+.dialog{
+    display: block;
+    position: fixed;
+    background-color: #333;
+    box-shadow: 2px 2px 8px#191919;
+    border-radius: 10px;
+    padding: 0px;
+    overflow: hidden;
+    right: 30px;
+    top:30px;
+    cursor: grab;
+    width: 200px;
+    height: 0px;
+    transition: height 0.3s ease, padding 0.3s ease;
+    z-index: 10000;
+}
+
+.dialog input{
+    display: block;
 }

@@ -8,11 +8,14 @@ function makeChanges(resp, changes) {
         change = changes[i];
         c = document.getElementById(change.x + "x" + change.y);
         if (change.color == 0) {
-            c.className = "cell";
+            c.classList.remove("inqueue");
+            c.classList.remove("processed");
         } else if (change.color == 1) {
-            c.className = "inqueue cell";
+            c.classList.add("inqueue");
+            c.classList.remove("processed");
         } else {
-            c.className = "processed cell";
+            c.classList.remove("inqueue");
+            c.classList.add("processed");
         }
         i++;
         if (i == changes.length) {
@@ -26,7 +29,11 @@ function makeChanges(resp, changes) {
 function drawPath(path) {
     var i = 0, int = 0;
     if(path.length<2){
-        alert("No path found!!");
+        if(document.getElementById("algorithm").value == "1"){
+            alert("No path found! Try increasing the Beam Size.");
+        }else{
+            alert("No path found!!");
+        }
         document.body.style.pointerEvents = "";
         return 0;
     }
@@ -90,6 +97,16 @@ function gatherData() {
         y: Math.floor((stop.offsetLeft - margin) / 40),
         x: Math.floor(stop.offsetTop / 40)
     };
+    portal1 = document.getElementById("portal1");
+    portal1 = {
+        y: Math.floor((portal1.offsetLeft - margin) / 40),
+        x: Math.floor(portal1.offsetTop / 40)
+    };
+    portal2 = document.getElementById("portal2");
+    portal2 = {
+        y: Math.floor((portal2.offsetLeft - margin) / 40),
+        x: Math.floor(portal2.offsetTop / 40)
+    };
     for (var j = 0; j < m; j++) {
         temp = [];
         for (var i = 0; i < n; i++) {
@@ -110,9 +127,12 @@ function gatherData() {
         })
     }
     var data = new FormData();
-    data.append('algo', parseInt(document.getElementById("algorithm").value))
+    data.append('algo', parseInt(document.getElementById("algorithm").value));
+    data.append('heuristic', parseInt(document.getElementById("heuristic").value))
+    data.append('relaxation', Number(document.getElementById("relaxation").value))
     data.append('start', JSON.stringify([start]));
     data.append('stop', JSON.stringify([stop]));
+    data.append('wormhole', JSON.stringify([portal1, portal2]));
     data.append('cutCorners', 1*document.getElementById("cutcorners").checked);
     data.append('allowDiagonals', 1*document.getElementById("allowdiag").checked);
     data.append('biDirectional', 1*document.getElementById("bidirec").checked);
@@ -121,6 +141,7 @@ function gatherData() {
     data.append('beamWidth', document.getElementById("beamwidth").value);
     data.append('checkpoints', JSON.stringify(checkpoints));
     data.append('maze', JSON.stringify(maze));
+    data.append('weights', JSON.stringify(weights));
     return data;
 }
 
