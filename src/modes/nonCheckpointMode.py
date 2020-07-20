@@ -113,7 +113,7 @@ def nonCheckpointMode(dict):
                 intersection = success.pop()
                 wrapped = set()
                 wrapped.add(intersection)
-                if algo == 8:
+                if algo == 10:
                     paths = env.getJpsPaths(wrapped)
                 else:
                     paths = env.getPaths(wrapped)
