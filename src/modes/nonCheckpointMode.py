@@ -51,6 +51,7 @@ def nonCheckpointMode(dict):
 
     beamWidth = int(dict['beamWidth'])
     relaxation = int(dict['relaxation'])
+    maxDepth = int(dict['maxDepth'])
     gridChanges = []
     path = []
 
@@ -63,20 +64,22 @@ def nonCheckpointMode(dict):
                 if algo == 0:
                     src.aStar(env, destinations)
                 if algo == 1:
-                    src.beamSearch(env, destinations, beamWidth)
-                if algo == 2:
-                    src.bestFirstSearch(env, destinations)
-                if algo == 3:
-                    src.breadthFirstSearch(env)
-                if algo == 4:
-                    src.depthFirstSearch(env)
-                if algo == 5:
-                    src.dijkstra(env)
-                if algo == 8:
-                    src.jumpPointSearch(env, destinations)
-                if algo == 9:
                     src.staticAStar(env, destinations, relaxation)
+                if algo == 2:
+                    src.dynamicAStar(env, destinations, relaxation, maxDepth)
+                if algo == 3:
+                    src.beamSearch(env, destinations, beamWidth)
+                if algo == 4:
+                    src.bestFirstSearch(env, destinations)
+                if algo == 5:
+                    src.breadthFirstSearch(env)
+                if algo == 8:
+                    src.depthFirstSearch(env)
+                if algo == 9:
+                    src.dijkstra(env)
                 if algo == 10:
+                    src.jumpPointSearch(env, destinations)
+                if algo == 11:
                     src.uniformCostSearch(env)
                 logs.extend(src.logs)
             for dest in destinations:
@@ -84,17 +87,23 @@ def nonCheckpointMode(dict):
                     if algo == 0:
                         dest.aStar(env, sources)
                     if algo == 1:
-                        dest.beamSearch(env, sources, beamWidth)
+                        dest.staticAStar(env, sources, relaxation)
                     if algo == 2:
-                        dest.bestFirstSearch(env, sources)
+                        dest.dynamicAStar(env, destinations, relaxation, maxDepth)
                     if algo == 3:
-                        dest.breadthFirstSearch(env)
+                        dest.beamSearch(env, sources, beamWidth)
                     if algo == 4:
-                        dest.depthFirstSearch(env)
+                        dest.bestFirstSearch(env, sources)
                     if algo == 5:
-                        dest.dijkstra(env)
+                        dest.breadthFirstSearch(env)
                     if algo == 8:
+                        dest.depthFirstSearch(env)
+                    if algo == 9:
+                        dest.dijkstra(env)
+                    if algo == 10:
                         dest.jumpPointSearch(env, sources)
+                    if algo == 11:
+                        dest.uniformCostSearch(env)
                 logs.extend(dest.logs)
             success, gridChange = env.update(logs)
             # env.print()
