@@ -27,21 +27,25 @@ function makeChanges(resp, changes) {
 }
 
 function drawPath(path) {
-    var i = 0, int = 0;
-    if(path.length<2){
-        if(document.getElementById("algorithm").value == "1"){
+    var i = 0,
+        int = 0;
+    if (path.length < 2) {
+        if (document.getElementById("algorithm").value == "1") {
             alert("No path found! Try increasing the Beam Size.");
-        }else{
+        } else {
             alert("No path found!!");
         }
         document.body.style.pointerEvents = "";
         return 0;
     }
+
     function drawLine() {
         point1 = path[i];
         point2 = path[i + 1];
-        if(i)
-            document.getElementById(point1.x+"x"+point1.y).classList.add("final");
+        if (point1.x == -1) return true;
+        if (point2.x == -1) return true;
+        if (i)
+            document.getElementById(point1.x + "x" + point1.y).classList.add("final");
         var dx = point2.y - point1.y;
         var dy = point2.x - point1.x;
         if (dx * dy) {
@@ -134,11 +138,11 @@ function gatherData() {
     data.append('stop', JSON.stringify([stop]));
     data.append('wormhole', JSON.stringify([portal1, portal2]));
     data.append('wormholeAllowed', document.getElementById("wormhole").checked);
-    data.append('cutCorners', 1*document.getElementById("cutcorners").checked);
-    data.append('allowDiagonals', 1*document.getElementById("allowdiag").checked);
-    data.append('biDirectional', 1*document.getElementById("bidirec").checked);
-    data.append('multistart', 1*document.getElementById("multistart").checked);
-    data.append('multidest', 1*document.getElementById("multidest").checked);
+    data.append('cutCorners', 1 * document.getElementById("cutcorners").checked);
+    data.append('allowDiagonals', 1 * document.getElementById("allowdiag").checked);
+    data.append('biDirectional', 1 * document.getElementById("bidirec").checked);
+    data.append('multistart', 1 * document.getElementById("multistart").checked);
+    data.append('multidest', 1 * document.getElementById("multidest").checked);
     data.append('beamWidth', document.getElementById("beamwidth").value);
     data.append('checkpoints', JSON.stringify(checkpoints));
     data.append('maze', JSON.stringify(maze));
@@ -156,7 +160,7 @@ function find() {
     console.log(data.entries());
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/findpath/");
-    xhr.onload = ()=>{
+    xhr.onload = () => {
         resp = JSON.parse(xhr.response);
         over.style.display = "none";
         document.body.style.pointerEvents = "none";

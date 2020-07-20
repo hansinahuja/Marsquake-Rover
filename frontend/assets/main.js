@@ -11,148 +11,131 @@ var multistart = false;
 var intensityMode = false;
 var intensitySlider = false;
 
-function lerpColor(a,b,l){
-    r1 = parseInt(a.substr(1,2),16);
-    g1 = parseInt(a.substr(3,2),16);
-    b1 = parseInt(a.substr(5,2),16);
-    r2 = parseInt(b.substr(1,2),16);
-    g2 = parseInt(b.substr(3,2),16);
-    b2 = parseInt(b.substr(5,2),16);
-    r3 = Math.floor((1-l)*r1 + l*r2);
-    g3 = Math.floor((1-l)*g1 + l*g2);
-    b3 = Math.floor((1-l)*b1 + l*b2);
-    c = (r3<<16)+(g3<<8)+b3;
-    return "#"+c.toString(16).padStart(6,0);
+function lerpColor(a, b, l) {
+    r1 = parseInt(a.substr(1, 2), 16);
+    g1 = parseInt(a.substr(3, 2), 16);
+    b1 = parseInt(a.substr(5, 2), 16);
+    r2 = parseInt(b.substr(1, 2), 16);
+    g2 = parseInt(b.substr(3, 2), 16);
+    b2 = parseInt(b.substr(5, 2), 16);
+    r3 = Math.floor((1 - l) * r1 + l * r2);
+    g3 = Math.floor((1 - l) * g1 + l * g2);
+    b3 = Math.floor((1 - l) * b1 + l * b2);
+    c = (r3 << 16) + (g3 << 8) + b3;
+    return "#" + c.toString(16).padStart(6, 0);
 }
 
 algoChange();
-function algoChange(){
+
+function algoChange() {
     algo = document.getElementById("algorithm").value;
-    if(algo!="3"){
+    if (algo != "3") {
         document.getElementById("beamwidth").disabled = true;
         document.getElementById("beamwidthl").style.color = "#555";
-    }else{
+    } else {
         document.getElementById("beamwidth").disabled = false;
         document.getElementById("beamwidthl").style.color = "#FFF";
     }
-    if(algo=="10"){
+    if (algo == "10") {
         document.getElementById("cutcorners").checked = true;
         document.getElementById("cutcorners").disabled = true;
         document.getElementById("cutcornersl").style.opacity = "0.3";
         document.getElementById("allowdiag").checked = true;
         document.getElementById("allowdiag").disabled = true;
         document.getElementById("allowdiagl").style.opacity = "0.3";
-    }else{
+    } else {
         document.getElementById("cutcorners").disabled = false;
         document.getElementById("cutcornersl").style.opacity = "1";
         document.getElementById("allowdiag").disabled = false;
         document.getElementById("allowdiagl").style.opacity = "1";
     }
-    if(algo=="1" || algo=="2"){
+    if (algo == "1" || algo == "2") {
         document.getElementById("relaxation").disabled = false;
         document.getElementById("relaxationl").style.color = "#FFF";
-    }else{
+    } else {
         document.getElementById("relaxation").disabled = true;
         document.getElementById("relaxationl").style.color = "#555";
     }
 
-    if(algo=="5" || algo=="8"|| algo=="9" || algo=="11"){
+    if (algo == "5" || algo == "8" || algo == "9" || algo == "11") {
         document.getElementById("heuristic").disabled = true;
-    }else{
+    } else {
         document.getElementById("heuristic").disabled = false;
     }
 
-    if(algo=="7"){
+    if (algo == "7") {
         AnimationTime = 1;
-    }else{
+    } else {
         AnimationTime = 10;
     }
 }
 
-function multiDest(){
-    if(!document.getElementById("multidest").checked){
-        if(document.getElementById("multistart").checked){
-            document.getElementById("multistart").checked = false;
-        }
-        document.getElementById("bidirec").disabled = false;
-        document.getElementById("bidirecl").style.opacity = "1";
-        multistart = false;
-        multidest = true;
-        for(let elmnt of document.getElementsByClassName("checkpoint")){
-            t = Math.floor(elmnt.offsetTop/40);
-            l = Math.floor(elmnt.offsetLeft/40-margin/40);
-            document.getElementById(t+"x"+l).classList.remove("start");
-            document.getElementById(t+"x"+l).classList.add("stop");
-            elmnt.src = "images/red.svg";
-        }
-    }else{
-        multistart = false;
-        multidest = false;
-        if(chid>0){
-            document.getElementById("bidirec").checked = false;
-            document.getElementById("bidirec").disabled = true;
-            document.getElementById("bidirecl").style.opacity = "0.3";
-        }
-        let i=0;
-        for(let elmnt of document.getElementsByClassName("checkpoint")){
-            t = Math.floor(elmnt.offsetTop/40);
-            l = Math.floor(elmnt.offsetLeft/40-margin/40);
-            document.getElementById(t+"x"+l).classList.remove("stop");
-            elmnt.src = "images/yellow"+(i+1)+".svg";
-            i++;
-        }
+function multiDest() {
+    if (document.getElementById("multistart").checked) {
+        document.getElementById("multistart").checked = false;
+    }
+    document.getElementById("bidirec").disabled = false;
+    document.getElementById("bidirecl").style.opacity = "1";
+    multistart = false;
+    multidest = true;
+    for (let elmnt of document.getElementsByClassName("checkpoint")) {
+        t = Math.floor(elmnt.offsetTop / 40);
+        l = Math.floor(elmnt.offsetLeft / 40 - margin / 40);
+        document.getElementById(t + "x" + l).classList.remove("start");
+        document.getElementById(t + "x" + l).classList.add("stop");
+        elmnt.src = "images/red.svg";
     }
 }
 
-
-function multiSource(){
-    if(!document.getElementById("multistart").checked){
-        if(document.getElementById("multidest").checked){
-            document.getElementById("multidest").checked = false;
-        }
-        multistart = true;
-        multidest = false;
-        document.getElementById("bidirec").disabled = false;
-        document.getElementById("bidirecl").style.opacity = "1";
-        for(let elmnt of document.getElementsByClassName("checkpoint")){
-            t = Math.floor(elmnt.offsetTop/40);
-            l = Math.floor(elmnt.offsetLeft/40-margin/40);
-            document.getElementById(t+"x"+l).classList.remove("stop");
-            document.getElementById(t+"x"+l).classList.add("start");
-            elmnt.src = "images/green.svg";
-        }
-    }else{
-        multistart = false;
-        multidest = false;
-        if(chid>0){
-            document.getElementById("bidirec").checked = false;
-            document.getElementById("bidirec").disabled = true;
-            document.getElementById("bidirecl").style.opacity = "0.3";
-        }
-        let i=0;
-        for(let elmnt of document.getElementsByClassName("checkpoint")){
-            t = Math.floor(elmnt.offsetTop/40);
-            l = Math.floor(elmnt.offsetLeft/40-margin/40);
-            document.getElementById(t+"x"+l).classList.remove("start");
-            elmnt.src = "images/yellow"+(i+1)+".svg";
-            i++;
-        }
+function checkpointMode(){
+    multistart = false;
+    multidest = false;
+    if (chid > 0) {
+        document.getElementById("bidirec").checked = false;
+        document.getElementById("bidirec").disabled = true;
+        document.getElementById("bidirecl").style.opacity = "0.3";
+    }
+    let i = 0;
+    for (let elmnt of document.getElementsByClassName("checkpoint")) {
+        t = Math.floor(elmnt.offsetTop / 40);
+        l = Math.floor(elmnt.offsetLeft / 40 - margin / 40);
+        document.getElementById(t + "x" + l).classList.remove("start");
+        document.getElementById(t + "x" + l).classList.remove("stop");
+        elmnt.src = "images/yellow" + (i + 1) + ".svg";
+        i++;
     }
 }
 
-function changeSlider(id){
+function multiSource() {
+    if (document.getElementById("multidest").checked) {
+        document.getElementById("multidest").checked = false;
+    }
+    multistart = true;
+    multidest = false;
+    document.getElementById("bidirec").disabled = false;
+    document.getElementById("bidirecl").style.opacity = "1";
+    for (let elmnt of document.getElementsByClassName("checkpoint")) {
+        t = Math.floor(elmnt.offsetTop / 40);
+        l = Math.floor(elmnt.offsetLeft / 40 - margin / 40);
+        document.getElementById(t + "x" + l).classList.remove("stop");
+        document.getElementById(t + "x" + l).classList.add("start");
+        elmnt.src = "images/green.svg";
+    }
+}
+
+function changeSlider(id) {
     let s, p = '';
-    if(id=='beamwidth'){
+    if (id == 'beamwidth') {
         s = "Beam Width: ";
-    }else if(id=='relaxation'){
+    } else if (id == 'relaxation') {
         s = "Relaxation: ";
-    }else if(id=='maxdepth'){
+    } else if (id == 'maxdepth') {
         s = "Max Depth: ";
-    }else{
+    } else {
         s = "Intensity: ";
         p = '%';
     }
-    document.getElementById(id+"l").innerText=s+document.getElementById(id).value+p;
+    document.getElementById(id + "l").innerText = s + document.getElementById(id).value + p;
 }
 
 
@@ -166,11 +149,11 @@ function hideNav() {
     nav.style.marginLeft = "-350px";
 }
 
-function deleteCheckpoints(){
+function deleteCheckpoints() {
     document.getElementById("bidirec").disabled = false;
     document.getElementById("bidirecl").style.opacity = "1";
-    while(chid){
-        ch = document.getElementById("checkpoint" + (chid-1));
+    while (chid) {
+        ch = document.getElementById("checkpoint" + (chid - 1));
         i = ch.style.left;
         i = Number(i.substr(0, i.length - 2));
         i = Math.floor((i - margin) / 40);
@@ -179,10 +162,10 @@ function deleteCheckpoints(){
         j = Math.floor(j / 40);
         box[j][i] = 0;
         ch.parentNode.removeChild(ch);
-        if(multistart){
-            document.getElementById(j+'x'+i).classList.remove("start");
-        }else if(multidest){
-            document.getElementById(j+'x'+i).classList.remove("stop");
+        if (multistart) {
+            document.getElementById(j + 'x' + i).classList.remove("start");
+        } else if (multidest) {
+            document.getElementById(j + 'x' + i).classList.remove("stop");
         }
         chid--;
     }
@@ -223,14 +206,14 @@ function makeGrid() {
     m = Math.floor(window.innerHeight / 40);
     for (var j = 0; j <= m; j++) {
         temp = []
-        temp1= []
+        temp1 = []
         for (var i = 0; i <= n; i++) {
             cell = document.createElement("div");
             cell.classList = ["cell"];
             cell.style.left = 40 * i + "px";
             cell.style.top = 40 * j + "px";
             // cell.innerText = "50%";
-            if(i==n || j==m){
+            if (i == n || j == m) {
                 cell.classList.add("wall");
                 temp.push(2);
                 grid.appendChild(cell);
@@ -293,19 +276,19 @@ function addCheckpoint(id) {
         if (chid > 4) {
             return false;
         }
-        if(chid==0 && !multidest && !multistart){
+        if (chid == 0 && !multidest && !multistart) {
             document.getElementById("bidirec").checked = false;
             document.getElementById("bidirec").disabled = true;
             document.getElementById("bidirecl").style.opacity = "0.3";
         }
         ch = document.createElement("img");
-        if(multistart){
+        if (multistart) {
             ch.src = "images/green.svg";
             document.getElementById(id).classList.add("start");
-        }else if(multidest){
+        } else if (multidest) {
             ch.src = "images/red.svg";
             document.getElementById(id).classList.add("stop");
-        }else{
+        } else {
             ch.src = "images/yellow" + (chid + 1) + ".svg";
         }
         ch.classList = "draggable checkpoint";
@@ -329,7 +312,7 @@ function removeCheckpoint(id) {
             clearGrid();
             showing = false;
         }
-        if(chid==1 && !multidest && !multistart){
+        if (chid == 1 && !multidest && !multistart) {
             document.getElementById("bidirec").disabled = false;
             document.getElementById("bidirecl").style.opacity = "1";
         }
@@ -343,17 +326,17 @@ function removeCheckpoint(id) {
         j = Math.floor(j / 40);
         box[j][i] = 0;
         ch.parentNode.removeChild(ch);
-        if(multistart){
-            document.getElementById(j+'x'+i).classList.remove("start");
-        }else if(multidest){
-            document.getElementById(j+'x'+i).classList.remove("stop");
+        if (multistart) {
+            document.getElementById(j + 'x' + i).classList.remove("start");
+        } else if (multidest) {
+            document.getElementById(j + 'x' + i).classList.remove("stop");
         }
         chid--;
         for (var i = id + 1; i < chid + 1; i++) {
             ch = document.getElementById("checkpoint" + i);
             ch.id = "checkpoint" + (i - 1);
             ch.oncontextmenu = removeCheckpoint(i - 1);
-            if(!multistart && !multidest)
+            if (!multistart && !multidest)
                 ch.src = "images/yellow" + i + ".svg";
         }
         return false;
@@ -452,21 +435,21 @@ function drawingElement(elmnt) {
         e = e || window.event;
         e.preventDefault();
         if (e.button != 0) return false;
-        val = lerpColor("#0000FF", "#FF0000", document.getElementById("intensity").value/100);
+        val = lerpColor("#0000FF", "#FF0000", document.getElementById("intensity").value / 100);
         pos3 = e.clientX;
         pos4 = e.clientY;
         document.onmouseup = closeDragElement;
         let i = elmnt.id.split('x');
-        if(intensityMode){
+        if (intensityMode) {
             weights[Number(i[0])][Number(i[1])] = parseInt(document.getElementById("intensity").value);
             elmnt.style.background = val;
-            elmnt.style.opacity = Math.abs(document.getElementById("intensity").value-50)/50;
-            if(elmnt.style.opacity<0.1){
+            elmnt.style.opacity = Math.abs(document.getElementById("intensity").value - 50) / 50;
+            if (elmnt.style.opacity < 0.1) {
                 elmnt.style.background = "";
                 elmnt.style.opacity = 1;
             }
             document.onmousemove = elementDragIntensity;
-        }else if (box[Number(i[0])][Number(i[1])] == 2) {
+        } else if (box[Number(i[0])][Number(i[1])] == 2) {
             box[Number(i[0])][Number(i[1])] = 0;
             elmnt.classList = "cell";
             document.onmousemove = elementDragOFF;
@@ -487,8 +470,8 @@ function drawingElement(elmnt) {
         let elmnt = document.getElementById(j + 'x' + i);
         weights[j][i] = parseInt(document.getElementById("intensity").value);
         elmnt.style.background = val;
-        elmnt.style.opacity = Math.abs(document.getElementById("intensity").value-50)/50;
-        if(elmnt.style.opacity<0.1){
+        elmnt.style.opacity = Math.abs(document.getElementById("intensity").value - 50) / 50;
+        if (elmnt.style.opacity < 0.1) {
             elmnt.style.background = "";
             elmnt.style.opacity = 1;
         }
@@ -526,62 +509,88 @@ function drawingElement(elmnt) {
     }
 }
 
-function scrollBar(cont){
-    track = cont.querySelector('.scrolltrack');
-    thumb = cont.querySelector('.scrollthumb');
-    h = cont.offsetHeight-1;
-    track.style.height = h+"px";
-    thumb.style.height = Math.floor(h*h/(cont.scrollHeight))+"px";
-    track.style.top = cont.scrollTop+'px';
-    thumb.style.top = Math.floor(cont.scrollTop*h/cont.scrollHeight)+'px';
-    if(h>=cont.scrollHeight){
+function scrollBar(cont) {
+    let track = cont.querySelector('.scrolltrack');
+    let thumb = cont.querySelector('.scrollthumb');
+    let h = cont.offsetHeight - 1;
+    track.style.height = h + "px";
+    thumb.style.height = Math.floor(h * h / (cont.scrollHeight)) + "px";
+    track.style.top = cont.scrollTop + 'px';
+    thumb.style.top = Math.floor(cont.scrollTop * h / cont.scrollHeight) + 'px';
+    if (h >= cont.scrollHeight) {
         track.style.display = "none";
-    }else{
+    } else {
         track.style.display = "block";
     }
+
+    thumb.onmousedown = click;
+    let pos2, pos4;
+
+    function click(e){
+        e = e || window.event;
+        if (e.button != 0) return false;
+        e.preventDefault();
+        pos4 = e.clientY;
+        document.onmouseup = close;
+        document.onmousemove = drag;
+    }
+    function drag(e){
+        e = e || window.event;
+        e.preventDefault();
+        pos2 = pos4 - e.clientY;
+        pos4 = e.clientY;
+        if(thumb.offsetTop - pos2 >= cont.offsetHeight-1 || thumb.offsetTop - pos2 < 0) return true;
+        cont.scrollTop = Math.ceil((thumb.offsetTop - pos2)*cont.scrollHeight/h);
+        thumb.style.top = (thumb.offsetTop - pos2) + "px";
+    }
+    function close(){
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+
 }
 
-function enableWormhole(){
+function enableWormhole() {
     let portals = [document.getElementById("portal1"), document.getElementById("portal2")];
     portals[0].style.display = "block";
     portals[1].style.display = "block";
     let k = 0;
-    for(let i = 5;i<box[0].length;i++){
-        for(let j = 5;j<box.length;j++){
-            if(!box[j][i]){
+    for (let i = 5; i < box[0].length; i++) {
+        for (let j = 5; j < box.length; j++) {
+            if (!box[j][i]) {
                 box[j][i] = 1;
-                portals[k].style.left = 40*i+20+'px';
-                portals[k].style.top = 40*j+20+'px';
-                i+=5;
+                portals[k].style.left = 40 * i + 20 + 'px';
+                portals[k].style.top = 40 * j + 20 + 'px';
+                i += 5;
                 k++;
-                if(k==2) return 0;
+                if (k == 2) return 0;
             }
         }
-    } 
+    }
 }
 
-function disableWormhole(){
+function disableWormhole() {
     let portals = [document.getElementById("portal1"), document.getElementById("portal2")];
-    for(let i=0; i<2; i++){
+    for (let i = 0; i < 2; i++) {
         portals[i].style.display = "none";
         j = portals[i].style.left;
-        j = j.substr(0, j.length-2);
+        j = j.substr(0, j.length - 2);
         j = Number(j)
-        j = Math.floor(j/40);
+        j = Math.floor(j / 40);
 
         k = portals[i].style.top;
-        k = k.substr(0, k.length-2);
+        k = k.substr(0, k.length - 2);
         k = Number(k)
-        k = Math.floor(k/40);
+        k = Math.floor(k / 40);
 
         box[k][j] = 0;
     }
 }
 
-function toggleWorm(){
-    if(document.getElementById("wormhole").checked){
+function toggleWorm() {
+    if (document.getElementById("wormhole").checked) {
         disableWormhole();
-    }else{
+    } else {
         enableWormhole();
     }
 }
@@ -594,7 +603,7 @@ function dragDialog(elmnt) {
     elmnt.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
-        if(intensitySlider) return true;
+        if (intensitySlider) return true;
         e = e || window.event;
         if (e.button != 0) return false;
         e.preventDefault();
@@ -623,14 +632,14 @@ function dragDialog(elmnt) {
     }
 }
 
-function showLight(){
+function showLight() {
     light = document.getElementById("light");
     light.style.height = "70px";
     intensityMode = true;
     // light.style.padding = "20px";
 }
 
-function hideLight(){
+function hideLight() {
     light = document.getElementById("light");
     light.style.height = "0px";
     intensityMode = false;
@@ -654,9 +663,9 @@ x = document.createElement("img")
 x.src = "images/yellow5.svg";
 
 
-window.onload = ()=> {
+window.onload = () => {
     document.getElementById("loading").style.opacity = 0;
-    setTimeout(()=>{
+    setTimeout(() => {
         document.getElementById("loading").style.display = "none";
     }, 300);
 };

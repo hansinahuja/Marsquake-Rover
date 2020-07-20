@@ -91,10 +91,12 @@
             <label class="checklabel" for="bidirec" id="bidirecl">Bidirectional</label>
             <input type="checkbox" id="wormhole">
             <label onclick="toggleWorm();" class="checklabel" for="wormhole" id="wormholel">Add Wormhole</label>
-            <input type="checkbox" id="multidest">
-            <label onclick="multiDest()" class="checklabel" for="multidest" id="multidestl">Multiple Destinations</label>
-            <input type="checkbox" id="multistart">
-            <label onclick="multiSource()" class="checklabel" for="multistart" id="multistartl">Multiple Sources</label>
+            <input name="mode" type="radio" id="checkp" checked>
+            <label onclick="checkpointMode()" class="radiolabel" for="checkp" id="checkpl">Checkpoints</label>
+            <input name="mode" type="radio" id="multidest">
+            <label onclick="multiDest()" class="radiolabel" for="multidest" id="multidestl">Multiple Destinations</label>
+            <input name="mode" type="radio" id="multistart">
+            <label onclick="multiSource()" class="radiolabel" for="multistart" id="multistartl">Multiple Sources</label>
             <label for="relaxation" id="relaxationl">Relaxation: 1.0</label>
             <input onmousemove="changeSlider(this.id);" type="range" step="0.1" min="0" max="2" value="1" style="display: block; width: 180px; margin-top: 10px; margin-bottom: 10px;" id="relaxation">
             <!-- <label for="maxdepth" id="maxdepthl">Max Depth: 10</label>
