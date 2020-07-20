@@ -1,13 +1,25 @@
 def switchLevel(level, beamWidth):
+
+    """
+    Switches the level in focus to the next level
+    Args:
+        level: The next beam level
+        beamWidth: maximum allowable width of beam to limit space complexity
+    Returns:
+        None
+    """
+
     newLevel = []
+
+    # Get the smallest heuristics in case of clashes
     fValues = {}
     for fValue, cell in level:
         if cell not in fValues or fValues[cell] > fValue:
             fValues[cell] = fValue
 
+    # Create the new level and limit space complexity
     for cell, fValue in fValues.items():
         newLevel.append((fValue, cell))
-
     newLevel.sort()
     newLevel = newLevel[:beamWidth]
     newLevel.reverse()

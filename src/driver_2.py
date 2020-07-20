@@ -16,10 +16,10 @@ def driver(dict):
 
 # dict = {
 #     "algo": 0,
-#     "start": [{"x": 2, "y": 0}],
-#     "stop": [{"x": 2, "y": 4}],
+#     "start": [{"x": 0, "y": 0}],
+#     "stop": [{"x": 0, "y": 4}],
 #     "checkpoints": [ ],
-#     # "wormhole": [{'x': 4, 'y1': 0}, {'x': 0, 'y': 4}],
+#     "wormhole": [{'x': 4, 'y': 0}, {'x': 4, 'y': 4}],
 #     "multistart": '0',
 #     "relaxation": '3',
 #     "maxDepth": '8',
@@ -31,7 +31,7 @@ def driver(dict):
 #     "maze":
 #     [[0, 0, 1, 0, 0],
 #      [0, 0, 1, 0, 0],
-#      [0, 0, 0, 0, 0],
+#      [0, 0, 1, 0, 0],
 #      [0, 0, 1, 0, 0],
 #      [0, 0, 1, 0, 0],
 #      ],
@@ -44,4 +44,4 @@ def driver(dict):
 #      ],
 # }
 
-# print(driver(dict))
+# print(driver(dict)['path'])

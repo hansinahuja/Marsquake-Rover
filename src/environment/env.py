@@ -237,6 +237,22 @@ class Environment:
 
             path1.reverse()
             path = path1 + path2[1:]
+
+            wormholeOutIndex = -1
+            for i in range(1, len(path)):
+                x1, y1 = path[i-1]['x'], path[i-1]['y']
+                x2, y2 = path[i]['x'], path[i]['y']
+                cell1, cell2 = self.grid[x1][y1], self.grid[x2][y2]
+                if cell1.type == 'wormholeEntry' and cell2.type == 'wormholeExit':
+                    wormholeOutIndex = i
+                    break
+
+            if wormholeOutIndex != -1:
+                path1 = path[:wormholeOutIndex]
+                path2 = path[wormholeOutIndex:]
+                buffer = {'x': -1, 'y': -1}
+                path = path1 + [buffer] + path2
+                
             paths.append(path)
         return paths
 
