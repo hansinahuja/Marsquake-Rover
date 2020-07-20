@@ -1,6 +1,5 @@
 from collections import deque
 
-
 def breadthFirstSearch(self, environment):
 
     """
@@ -29,7 +28,7 @@ def breadthFirstSearch(self, environment):
     nextCell = self.waitList.popleft()
     self.logs.append([self, nextCell, 'visited'])
 
-    # Iterate over the immediate neighbours
+    # Iterate over valid neighbours
     for nx, ny in nextCell.location.neighbours:
 
         if not self.isValidMove(environment, nextCell, nx, ny):

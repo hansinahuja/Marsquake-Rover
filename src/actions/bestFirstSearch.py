@@ -31,7 +31,7 @@ def bestFirstSearch(self, environment, targets):
     self.visited.add(nextCell)
     self.logs.append([self, nextCell, 'visited'])
 
-    # Iterate over immediate neighbours
+    # Iterate over valid neighbours
     for nx, ny in nextCell.location.neighbours:
 
         if not self.isValidMove(environment, nextCell, nx, ny):

@@ -16,45 +16,61 @@ def switchLevel(level, beamWidth):
 
 def beamSearch(self, environment, targets, beamWidth):
 
+    """
+    Performs one iteration of beam search based on agent's current state.
+    Args:
+        environment: The current environment
+        targets: The target agents
+        beamWidth: maximum allowable width of beam to limit space complexity
+    Returns:
+        None
+    """
+    
+    # Clean the logs
     self.logs = []
 
     # First iteration
     if self.waitList == None:
         sourceCell = environment.grid[self.location.x][self.location.y]
-        self.waitList = [
-            [(environment.bestHeuristic(sourceCell, targets), sourceCell)], []]
+        self.waitList = [[(environment.bestHeuristic(sourceCell, targets), sourceCell)], []]
         self.distances[sourceCell] = 0
 
     # Exhausted all possible moves
     if len(self.waitList) == 0:
         return
 
+    # If current level is exhaustem, switch the levels and log the changes
     currentLevel, nextLevel = self.waitList
     if len(currentLevel) == 0:
         currentLevel, nextLevel = switchLevel(nextLevel, beamWidth), []
         for _, cell in currentLevel:
             self.logs.append([self, cell, 'waitList'])
-            # print(cell.location.x, cell.location.y, 'waitList')
 
+    # No more possible moves
     if len(currentLevel) == 0:
         self.waitList = [currentLevel, nextLevel]
         return
 
+    # Pop the next element and log the changes
     minElement = currentLevel.pop()
     nextCell = minElement[1]
     self.visited.add(nextCell)
     self.logs.append([self, nextCell, 'visited'])
-    # print(nextCell.location.x, nextCell.location.y, 'visited')
 
+    # Iterate over valid neighbours
     for nx, ny in nextCell.location.neighbours:
+
         if not self.isValidMove(environment, nextCell, nx, ny):
             continue
+
+        # Calculate heuristic and check if a better path is possible
         neighbour = environment.grid[nx][ny]
-        # newDistance = self.distances[nextCell] + neighbour.weight
         newDistance = self.distances[nextCell] + environment.distance(nextCell, neighbour)
         fValue = newDistance + environment.bestHeuristic(neighbour, targets)
         if neighbour in self.distances and self.distances[neighbour] <= newDistance:
             continue
+
+        # Add neighbour to the queue and log the changes
         nextLevel.append((fValue, neighbour))
         self.path[neighbour] = nextCell
         self.distances[neighbour] = newDistance

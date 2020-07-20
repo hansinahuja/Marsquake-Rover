@@ -1,10 +1,9 @@
 from collections import deque
 
-
 def depthFirstSearch(self, environment):
 
     """
-    Performs one iteration of breadth first search based on agent's current state.
+    Performs one iteration of depth first search based on agent's current state.
     Args:
         environment: The current environment
     Returns:
@@ -44,7 +43,7 @@ def depthFirstSearch(self, environment):
     self.logs.append([self, nextCell, 'inRecursion'])
 
     
-    # Iterate over the immediate neighbours
+    # Iterate over valid neighbours
     for nx, ny in nextCell.location.neighbours:
         if not self.isValidMove(environment, nextCell, nx, ny):
             continue
