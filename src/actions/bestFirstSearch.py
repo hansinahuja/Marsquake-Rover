@@ -1,8 +1,17 @@
 import heapq
 
-
 def bestFirstSearch(self, environment, targets):
 
+    """
+    Performs one iteration of best first search based on agent's current state.
+    Args:
+        environment: The current environment
+        targets: The target agents
+    Returns:
+        None
+    """
+
+    # Clean the logs
     self.logs = []
 
     # First iteration
@@ -12,28 +21,31 @@ def bestFirstSearch(self, environment, targets):
             sourceCell, targets), sourceCell)]
         self.distances[sourceCell] = 0
 
+    # Exhausted all possible moves
     if len(self.waitList) == 0:
         return
 
+    # Pop the top element and log the changes
     minElement = heapq.heappop(self.waitList)
     nextCell = minElement[1]
     self.visited.add(nextCell)
     self.logs.append([self, nextCell, 'visited'])
-    # print(nextCell.location.x, nextCell.location.y, 'visited')
 
+    # Iterate over immediate neighbours
     for nx, ny in nextCell.location.neighbours:
+
         if not self.isValidMove(environment, nextCell, nx, ny):
             continue
+
+        # Check if a better path is possible
         neighbour = environment.grid[nx][ny]
-        # newDistance = self.distances[nextCell] + neighbour.weight
         newDistance = self.distances[nextCell] + environment.distance(nextCell, neighbour)
         if neighbour in self.distances and self.distances[neighbour] <= newDistance:
             continue
         
+        # Add the neighbour to the heap and log the changes
         heuristic = environment.bestHeuristic(neighbour, targets)
         heapq.heappush(self.waitList, (heuristic, neighbour))
         self.path[neighbour] = nextCell
         self.distances[neighbour] = newDistance
-        # self.visited.add(neighbour)
         self.logs.append([self, neighbour, 'waitList'])
-        # print(neighbour.location.x, neighbour.location.y, 'inQueue')

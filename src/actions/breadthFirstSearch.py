@@ -3,6 +3,15 @@ from collections import deque
 
 def breadthFirstSearch(self, environment):
 
+    """
+    Performs one iteration of breadth first search based on agent's current state.
+    Args:
+        environment: The current environment
+    Returns:
+        None
+    """
+
+    # Clean the logs
     self.logs = []
 
     # First iteration
@@ -16,16 +25,19 @@ def breadthFirstSearch(self, environment):
     if len(self.waitList) == 0:
         return
 
+    # Pop the next element and log the changes
     nextCell = self.waitList.popleft()
     self.logs.append([self, nextCell, 'visited'])
-    # print(nextCell.location.x, nextCell.location.y, 'visited')
 
+    # Iterate over the immediate neighbours
     for nx, ny in nextCell.location.neighbours:
+
         if not self.isValidMove(environment, nextCell, nx, ny):
             continue
+
+        # Add the neighbour to the queue and log the changes
         neighbour = environment.grid[nx][ny]
         self.waitList.append(neighbour)
         self.path[neighbour] = nextCell
         self.visited.add(neighbour)
         self.logs.append([self, neighbour, 'waitList'])
-        # print(neighbour.location.x, neighbour.location.y, 'inQueue')

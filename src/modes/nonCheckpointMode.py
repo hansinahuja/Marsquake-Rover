@@ -30,24 +30,25 @@ def nonCheckpointMode(dict):
 
     # print(dict['weights'])
     # print(dict)
-    maxWeight = 0
+    # maxWeight = 0
     for row in env.grid:
         for cell in row:
             if dict['maze'][cell.location.x][cell.location.y] == 1:
                 cell.type = 'wall'
             else:
-                maxWeight = max(maxWeight, 100 - dict['weights'][cell.location.x][cell.location.y])
+                cell.weight = (100 - dict['weights'][cell.location.x][cell.location.y]) / 100
+                cell.weight *= 2
             # print(dict['weights'][cell.location.x][cell.location.y], end = ' ')
         # print()
 
     # print(dict['weights'])
     # print("EHy")
     # print(dict)
-    for row in env.grid:
-        for cell in row:
-            if dict['maze'][cell.location.x][cell.location.y] != 1:
-                cell.weight = (100 - dict['weights'][cell.location.x][cell.location.y]) / maxWeight
-                cell.weight *= 2
+    # for row in env.grid:
+    #     for cell in row:
+    #         if dict['maze'][cell.location.x][cell.location.y] != 1:
+    #             cell.weight = (100 - dict['weights'][cell.location.x][cell.location.y]) / maxWeight
+    #             cell.weight *= 2
             # print(cell.weight, end = ' ')
         # print()
 
