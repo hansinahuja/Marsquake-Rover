@@ -51,7 +51,8 @@ def nonCheckpointMode(dict):
 
     beamWidth = int(dict['beamWidth'])
     relaxation = int(dict['relaxation'])
-    maxDepth = int(dict['maxDepth'])
+#     maxDepth = int(dict['maxDepth'])
+    maxDepth = 1000
     gridChanges = []
     path = []
 
