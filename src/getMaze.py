@@ -4,7 +4,6 @@ from environment.env import Environment
 from environment.utils import Location
 
 def recursiveMaze(dict):
-        env = Environment(int(dict['length']), int(dict['breadth']))
         def randomOddNumber(low, high):
             low = low // 2 
             if high % 2:
