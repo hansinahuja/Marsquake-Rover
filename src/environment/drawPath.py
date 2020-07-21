@@ -105,57 +105,78 @@ def getIDAPath(self, destination):
 
     return path
 
+
 def getJpsPath(self, intersectionPt): 
 
-    path1 = []
+    """
+    Gets the final path from source to destination.
+    Args:
+        intersectionPt: Point at which the source and destination meet.
+    Returns:
+        path: Path taken by agents to meet each other.
+    """
+
+    srcToIntersection = []
     agent = intersectionPt.srcAgent
-    c = intersectionPt
+    currentCell = intersectionPt
+
+    # Get the current direction
     directions = ['right', 'left', 'up', 'down',
                     'right-up', 'right-down', 'left-up', 'left-down']
     for direction in directions:
-        if (c, direction) in agent.path:
-            s = direction
-    while (c, s) in agent.path:
-        path1.append([c.location.x, c.location.y])
-        tmp = agent.path[(c, s)][0]
-        s = agent.path[(c, s)][1]
-        c = tmp
-    path1.append([agent.location.x, agent.location.y])
+        if (currentCell, direction) in agent.path:
+            currentDirection = direction
 
+    # Create path from source to intersection point by following parent cells.
+    while (currentCell, currentDirection) in agent.path:
+        srcToIntersection.append([currentCell.location.x, currentCell.location.y])
+        nextCell = agent.path[(currentCell, currentDirection)]
+        currentDirection = nextCell[1]
+        currentCell = nextCell[0]
+    srcToIntersection.append([agent.location.x, agent.location.y])
+
+    # Create path from destination to intersection point by following parent cells.
+    destToIntersection = []
     agent = intersectionPt.destAgent
-    path2 = []
-    c = intersectionPt
-    while c in agent.path:
-        path2.append([c.location.x, c.location.y])
-        c = agent.path[c]
-    path2.append([agent.location.x, agent.location.y])
+    currentCell = intersectionPt
+    for direction in directions:
+        if (currentCell, direction) in agent.path:
+            currentDirection = direction
+    while (currentCell, currentDirection) in agent.path:
+        destToIntersection.append([currentCell.location.x, currentCell.location.y])
+        nextCell = agent.path[(currentCell, currentDirection)]
+        currentDirection = nextCell[1]
+        currentCell = nextCell[0]
+    destToIntersection.append([agent.location.x, agent.location.y])
 
-    path1.reverse()
-    path3 = path1 + path2[1:]
-    path4 = []
-    [path4.append(cell) for cell in path3 if cell not in path4]
+    # Join the two paths and remove duplicates
+    srcToIntersection.reverse()
+    path1 = srcToIntersection + destToIntersection
+    path2 = []
+    [path2.append(cell) for cell in path1 if cell not in path2]
     path = []
-    for cell in path4:
+
+    # Join non adjacent cells
+    for cell in path2:
         if len(path) == 0:
-            path.append(cell)
+            entry = {'x': cell[0], 'y': cell[1]}
+            path.append(entry)
         else:
             top = path[len(path) - 1]
-            steps = max(abs(top[0] - cell[0]), abs(top[1] - cell[1]))
+            print(top)
+            steps = max(abs(top['x'] - cell[0]), abs(top['y'] - cell[1]))
             for j in range(steps):
-                x, y = top[0], top[1]
-                if top[0] > cell[0]:
-                    x = top[0] - 1 - j
-                if top[1] > cell[1]:
-                    y = top[1] - 1 - j
-                if top[0] < cell[0]:
-                    x = top[0] + 1 + j
-                if top[1] < cell[1]:
-                    y = top[1] + 1 + j
-                path.append([x, y])
+                x, y = top['x'], top['y']
+                if top['x'] > cell[0]:
+                    x = top['x'] - 1 - j
+                if top['y'] > cell[1]:
+                    y = top['y'] - 1 - j
+                if top['x'] < cell[0]:
+                    x = top['x'] + 1 + j
+                if top['y'] < cell[1]:
+                    y = top['y'] + 1 + j
+                entry = {'x': x, 'y': y}
+                path.append(entry)
 
-    dictPath = []
-    for cell in path:
-        entry = {'x': cell[0], 'y': cell[1]}
-        dictPath.append(entry)
-    return dictPath
+    return path
 
