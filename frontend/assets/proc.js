@@ -47,8 +47,10 @@ function drawPath(path) {
     function drawLine() {
         point1 = path[i];
         point2 = path[i + 1];
-        if (point1.x == -1) return true;
-        if (point2.x == -1) return true;
+        if (point1.x == -1 || point2.x == -1) {
+            i++;
+            return true;
+        }
         if (i)
             document.getElementById(point1.x + "x" + point1.y).classList.add("final");
         var dx = point2.y - point1.y;
