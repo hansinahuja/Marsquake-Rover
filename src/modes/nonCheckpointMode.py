@@ -3,71 +3,29 @@ from environment.env import Environment
 from environment.utils import Location
 
 
-def nonCheckpointMode(dict):
-    algo = int(dict['algo'])
-    env = Environment(len(dict['maze']), len(dict['maze'][0]))
-    env.cutCorners = int(dict['cutCorners'])
-    env.allowDiagonals = int(dict['allowDiagonals'])
+def nonCheckpointMode(config):
+    
     sources = []
     destinations = []
 
-    for source in dict['start']:
+    for source in config['start']:
         sources.append(Agent(Location(source['x'], source['y']), 'source'))
-    for destination in dict['stop']:
-        destinations.append(Agent(Location(
-            destination['x'], destination['y']), 'destination', int(dict['biDirectional'])))
+    for destination in config['stop']:
+        destinations.append(Agent(Location(destination['x'], destination['y']), 'destination', int(config['biDirectional'])))
 
-    for checkpoint in dict['checkpoints']:
-        if int(dict['multistart'])==1:
-            sources.append(
-                Agent(Location(checkpoint['x'], checkpoint['y']), 'source', True))
+    for checkpoint in config['checkpoints']:
+        if int(config['multistart'])==1:
+            sources.append(Agent(Location(checkpoint['x'], checkpoint['y']), 'source', True))
         else:
-            destinations.append(
-                Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', int(dict['biDirectional'])))
+            destinations.append(Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', int(config['biDirectional'])))
 
-    for agent in sources + destinations:
-        env.placeAgent(agent)
-
-    # print(dict['weights'])
-    # print(dict)
-    # maxWeight = 0
-    for row in env.grid:
-        for cell in row:
-            if dict['maze'][cell.location.x][cell.location.y] == 1:
-                cell.type = 'wall'
-            else:
-                cell.weight = (100 - dict['weights'][cell.location.x][cell.location.y]) / 100
-                cell.weight *= 2
-            # print(dict['weights'][cell.location.x][cell.location.y], end = ' ')
-        # print()
-
-    # print(dict['weights'])
-    # print("EHy")
-    # print(dict)
-    # for row in env.grid:
-    #     for cell in row:
-    #         if dict['maze'][cell.location.x][cell.location.y] != 1:
-    #             cell.weight = (100 - dict['weights'][cell.location.x][cell.location.y]) / maxWeight
-    #             cell.weight *= 2
-            # print(cell.weight, end = ' ')
-        # print()
-
-
-    # Remove if statement later
-    if 'wormhole' in dict:
-        wormhole = dict['wormhole']
-        x1, y1, x2, y2 = wormhole[0]['x'], wormhole[0]['y'], wormhole[1]['x'], wormhole[1]['y']
-        if x1!=x2 or y1!=y2:
-            wormholeEntry = env.grid[x1][y1]
-            wormholeExit = env.grid[x2][y2]
-            wormholeEntry.location.neighbours = [[x2, y2]]
-            wormholeEntry.type = 'wormholeEntry'
-            wormholeExit.type = 'wormholeExit'
+    env = Environment(config, sources + destinations)
 
     
     maxDepth = 1000
     gridChanges = []
     path = []
+    algo = int(config['algo'])
 
     #  ------------- Original Driver
     
@@ -78,11 +36,11 @@ def nonCheckpointMode(dict):
                 if algo == 0:
                     src.aStar(env, destinations)
                 if algo == 1:
-                    src.staticAStar(env, destinations, float(dict['relaxation']))
+                    src.staticAStar(env, destinations, float(config['relaxation']))
                 if algo == 2:
-                    src.dynamicAStar(env, destinations, float(dict['relaxation']), maxDepth)
+                    src.dynamicAStar(env, destinations, float(config['relaxation']), maxDepth)
                 if algo == 3:
-                    src.beamSearch(env, destinations, int(dict['beamWidth']))
+                    src.beamSearch(env, destinations, int(config['beamWidth']))
                 if algo == 4:
                     src.bestFirstSearch(env, destinations)
                 if algo == 5:
@@ -101,11 +59,11 @@ def nonCheckpointMode(dict):
                     if algo == 0:
                         dest.aStar(env, sources)
                     if algo == 1:
-                        dest.staticAStar(env, sources, float(dict['relaxation']))
+                        dest.staticAStar(env, sources, float(config['relaxation']))
                     if algo == 2:
-                        dest.dynamicAStar(env, destinations, float(dict['relaxation']), maxDepth)
+                        dest.dynamicAStar(env, destinations, float(config['relaxation']), maxDepth)
                     if algo == 3:
-                        dest.beamSearch(env, sources, int(dict['beamWidth']))
+                        dest.beamSearch(env, sources, int(config['beamWidth']))
                     if algo == 4:
                         dest.bestFirstSearch(env, sources)
                     if algo == 5:

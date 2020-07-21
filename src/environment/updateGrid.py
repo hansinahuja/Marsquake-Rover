@@ -1,0 +1,132 @@
+def update(self, logs):
+    updates = {}
+    success = set()
+    recursiveMode = False
+    logs = list(filter(None, logs))
+    gridChanges = []
+    colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
+
+    if len(logs) == 0:
+        return success, gridChanges
+
+    if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
+        recursiveMode = True
+
+    for log in logs:
+        agent, cell, state = log
+        if cell.type == 'wormholeEntry' or cell.type == 'wormholeExit':
+            continue
+        if cell not in updates:
+            updates[cell] = log
+        elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
+            updates[cell] = log
+        elif recursiveMode and state == 'inRecursion' and updates[cell][2] != 'inRecursion':
+            updates[cell] = log
+
+    for log in updates.values():
+        agent, cell, state = log
+        if cell.type != 'source' and cell.type != 'destination':
+            cell.type = state
+            if recursiveMode:
+                if state == 'inRecursion':
+                    cell.type = 'visited'
+                else:
+                    cell.type = 'free'
+            gridChange = {'x': cell.location.x,
+                            'y': cell.location.y, 'color': colorDict[cell.type]}
+            gridChanges.append(gridChange)
+
+        if agent.type == 'source' and cell.srcAgent == None:
+            cell.srcAgent = agent
+
+        if agent.type == 'destination' and cell.destAgent == None:
+            cell.destAgent = agent
+
+        if not recursiveMode and state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
+            success.add(cell)
+
+        if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
+            success.add(cell)
+
+    return success, gridChanges
+
+
+
+
+def idaupdate(self, logs, weight, prevPath):
+    updates = {}
+    success = set()
+    recursiveMode = False
+    logs = list(filter(None, logs))
+    gridChanges = []
+    colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
+
+    if len(logs) == 0:
+        return success , gridChanges, [[]]
+    
+    
+    for log in logs:
+        agent, cell, state = log
+        if cell not in updates:
+            updates[cell] = log
+        elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
+            updates[cell] = log
+        elif recursiveMode and state == 'inRecursion' and updates[cell][2] != 'inRecursion':
+            updates[cell] = log
+
+    for log in updates.values():
+        agent, cell, state = log
+
+        if agent.type == 'source' and cell.srcAgent == None:
+            cell.srcAgent = agent
+
+        if agent.type == 'destination' and cell.destAgent == None:
+            cell.destAgent = agent
+
+        # if not recursiveMode and state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
+        #     success.add(cell)
+        if cell.type == 'destination':
+            success.add(cell)
+
+        if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
+            success.add(cell)
+    
+    current = set()
+    current.add(logs[0][1])
+    newPath = self.idaPaths(current, weight)
+    lenNew = len(newPath[0])
+    lenPrv = len(prevPath[0])
+    itr = 0
+    for i in range(min(lenNew, lenPrv)):
+        if prevPath[0][i] != newPath[0][i]:
+            break
+        itr += 1
+    if prevPath[0] != newPath[0]:
+        for i in range(itr, lenPrv):
+            gridChange = {'x': prevPath[0][i]['x'],
+                        'y': prevPath[0][i]['y'], 'color': 0}
+            gridChanges.append(gridChange)
+        for i in range(lenNew):
+            gridChange = {'x': newPath[0][i]['x'],
+                        'y': newPath[0][i]['y'], 'color': 2}
+            gridChanges.append(gridChange)
+
+    if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
+        recursiveMode = True
+    
+    return success , gridChanges, newPath
+
+def getActivatedCells(self):
+    activatedCells = []
+    for row in self.grid:
+        for cell in row:
+            if cell.type == 'visited' or cell.type == 'waitList':
+                activatedCells.append(
+                    {'x': cell.location.x, 'y': cell.location.y, 'color': 0})
+    return activatedCells
+def getActivatedCells_IDA(self, path):
+    activatedCells = []
+    for c in path:
+        activatedCells.append(
+            {'x': c['x'], 'y': c['y'], 'color': 0})
+    return activatedCells

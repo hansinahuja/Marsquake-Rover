@@ -1,6 +1,15 @@
 from math import sqrt
 from environment.utils import Location
 
+def distance(self, src, dest):
+
+    if src.type == 'wormholeEntry' and dest.type=='wormholeExit':
+        return 0
+
+    deltaX = abs(src.location.x - dest.location.x)
+    deltaY = abs(src.location.y - dest.location.y)
+    return dest.weight * sqrt(manhattanDistance(deltaX, deltaY))
+
 def bestHeuristic(self, source, destinations):
     minHeuristic = self.length + self.breadth
     for destination in destinations:

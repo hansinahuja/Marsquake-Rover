@@ -1,37 +1,84 @@
 from environment.utils import Location, Cell
-from environment.heuristics import manhattanDistance
-from math import sqrt
 
 class Environment:
-    def __init__(self, length, breadth):
-        self.length = length
-        self.breadth = breadth
-        self.grid = [[Cell(Location(x, y)) for y in range(breadth)]
-                     for x in range(length)]
-        self.heuristic = 'manhattan'
-        self.allowDiagonals = False
-        self.cutCorners = False
 
-    def distance(self, src, dest):
+    """
+    Class to represent the environment of the path-finder.
+    Attributes:
+        length: Length of the grid. 
+        breadth: Breadth of the grid.
+        grid: Two-dimensional array of Cells representing the grid.
+        heuristic: Heuristic function for guided algorithms.
+        allowDiagonals: Whether diagonal movement of agents is possible.
+        cutCorners: Whether agents are allowed to cut corners of walls.
+    Methods:
+        update: 
+        idaupdate: 
+        getActivatedCells: 
+        getActivatedCells_IDA: 
+        getPaths: 
+        getJpsPaths: 
+        idaPaths: 
+        bestHeuristic: 
+        distance: 
+    """
 
-        if src.type == 'wormholeEntry' and dest.type=='wormholeExit':
-            return 0
+    def __init__(self, config, agents):
 
-        deltaX = abs(src.location.x - dest.location.x)
-        deltaY = abs(src.location.y - dest.location.y)
-        return dest.weight * sqrt(manhattanDistance(deltaX, deltaY))
+        """
+        Constructor for class Environment.
+        Arguments:
+            config: Dictionary with all the configuration settings.
+            agents: List of agents on the grid.
+        Returns:
+            None
+        """
 
-    def placeAgent(self, agent):
-        x = agent.location.x
-        y = agent.location.y
-        self.grid[x][y].type = agent.type
-        if agent.type == 'source':
-            self.grid[x][y].srcAgent = agent
-        else:
-            self.grid[x][y].destAgent = agent
+        # Extract and initialise all the environment properties
+        self.length = len(config['maze'])
+        self.breadth = len(config['maze'][0])
+        self.grid = [[Cell(Location(x, y)) for y in range(self.breadth)]
+                     for x in range(self.length)]
+        heuristicDict = {0: 'manhattan', 1: 'euclidean', 2: 'octile', 3: 'chebyshev'}
+        self.heuristic = heuristicDict[int(config['heuristic'])]
+        self.allowDiagonals = int(config['allowDiagonals'])
+        self.cutCorners = int(config['cutCorners'])
 
-    # from environment.randomMazes import recursiveMaze, randomizedPrim
-    from environment.heuristics import bestHeuristic
+        # Set up walls and cell weights
+        for row in self.grid:
+            for cell in row:
+                if config['maze'][cell.location.x][cell.location.y] == 1:
+                    cell.type = 'wall'
+                else:
+                    cell.weight = (100 - config['weights'][cell.location.x][cell.location.y]) / 100
+                    cell.weight *= 2
+
+        # Set up wormholes
+        if 'wormhole' in config:
+            wormhole = config['wormhole']
+            x1, y1, x2, y2 = wormhole[0]['x'], wormhole[0]['y'], wormhole[1]['x'], wormhole[1]['y']
+            if x1!=x2 or y1!=y2:
+                wormholeEntry = self.grid[x1][y1]
+                wormholeExit = self.grid[x2][y2]
+                wormholeEntry.location.neighbours = [[x2, y2]]
+                wormholeEntry.type = 'wormholeEntry'
+                wormholeExit.type = 'wormholeExit'
+
+        # Iterate over all agents, and mark them as either sources or destinations
+        for agent in agents:
+            x = agent.location.x
+            y = agent.location.y
+            self.grid[x][y].type = agent.type
+            if agent.type == 'source':
+                self.grid[x][y].srcAgent = agent
+            else:
+                self.grid[x][y].destAgent = agent
+        
+
+    # Import member functions
+    from environment.heuristics import bestHeuristic, distance
+    from environment.drawPath import getPaths, getJpsPaths, idaPaths
+    from environment.updateGrid import update, idaupdate, getActivatedCells, getActivatedCells_IDA
 
     # For debugging
     def print(self):
@@ -58,262 +105,4 @@ class Environment:
                     print('.', end='')
             print()
         print()
-
-    def update(self, logs):
-        updates = {}
-        success = set()
-        recursiveMode = False
-        logs = list(filter(None, logs))
-        gridChanges = []
-        colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
-
-        if len(logs) == 0:
-            return success, gridChanges
-
-        if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
-            recursiveMode = True
-
-        for log in logs:
-            agent, cell, state = log
-            if cell.type == 'wormholeEntry' or cell.type == 'wormholeExit':
-                continue
-            if cell not in updates:
-                updates[cell] = log
-            elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
-                updates[cell] = log
-            elif recursiveMode and state == 'inRecursion' and updates[cell][2] != 'inRecursion':
-                updates[cell] = log
-
-        for log in updates.values():
-            agent, cell, state = log
-            if cell.type != 'source' and cell.type != 'destination':
-                cell.type = state
-                if recursiveMode:
-                    if state == 'inRecursion':
-                        cell.type = 'visited'
-                    else:
-                        cell.type = 'free'
-                gridChange = {'x': cell.location.x,
-                              'y': cell.location.y, 'color': colorDict[cell.type]}
-                gridChanges.append(gridChange)
-
-            if agent.type == 'source' and cell.srcAgent == None:
-                cell.srcAgent = agent
-
-            if agent.type == 'destination' and cell.destAgent == None:
-                cell.destAgent = agent
-
-            if not recursiveMode and state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
-                success.add(cell)
-
-            if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
-                success.add(cell)
-
-        return success, gridChanges
     
-    def idaPaths(self, success, weight):                          # For idaStar and ida
-        paths = []
-        for cell in success:
-            path1 = []
-            agent = cell.srcAgent
-            c = cell
-            wt = weight
-            while (c, wt) in agent.path:
-                entry = {'x': c.location.x, 'y': c.location.y}
-                path1.append(entry)
-                X = agent.path[(c, wt)]
-                c = X[0]
-                wt = X[1]
-            entry = {'x': agent.location.x, 'y': agent.location.y}
-            path1.append(entry)
-            path1.reverse()
-            paths.append(path1)
-        return paths
-    
-    
-    def idaupdate(self, logs, weight, prevPath):
-        updates = {}
-        success = set()
-        recursiveMode = False
-        logs = list(filter(None, logs))
-        gridChanges = []
-        colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
-
-        if len(logs) == 0:
-            return success , gridChanges, [[]]
-        
-        
-        for log in logs:
-            agent, cell, state = log
-            if cell not in updates:
-                updates[cell] = log
-            elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
-                updates[cell] = log
-            elif recursiveMode and state == 'inRecursion' and updates[cell][2] != 'inRecursion':
-                updates[cell] = log
-
-        for log in updates.values():
-            agent, cell, state = log
-
-            if agent.type == 'source' and cell.srcAgent == None:
-                cell.srcAgent = agent
-
-            if agent.type == 'destination' and cell.destAgent == None:
-                cell.destAgent = agent
-
-            # if not recursiveMode and state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
-            #     success.add(cell)
-            if cell.type == 'destination':
-                success.add(cell)
-
-            if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
-                success.add(cell)
-        
-        current = set()
-        current.add(logs[0][1])
-        newPath = self.idaPaths(current, weight)
-        lenNew = len(newPath[0])
-        lenPrv = len(prevPath[0])
-        itr = 0
-        for i in range(min(lenNew, lenPrv)):
-            if prevPath[0][i] != newPath[0][i]:
-                break
-            itr += 1
-        if prevPath[0] != newPath[0]:
-            for i in range(itr, lenPrv):
-                gridChange = {'x': prevPath[0][i]['x'],
-                            'y': prevPath[0][i]['y'], 'color': 0}
-                gridChanges.append(gridChange)
-            for i in range(lenNew):
-                gridChange = {'x': newPath[0][i]['x'],
-                            'y': newPath[0][i]['y'], 'color': 2}
-                gridChanges.append(gridChange)
-
-        if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
-            recursiveMode = True
-        
-        return success , gridChanges, newPath
-
-
-    def getActivatedCells(self):
-        activatedCells = []
-        for row in self.grid:
-            for cell in row:
-                if cell.type == 'visited' or cell.type == 'waitList':
-                    activatedCells.append(
-                        {'x': cell.location.x, 'y': cell.location.y, 'color': 0})
-        return activatedCells
-    def getActivatedCells_IDA(self, path):
-        activatedCells = []
-        for c in path:
-            activatedCells.append(
-                {'x': c['x'], 'y': c['y'], 'color': 0})
-        return activatedCells
-
-    def getPaths(self, success):
-        paths = []
-
-        for cell in success:
-            # print(cell.location.x, cell.location.y)
-            path1 = []
-            agent = cell.srcAgent
-            c = cell
-            while c in agent.path:
-                entry = {'x': c.location.x, 'y': c.location.y}
-                path1.append(entry)
-                c = agent.path[c]
-            entry = {'x': agent.location.x, 'y': agent.location.y}
-            path1.append(entry)
-
-            agent = cell.destAgent
-            path2 = []
-            c = cell
-            while c in agent.path:
-                entry = {'x': c.location.x, 'y': c.location.y}
-                path2.append(entry)
-                c = agent.path[c]
-            entry = {'x': agent.location.x, 'y': agent.location.y}
-            path2.append(entry)
-
-            path1.reverse()
-            path = path1 + path2[1:]
-
-            wormholeOutIndex = -1
-            for i in range(1, len(path)):
-                x1, y1 = path[i-1]['x'], path[i-1]['y']
-                x2, y2 = path[i]['x'], path[i]['y']
-                cell1, cell2 = self.grid[x1][y1], self.grid[x2][y2]
-                if cell1.type == 'wormholeEntry' and cell2.type == 'wormholeExit':
-                    wormholeOutIndex = i
-                    break
-
-            if wormholeOutIndex != -1:
-                path1 = path[:wormholeOutIndex]
-                path2 = path[wormholeOutIndex:]
-                buffer = {'x': -1, 'y': -1}
-                path = path1 + [buffer] + path2
-                
-            paths.append(path)
-        return paths
-
-    
-
-    def getJpsPaths(self, success):
-        paths = []
-
-        for cell in success:
-            path1 = []
-            agent = cell.srcAgent
-            c = cell
-            directions = ['right', 'left', 'up', 'down',
-                          'right-up', 'right-down', 'left-up', 'left-down']
-            for direction in directions:
-                if (c, direction) in agent.path:
-                    s = direction
-            while (c, s) in agent.path:
-                path1.append([c.location.x, c.location.y])
-                tmp = agent.path[(c, s)][0]
-                s = agent.path[(c, s)][1]
-                c = tmp
-            path1.append([agent.location.x, agent.location.y])
-
-            agent = cell.destAgent
-            path2 = []
-            c = cell
-            while c in agent.path:
-                path2.append([c.location.x, c.location.y])
-                c = agent.path[c]
-            path2.append([agent.location.x, agent.location.y])
-
-            path1.reverse()
-            path3 = path1 + path2[1:]
-            path4 = []
-            [path4.append(cell) for cell in path3 if cell not in path4]
-            path = []
-            for cell in path4:
-                if len(path) == 0:
-                    path.append(cell)
-                else:
-                    top = path[len(path) - 1]
-                    steps = max(abs(top[0] - cell[0]), abs(top[1] - cell[1]))
-                    for j in range(steps):
-                        x, y = top[0], top[1]
-                        if top[0] > cell[0]:
-                            x = top[0] - 1 - j
-                        if top[1] > cell[1]:
-                            y = top[1] - 1 - j
-                        if top[0] < cell[0]:
-                            x = top[0] + 1 + j
-                        if top[1] < cell[1]:
-                            y = top[1] + 1 + j
-                        path.append([x, y])
-            paths.append(path)
-
-        dictPaths = []
-        for path in paths:
-            dictPath = []
-            for cell in path:
-                entry = {'x': cell[0], 'y': cell[1]}
-                dictPath.append(entry)
-            dictPaths.append(dictPath)
-        return dictPaths
