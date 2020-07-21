@@ -13,7 +13,8 @@ class Agent():
         distances: Minimum distances to reach different cells.
     Methods:
         isValdiMove: To check if a particular movement is valid.
-        All the search algorithms 
+        breadthFirstSearch, depthFirstSearch, dijkstra, uniformCostSearch: unguided search algorithms
+        aStar, beamSearch, bestFirstSearch, dynamicAStar, idaStar, jumpPointSearch, staticAStar: guided search algorithms
     """
 
 
@@ -35,20 +36,7 @@ class Agent():
         self.path = {}
         self.logs = []
         self.distances = {}
-
-    # Import member functions
-    from actions.breadthFirstSearch import breadthFirstSearch
-    from actions.depthFirstSearch import depthFirstSearch
-    from actions.dijkstra import dijkstra
-    from actions.bestFirstSearch import bestFirstSearch
-    from actions.staticAStar import staticAStar
-    from actions.aStar import aStar
-    from actions.idaStar import idaStar
-    from actions.beamSearch import beamSearch
-    from actions.jumpPointSearch import jumpPointSearch
-    from actions.ida import ida
-    from actions.uniformCostSearch import uniformCostSearch
-    from actions.dynamicAStar import dynamicAStar
+        
 
     def isValidMove(self, environment, currentCell, x2, y2, checkVisited = True):
 
@@ -89,3 +77,18 @@ class Agent():
                     return False
 
         return True
+
+    # Import all search algorithms
+    from actions import (
+        aStar,
+        beamSearch, 
+        bestFirstSearch, 
+        breadthFirstSearch, 
+        depthFirstSearch, 
+        dijkstra, 
+        dynamicAStar,
+        idaStar,
+        jumpPointSearch,
+        staticAStar,
+        uniformCostSearch
+    )
