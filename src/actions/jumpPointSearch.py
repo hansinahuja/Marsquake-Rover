@@ -95,8 +95,6 @@ def jumpPointSearch(self, environment, targets):
                 self.path[(currentCell, direction)] = (nextCell, directionFrom)            
             self.logs.append([self, currentCell, 'visited'])
             self.visited.add((currentCell, direction))
-            if currentCell.type == 'destination':
-                return 
             
             flag = 0
             
@@ -177,8 +175,6 @@ def jumpPointSearch(self, environment, targets):
                 self.path[(currentCell, direction)] = (nextCell, directionFrom)
             self.logs.append([self, currentCell, 'visited'])
             self.visited.add((currentCell, direction))
-            if currentCell.type == 'destination':
-                return 
 
             # Perform horizontal and vertical scans
             if direction == 'right-up':
