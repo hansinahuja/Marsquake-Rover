@@ -28,7 +28,8 @@ function randomMaze() {
     document.body.style.pointerEvents = "none";
     over = document.getElementById("overlay");
     over.style.display = "block";
-
+    disableWormhole();
+    document.getElementById("wormhole").checked = false;
     clearGrid();
     makeGrid();
     document.getElementById("bidirec").disabled = false;
