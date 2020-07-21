@@ -77,19 +77,16 @@ def nonCheckpointMode(config):
                     if algo == 11:
                         dest.uniformCostSearch(env)
                 logs.extend(dest.logs)
-            success, gridChange = env.update(logs)
+            intersectionPts, gridChange = env.update(logs)
             # env.print()
             # print(gridChange)
             gridChanges.extend(gridChange)
-            if len(success) > 0:
-                intersection = success.pop()
-                wrapped = set()
-                wrapped.add(intersection)
+            if len(intersectionPts) > 0:
+                intersectionPt = intersectionPts.pop()
                 if algo == 10:
-                    paths = env.getJpsPaths(wrapped)
+                    path = env.getJpsPath(intersectionPt)
                 else:
-                    paths = env.getPaths(wrapped)
-                path = paths[0]
+                    path = env.getPath(intersectionPt)
                 # print('Path:', path)
                 break
             if len(src.logs) == 0 and len(dest.logs) == 0:

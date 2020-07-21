@@ -77,7 +77,7 @@ class Environment:
 
     # Import member functions
     from environment.heuristics import bestHeuristic, distance
-    from environment.drawPath import getPaths, getJpsPaths, idaPaths
+    from environment.drawPath import getPath, getJpsPath, idaPaths
     from environment.updateGrid import update, idaupdate, getActivatedCells, getActivatedCells_IDA
 
     # For debugging
