@@ -571,7 +571,7 @@ function enableWormhole() {
     portals[0].style.display = "block";
     portals[1].style.display = "block";
     let k = 0;
-    for (let o = Math.floor(2.5*(box[0].length)); o < (box.length)*(box[0].length); o++) {
+    for (let o = Math.floor(3.5*(box[0].length)); o < (box.length)*(box[0].length); o++) {
         i = o%(box[0].length);
         j = Math.floor(o/(box[0].length))
         if (!box[j][i]) {
