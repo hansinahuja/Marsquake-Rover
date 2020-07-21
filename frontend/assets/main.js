@@ -571,16 +571,16 @@ function enableWormhole() {
     portals[0].style.display = "block";
     portals[1].style.display = "block";
     let k = 0;
-    for (let i = 5; i < box[0].length; i++) {
-        for (let j = 5; j < box.length; j++) {
-            if (!box[j][i]) {
-                box[j][i] = 1;
-                portals[k].style.left = 40 * i + 20 + 'px';
-                portals[k].style.top = 40 * j + 20 + 'px';
-                i += 5;
-                k++;
-                if (k == 2) return 0;
-            }
+    for (let o = Math.floor(2.5*(box[0].length)); o < (box.length)*(box[0].length); o++) {
+        i = o%(box[0].length);
+        j = Math.floor(o/(box[0].length))
+        if (!box[j][i]) {
+            box[j][i] = 1;
+            portals[k].style.left = 40 * i + 20 + 'px';
+            portals[k].style.top = 40 * j + 20 + 'px';
+            i += 5;
+            k++;
+            if (k == 2) return 0;
         }
     }
 }
