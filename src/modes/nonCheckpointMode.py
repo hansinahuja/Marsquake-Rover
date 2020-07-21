@@ -105,7 +105,7 @@ def nonCheckpointMode(config):
         threshold = env.bestHeuristic(sources[0], destinations)
         newThreshold = 50000         # Large Value
         itrCount = 0                 # IterationCount is necessary for tle
-        prevPath = [[]]
+        prevPath = []
         while True and itrCount < 1000:
             logs = []
             for src in sources:
@@ -117,10 +117,11 @@ def nonCheckpointMode(config):
                 if X > threshold :
                     newThreshold = min(X, newThreshold)
                 else:
-                    success, gridChange, prevPath = env.idaupdate(logs, Y, prevPath)        
+                    intersectionPts, gridChange, prevPath = env.idaupdate(logs, Y, prevPath)        
             gridChanges.extend(gridChange)
-            if len(success) > 0:
-                paths = env.idaPaths(success, X)
+            if len(intersectionPts) > 0:
+                intersectionPt = intersectionPts.pop()
+                path = env.getIDAPath(intersectionPt)
                 break
             if len(src.logs) == 0 and len(sources[0].waitList) == 0:
                 if newThreshold == 50000:     # No Path exists
@@ -135,8 +136,9 @@ def nonCheckpointMode(config):
                     agent.logs = []
                     agent.distances = {}
 
-        activatedCells = env.getActivatedCells_IDA(paths[0])
+        activatedCells = env.getActivatedCells_IDA(path)
+        print(path)
         output = {'gridChanges': gridChanges,
-                  'path': paths[0], 'activatedCells': activatedCells}
+                  'path': path, 'activatedCells': activatedCells}
         # print(gridChanges)
         return output

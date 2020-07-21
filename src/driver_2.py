@@ -14,34 +14,35 @@ def driver(dict):
         return nonCheckpointMode(dict)
 
 
-# dict = {
-#     "algo": 0,
-#     "start": [{"x": 0, "y": 0}],
-#     "stop": [{"x": 0, "y": 4}],
-#     "checkpoints": [ ],
-#     "wormhole": [{'x': 4, 'y': 0}, {'x': 4, 'y': 4}],
-#     "multistart": '0',
-#     "relaxation": '3',
-#     "maxDepth": '8',
-#     "multidest": '0',
-#     "cutCorners": 1,
-#     "allowDiagonals": 1,
-#     "biDirectional": 0,
-#     "beamWidth": 2,
-#     "maze":
-#     [[0, 0, 1, 0, 0],
-#      [0, 0, 1, 0, 0],
-#      [0, 0, 1, 0, 0],
-#      [0, 0, 1, 0, 0],
-#      [0, 0, 1, 0, 0],
-#      ],
-#      "weights": 
-#      [[50, 50, 50, 50, 50],
-#      [50, 50, 50, 50, 50],
-#      [50, 50, 50, 50, 50],
-#      [50, 50, 50, 50, 50],
-#      [50, 50, 50, 50, 50],
-#      ],
-# }
+dict = {
+    "algo": 7,
+    "start": [{"x": 0, "y": 0}],
+    "stop": [{"x": 0, "y": 4}],
+    "checkpoints": [ ],
+    "wormhole": [{'x': 2, 'y': 0}, {'x': 2, 'y': 4}],
+    "multistart": '0',
+    "relaxation": '3',
+    "maxDepth": '8',
+    "multidest": '0',
+    "cutCorners": 1,
+    "heuristic": 0,
+    "allowDiagonals": 1,
+    "biDirectional": 0,
+    "beamWidth": 2,
+    "maze":
+    [[0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     [0, 0, 1, 0, 0],
+     ],
+     "weights": 
+     [[50, 50, 50, 50, 50],
+     [50, 50, 50, 50, 50],
+     [50, 50, 50, 50, 50],
+     [50, 50, 50, 50, 50],
+     [50, 50, 50, 50, 50],
+     ],
+}
 
-# print(driver(dict)['path'])
+print(driver(dict)['path'])

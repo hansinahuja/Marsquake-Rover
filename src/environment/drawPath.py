@@ -53,26 +53,59 @@ def getPath(self, intersectionPt):
 
     return path
 
-def idaPaths(self, success, weight):                          # For idaStar and ida
-    paths = []
-    for cell in success:
-        path1 = []
-        agent = cell.srcAgent
-        c = cell
-        wt = weight
-        while (c, wt) in agent.path:
-            entry = {'x': c.location.x, 'y': c.location.y}
-            path1.append(entry)
-            X = agent.path[(c, wt)]
-            c = X[0]
-            wt = X[1]
-        entry = {'x': agent.location.x, 'y': agent.location.y}
-        path1.append(entry)
-        path1.reverse()
-        paths.append(path1)
-    return paths
+def getIDAPath(self, destination):                          
 
-def getJpsPath(self, intersectionPt):
+    """
+    Gets the final path from source to destination.
+    Args:
+        destination: destination point.
+    Returns:
+        path: Path taken by source agent to get to destination.
+    """
+
+    path = []
+    agent = destination.srcAgent
+    cell = destination
+    weight = 0
+    
+    # Get the weight of the destination cell
+    for point in agent.path:
+        if point[0] == cell:
+            cell = point[0]
+            weight = point[1]
+
+    # Create the path by following parent cell
+    while (cell, weight) in agent.path:
+        entry = {'x': cell.location.x, 'y': cell.location.y}
+        path.append(entry)
+        nextCell = agent.path[(cell, weight)]
+        cell = nextCell[0]
+        weight = nextCell[1]
+
+    entry = {'x': agent.location.x, 'y': agent.location.y}
+    path.append(entry)
+    path.reverse()
+
+    # Find out if a wormhole was taken 
+    wormholeOutIndex = -1
+    for i in range(1, len(path)):
+        x1, y1 = path[i-1]['x'], path[i-1]['y']
+        x2, y2 = path[i]['x'], path[i]['y']
+        cell1, cell2 = self.grid[x1][y1], self.grid[x2][y2]
+        if cell1.type == 'wormholeEntry' and cell2.type == 'wormholeExit':
+            wormholeOutIndex = i
+            break
+
+    # If wormhole was taken, add an indicator entry
+    if wormholeOutIndex != -1:
+        srcToIntersection = path[:wormholeOutIndex]
+        destToIntersection = path[wormholeOutIndex:]
+        buffer = {'x': -1, 'y': -1}
+        path = srcToIntersection + [buffer] + destToIntersection
+
+    return path
+
+def getJpsPath(self, intersectionPt): 
 
     path1 = []
     agent = intersectionPt.srcAgent

@@ -77,7 +77,7 @@ def idaupdate(self, logs, weight, prevPath):
     colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
 
     if len(logs) == 0:
-        return success , gridChanges, [[]]
+        return success , gridChanges, []
     
     
     for log in logs:
@@ -106,24 +106,22 @@ def idaupdate(self, logs, weight, prevPath):
         if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
             success.add(cell)
     
-    current = set()
-    current.add(logs[0][1])
-    newPath = self.idaPaths(current, weight)
-    lenNew = len(newPath[0])
-    lenPrv = len(prevPath[0])
+    newPath = self.getIDAPath(logs[0][1])
+    lenNew = len(newPath)
+    lenPrv = len(prevPath)
     itr = 0
     for i in range(min(lenNew, lenPrv)):
-        if prevPath[0][i] != newPath[0][i]:
+        if prevPath[i] != newPath[i]:
             break
         itr += 1
-    if prevPath[0] != newPath[0]:
+    if prevPath != newPath:
         for i in range(itr, lenPrv):
-            gridChange = {'x': prevPath[0][i]['x'],
-                        'y': prevPath[0][i]['y'], 'color': 0}
+            gridChange = {'x': prevPath[i]['x'],
+                        'y': prevPath[i]['y'], 'color': 0}
             gridChanges.append(gridChange)
         for i in range(lenNew):
-            gridChange = {'x': newPath[0][i]['x'],
-                        'y': newPath[0][i]['y'], 'color': 2}
+            gridChange = {'x': newPath[i]['x'],
+                        'y': newPath[i]['y'], 'color': 2}
             gridChanges.append(gridChange)
 
     if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
