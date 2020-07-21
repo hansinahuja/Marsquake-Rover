@@ -1,9 +1,12 @@
-var AnimationTime = 10;
+// Functions related to Path Finding and Path Drawing
+
+var AnimationTime = 10; // How fast the visualisation proceeds
 
 function makeChanges(resp, changes) {
+    // Make the changes returned by the API as an animation
     var i = 0,
         int = 0;
-
+    // This functions is called automatically after AnimationTime delay
     function color() {
         change = changes[i];
         c = document.getElementById(change.x + "x" + change.y);
@@ -27,8 +30,10 @@ function makeChanges(resp, changes) {
 }
 
 function drawPath(path) {
+    // Draw the path at the end
     var i = 0,
         int = 0;
+    // Error handling
     if (path.length < 2) {
         if (document.getElementById("algorithm").value == "1") {
             alert("No path found! Try increasing the Beam Size.");
@@ -38,7 +43,7 @@ function drawPath(path) {
         document.body.style.pointerEvents = "";
         return 0;
     }
-
+    // Draw line between two adjacent points in the path
     function drawLine() {
         point1 = path[i];
         point2 = path[i + 1];
@@ -89,6 +94,7 @@ function drawPath(path) {
 }
 
 function gatherData() {
+    // Gather the data required for the API call from the environment
     var start, stop, maze = [],
         checkpoints = [];
     start = document.getElementById("start");
@@ -130,6 +136,7 @@ function gatherData() {
             x: Math.floor(elmnt.offsetTop / 40)
         })
     }
+    // Send the data as FormData
     var data = new FormData();
     data.append('algo', parseInt(document.getElementById("algorithm").value));
     data.append('heuristic', parseInt(document.getElementById("heuristic").value))
@@ -151,6 +158,7 @@ function gatherData() {
 }
 
 function find() {
+    // Handle the API call to the server to find the path
     over = document.getElementById("overlay");
     over.style.display = "block";
     hideNav();
@@ -161,6 +169,7 @@ function find() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/findpath/");
     xhr.onload = () => {
+        // When the server responds, make the changes and draw the path
         resp = JSON.parse(xhr.response);
         over.style.display = "none";
         document.body.style.pointerEvents = "none";

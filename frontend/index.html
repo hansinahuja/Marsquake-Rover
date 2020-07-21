@@ -82,28 +82,36 @@
                 <option value="2">Octile</option>
                 <option value="3">Chebyshev</option>
             </select>
+            <b>Mode: </b>
+            <input name="mode" type="radio" id="multistart">
+            <label onclick="multiSource()" class="radiolabel" for="multistart" id="multistartl">Multiple Sources</label>
+            <input name="mode" type="radio" id="multidest">
+            <label onclick="multiDest()" class="radiolabel" for="multidest" id="multidestl">Multiple
+                Destinations</label>
+            <input name="mode" type="radio" id="checkp" checked>
+            <label onclick="checkpointMode()" class="radiolabel" for="checkp" id="checkpl">Checkpoints</label>
             <b>Configuration:</b>
             <input type="checkbox" id="cutcorners">
-            <label onclick="if(!document.getElementById('cutcorners').checked) document.getElementById('allowdiag').checked = true;" class="checklabel" for="cutcorners" id="cutcornersl">Cut Corners</label>
+            <label
+                onclick="if(!document.getElementById('cutcorners').checked) document.getElementById('allowdiag').checked = true;"
+                class="checklabel" for="cutcorners" id="cutcornersl">Cut Corners</label>
             <input type="checkbox" id="allowdiag">
-            <label class="checklabel" for="allowdiag" id="allowdiagl">Allow Diagonals</label>
+            <label
+                onclick="if(document.getElementById('allowdiag').checked) document.getElementById('cutcorners').checked = false;"
+                class="checklabel" for="allowdiag" id="allowdiagl">Allow Diagonals</label>
             <input type="checkbox" id="bidirec">
             <label class="checklabel" for="bidirec" id="bidirecl">Bidirectional</label>
             <input type="checkbox" id="wormhole">
-            <label onclick="toggleWorm();" class="checklabel" for="wormhole" id="wormholel">Add Wormhole</label>
-            <input name="mode" type="radio" id="checkp" checked>
-            <label onclick="checkpointMode()" class="radiolabel" for="checkp" id="checkpl">Checkpoints</label>
-            <input name="mode" type="radio" id="multidest">
-            <label onclick="multiDest()" class="radiolabel" for="multidest" id="multidestl">Multiple Destinations</label>
-            <input name="mode" type="radio" id="multistart">
-            <label onclick="multiSource()" class="radiolabel" for="multistart" id="multistartl">Multiple Sources</label>
+            <label onclick="toggleWorm();" class="checklabel" for="wormhole" id="wormholel">Wormhole</label>
             <label for="relaxation" id="relaxationl">Relaxation: 1.0</label>
-            <input onmousemove="changeSlider(this.id);" type="range" step="0.1" min="0" max="2" value="1" style="display: block; width: 180px; margin-top: 10px; margin-bottom: 10px;" id="relaxation">
+            <input onmousemove="changeSlider(this.id);" type="range" step="0.1" min="0" max="2" value="1"
+                style="display: block; width: 180px; margin-top: 10px; margin-bottom: 10px;" id="relaxation">
             <!-- <label for="maxdepth" id="maxdepthl">Max Depth: 10</label>
             <input onmousemove="changeSlider(this.id);" type="range" min="10" max="50" value="10" style="display: block; width: 180px; margin-top: 10px; margin-bottom: 10px;" id="maxdepth"> -->
             <label for="beamwidth" id="beamwidthl">Beam Width: 5</label>
-            <input onmousemove="changeSlider(this.id);" type="range" min="1" max="10" value="5" style="display: block; width: 180px; margin-top: 10px; margin-bottom: 10px;" id="beamwidth">
-            
+            <input onmousemove="changeSlider(this.id);" type="range" min="1" max="10" value="5"
+                style="display: block; width: 180px; margin-top: 10px; margin-bottom: 10px;" id="beamwidth">
+
             <b>Maze Generation Algorithm:</b>
             <input type="radio" id="mazealgo0" value="0" name="mazealgo" checked>
             <label for="mazealgo0" class="radiolabel">Recursive Maze</label>
@@ -115,8 +123,9 @@
                 <button onclick="hideNav(); showLight()">Define Sunlight</button>
                 <button onclick="randomMaze()">Random Maze</button>
                 <button onclick="find()" style="background: red;">Find Route!</button><br>
-                <button onclick="deleteCheckpoints(); clearGrid(); makeGrid(); hideNav();" style="background: royalblue;">Reset Grid</button>
-                
+                <button
+                    onclick="deleteCheckpoints(); clearGrid(); makeGrid(); hideNav(); disableWormhole(); document.getElementById('wormhole').checked=false;"
+                    style="background: royalblue;">Reset Grid</button>
             </center>
         </div>
     </nav>
@@ -129,16 +138,17 @@
                 style="display: block; transition: 0.5s; position: absolute; height: 3px; width: 18px; transform: translate(-50%,-50%) rotate(-45deg); background-color: white;">
             </div>
         </div>
-        <div style = "display:block; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%);">
+        <div style="display:block; position: absolute; top: 50%; left:50%; transform: translate(-50%, -50%);">
             <label id="intensityl" for="intensity">Intensity: 75%</label>
-            <input onmouseover="intensitySlider=true;" onmouseout="intensitySlider=false;" onmousemove="changeSlider(this.id);" id = "intensity" type="range" min="0" max="100" value="75">
+            <input onmouseover="intensitySlider=true;" onmouseout="intensitySlider=false;"
+                onmousemove="changeSlider(this.id);" id="intensity" type="range" min="0" max="100" value="75">
         </div>
     </div>
     <img class="draggable" id="start" src="images/green.svg">
     <img class="draggable" id="stop" src="images/red.svg">
     <img class="draggable" id="portal1" src="images/portal1.svg">
-    <img class="draggable" id="portal2" src="images/portal1.svg">
-    
+    <img class="draggable" id="portal2" src="images/portal2.svg">
+
     <script src="assets/main.js"></script>
     <script src="assets/proc.js"></script>
     <script src="assets/mazebuilder.js"></script>

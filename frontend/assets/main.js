@@ -1,34 +1,34 @@
-var i = 0;
-var j = 0;
-var interval = 0;
-var box = [];
-var weights = [];
-var chid = 0;
-var margin = 0;
-var showing = false;
-var multidest = false;
-var multistart = false;
-var intensityMode = false;
-var intensitySlider = false;
+// Functions for overall behaviour of the app
+
+var box = []; // Stores occupancy of each cell by wall or other draggable
+var weights = []; // Stores weight of each cell
+var chid = 0; // Current checkpoint id
+var margin = 0; // (Deprecated) Left margin of the grid
+var showing = false; // Flag whether there is a path drawn on screen
+var multidest = false; // If this is multi destination mode
+var multistart = false; // If this is multi start mode
+var intensityMode = false; // If the user is painting sunlight values
+var intensitySlider = false; // If the intensity slider is in focus
 
 function lerpColor(a, b, l) {
-    r1 = parseInt(a.substr(1, 2), 16);
-    g1 = parseInt(a.substr(3, 2), 16);
-    b1 = parseInt(a.substr(5, 2), 16);
-    r2 = parseInt(b.substr(1, 2), 16);
-    g2 = parseInt(b.substr(3, 2), 16);
-    b2 = parseInt(b.substr(5, 2), 16);
-    r3 = Math.floor((1 - l) * r1 + l * r2);
-    g3 = Math.floor((1 - l) * g1 + l * g2);
-    b3 = Math.floor((1 - l) * b1 + l * b2);
-    c = (r3 << 16) + (g3 << 8) + b3;
+    // Linearly interpolate between colors a and b at a distance l from a
+    let r1 = parseInt(a.substr(1, 2), 16),
+        g1 = parseInt(a.substr(3, 2), 16),
+        b1 = parseInt(a.substr(5, 2), 16),
+        r2 = parseInt(b.substr(1, 2), 16),
+        g2 = parseInt(b.substr(3, 2), 16),
+        b2 = parseInt(b.substr(5, 2), 16),
+        r3 = Math.floor((1 - l) * r1 + l * r2),
+        g3 = Math.floor((1 - l) * g1 + l * g2),
+        b3 = Math.floor((1 - l) * b1 + l * b2),
+        c = (r3 << 16) + (g3 << 8) + b3;
     return "#" + c.toString(16).padStart(6, 0);
 }
 
-algoChange();
-
 function algoChange() {
+    // Handles enabling or disabling relavant options when the algorithm is changed
     algo = document.getElementById("algorithm").value;
+    // Beam Search
     if (algo != "3") {
         document.getElementById("beamwidth").disabled = true;
         document.getElementById("beamwidthl").style.color = "#555";
@@ -36,6 +36,7 @@ function algoChange() {
         document.getElementById("beamwidth").disabled = false;
         document.getElementById("beamwidthl").style.color = "#FFF";
     }
+    // Jump Point Search
     if (algo == "10") {
         document.getElementById("cutcorners").checked = true;
         document.getElementById("cutcorners").disabled = true;
@@ -43,12 +44,19 @@ function algoChange() {
         document.getElementById("allowdiag").checked = true;
         document.getElementById("allowdiag").disabled = true;
         document.getElementById("allowdiagl").style.opacity = "0.3";
+        document.getElementById("wormhole").checked = false;
+        document.getElementById("wormhole").disabled = true;
+        document.getElementById("wormholel").style.opacity = "0.3";
+        disableWormhole();
     } else {
         document.getElementById("cutcorners").disabled = false;
         document.getElementById("cutcornersl").style.opacity = "1";
         document.getElementById("allowdiag").disabled = false;
         document.getElementById("allowdiagl").style.opacity = "1";
+        document.getElementById("wormhole").disabled = false;
+        document.getElementById("wormholel").style.opacity = "1";
     }
+    // Static and Dynamic A*
     if (algo == "1" || algo == "2") {
         document.getElementById("relaxation").disabled = false;
         document.getElementById("relaxationl").style.color = "#FFF";
@@ -56,13 +64,13 @@ function algoChange() {
         document.getElementById("relaxation").disabled = true;
         document.getElementById("relaxationl").style.color = "#555";
     }
-
+    // BFS, DFS, Dijkstra and UCS
     if (algo == "5" || algo == "8" || algo == "9" || algo == "11") {
         document.getElementById("heuristic").disabled = true;
     } else {
         document.getElementById("heuristic").disabled = false;
     }
-
+    // IDA*
     if (algo == "7") {
         AnimationTime = 1;
     } else {
@@ -71,13 +79,13 @@ function algoChange() {
 }
 
 function multiDest() {
-    if (document.getElementById("multistart").checked) {
-        document.getElementById("multistart").checked = false;
-    }
+    // Setup multi destination mode
+    // Enable bidirectional search
     document.getElementById("bidirec").disabled = false;
     document.getElementById("bidirecl").style.opacity = "1";
     multistart = false;
     multidest = true;
+    // Change checkpoint icons
     for (let elmnt of document.getElementsByClassName("checkpoint")) {
         t = Math.floor(elmnt.offsetTop / 40);
         l = Math.floor(elmnt.offsetLeft / 40 - margin / 40);
@@ -87,15 +95,18 @@ function multiDest() {
     }
 }
 
-function checkpointMode(){
+function checkpointMode() {
+    // Setup checkpoint mode
     multistart = false;
     multidest = false;
     if (chid > 0) {
+        // Bidirectional search not available if n(checkpoints)>0
         document.getElementById("bidirec").checked = false;
         document.getElementById("bidirec").disabled = true;
         document.getElementById("bidirecl").style.opacity = "0.3";
     }
     let i = 0;
+    // Replacing the checkpoint icons
     for (let elmnt of document.getElementsByClassName("checkpoint")) {
         t = Math.floor(elmnt.offsetTop / 40);
         l = Math.floor(elmnt.offsetLeft / 40 - margin / 40);
@@ -107,13 +118,13 @@ function checkpointMode(){
 }
 
 function multiSource() {
-    if (document.getElementById("multidest").checked) {
-        document.getElementById("multidest").checked = false;
-    }
+    // Setup multi start mode
     multistart = true;
     multidest = false;
+    // Enable bidirectional search
     document.getElementById("bidirec").disabled = false;
     document.getElementById("bidirecl").style.opacity = "1";
+    // Change checkpoint icons
     for (let elmnt of document.getElementsByClassName("checkpoint")) {
         t = Math.floor(elmnt.offsetTop / 40);
         l = Math.floor(elmnt.offsetLeft / 40 - margin / 40);
@@ -124,6 +135,7 @@ function multiSource() {
 }
 
 function changeSlider(id) {
+    // Sets the label text when a slider is changed
     let s, p = '';
     if (id == 'beamwidth') {
         s = "Beam Width: ";
@@ -140,16 +152,19 @@ function changeSlider(id) {
 
 
 function showNav() {
+    // Show the navbar
     nav = document.getElementsByTagName("nav")[0];
     nav.style.marginLeft = "0px";
 }
 
 function hideNav() {
+    // Hide the navbar
     nav = document.getElementsByTagName("nav")[0];
     nav.style.marginLeft = "-350px";
 }
 
 function deleteCheckpoints() {
+    // Remove all the checkpoints
     document.getElementById("bidirec").disabled = false;
     document.getElementById("bidirecl").style.opacity = "1";
     while (chid) {
@@ -172,6 +187,7 @@ function deleteCheckpoints() {
 }
 
 function clearGrid() {
+    // Remove all the things drawn for visualising the algorithms and the final path
     var inqueue = document.getElementsByClassName("inqueue");
     var l = inqueue.length;
     for (var i = 0; i < l; i++) {
@@ -182,13 +198,11 @@ function clearGrid() {
     for (var i = 0; i < l; i++) {
         processed[0].classList.remove("processed");
     }
-
     var final = document.getElementsByClassName("final");
     var l = final.length;
     for (var i = 0; i < l; i++) {
         final[0].classList.remove("final");
     }
-
     var path = document.getElementsByClassName("path");
     var l = path.length;
     for (var i = 0; i < l; i++) {
@@ -198,6 +212,7 @@ function clearGrid() {
 
 
 function makeGrid() {
+    // Create the grid on the screen
     box = [];
     weights = [];
     grid = document.getElementById("grid");
@@ -212,7 +227,6 @@ function makeGrid() {
             cell.classList = ["cell"];
             cell.style.left = 40 * i + "px";
             cell.style.top = 40 * j + "px";
-            // cell.innerText = "50%";
             if (i == n || j == m) {
                 cell.classList.add("wall");
                 temp.push(2);
@@ -220,8 +234,8 @@ function makeGrid() {
                 continue;
             }
             cell.id = j + "x" + i;
-            drawingElement(cell);
-            cell.oncontextmenu = addCheckpoint(cell.id);
+            drawingElement(cell); // Each cell can be a starting point for drawing walls 
+            cell.oncontextmenu = addCheckpoint(cell.id); // Right Click to add checkpoint
             grid.appendChild(cell);
             temp.push(0);
             temp1.push(50);
@@ -260,27 +274,30 @@ function makeGrid() {
     }
 }
 
-makeGrid();
-
-
 function addCheckpoint(id) {
+    // Returns a function to add checkpoint at the specific id
     function addCheckpoint() {
         if (showing) {
+            // First clear grid before adding the checkpoint
             clearGrid();
             showing = false;
         }
         i = id.split("x");
+        // No checkpoints on walls
         if (box[Number(i[0])][Number(i[1])]) {
             return false;
         }
+        // No more than 5 checkpoints
         if (chid > 4) {
             return false;
         }
+        // Remove bidirectional search if not already done 
         if (chid == 0 && !multidest && !multistart) {
             document.getElementById("bidirec").checked = false;
             document.getElementById("bidirec").disabled = true;
             document.getElementById("bidirecl").style.opacity = "0.3";
         }
+        // Create the element
         ch = document.createElement("img");
         if (multistart) {
             ch.src = "images/green.svg";
@@ -298,6 +315,7 @@ function addCheckpoint(id) {
         ch.style.zIndex = Number(i[0]);
         ch.style.top = 40 * Number(i[0]) + 20 + "px";
         ch.style.left = margin + 40 * Number(i[1]) + 20 + "px";
+        // Draggable element which snaps to the grid
         dragElement(ch);
         box[Number(i[0])][Number(i[1])] = 1;
         document.body.appendChild(ch);
@@ -307,11 +325,13 @@ function addCheckpoint(id) {
 }
 
 function removeCheckpoint(id) {
+    // Returns a function to remove the checkpoint with id = id
     function remove(e) {
         if (showing) {
             clearGrid();
             showing = false;
         }
+        // Enable Bidirectional search if n(checkpoints)==0
         if (chid == 1 && !multidest && !multistart) {
             document.getElementById("bidirec").disabled = false;
             document.getElementById("bidirecl").style.opacity = "1";
@@ -345,6 +365,7 @@ function removeCheckpoint(id) {
 }
 
 function dragElement(elmnt) {
+    // Make elmnt draggable and snap it to the grid
     var pos1 = 0,
         pos2 = 0,
         pos3 = 0,
@@ -411,18 +432,9 @@ function dragElement(elmnt) {
     }
 }
 
-for (let elmnt of document.getElementsByClassName("draggable")) {
-    dragElement(elmnt);
-}
-
-for (let elmnt of document.getElementsByClassName("dialog")) {
-    dragDialog(elmnt);
-}
-
 function drawingElement(elmnt) {
-    var pos1 = 0,
-        pos2 = 0,
-        pos3 = 0,
+    // Make elmnt a possible starting point for drawing
+    var pos3 = 0,
         pos4 = 0,
         val = 0;
     elmnt.onmousedown = dragMouseDown;
@@ -459,7 +471,7 @@ function drawingElement(elmnt) {
             document.onmousemove = elementDragON;
         }
     }
-
+    // For drawing sunlight intensities
     function elementDragIntensity(e) {
         e = e || window.event;
         e.preventDefault();
@@ -476,7 +488,7 @@ function drawingElement(elmnt) {
             elmnt.style.opacity = 1;
         }
     }
-
+    // For drawing walls
     function elementDragON(e) {
         e = e || window.event;
         e.preventDefault();
@@ -489,7 +501,7 @@ function drawingElement(elmnt) {
             document.getElementById(j + 'x' + i).classList = "wall cell"
         }
     }
-
+    // For reomving walls
     function elementDragOFF(e) {
         e = e || window.event;
         e.preventDefault();
@@ -510,6 +522,7 @@ function drawingElement(elmnt) {
 }
 
 function scrollBar(cont) {
+    // Make scrollbar functional in .navcont elements
     let track = cont.querySelector('.scrolltrack');
     let thumb = cont.querySelector('.scrollthumb');
     let h = cont.offsetHeight - 1;
@@ -526,7 +539,7 @@ function scrollBar(cont) {
     thumb.onmousedown = click;
     let pos2, pos4;
 
-    function click(e){
+    function click(e) {
         e = e || window.event;
         if (e.button != 0) return false;
         e.preventDefault();
@@ -534,16 +547,18 @@ function scrollBar(cont) {
         document.onmouseup = close;
         document.onmousemove = drag;
     }
-    function drag(e){
+
+    function drag(e) {
         e = e || window.event;
         e.preventDefault();
         pos2 = pos4 - e.clientY;
         pos4 = e.clientY;
-        if(thumb.offsetTop - pos2 >= cont.offsetHeight-1 || thumb.offsetTop - pos2 < 0) return true;
-        cont.scrollTop = Math.ceil((thumb.offsetTop - pos2)*cont.scrollHeight/h);
+        if (thumb.offsetTop - pos2 >= cont.offsetHeight - 1 || thumb.offsetTop - pos2 < 0) return true;
+        cont.scrollTop = Math.ceil((thumb.offsetTop - pos2) * cont.scrollHeight / h);
         thumb.style.top = (thumb.offsetTop - pos2) + "px";
     }
-    function close(){
+
+    function close() {
         document.onmouseup = null;
         document.onmousemove = null;
     }
@@ -551,6 +566,7 @@ function scrollBar(cont) {
 }
 
 function enableWormhole() {
+    // Find suitable starting points for the wormholes and place them
     let portals = [document.getElementById("portal1"), document.getElementById("portal2")];
     portals[0].style.display = "block";
     portals[1].style.display = "block";
@@ -570,6 +586,7 @@ function enableWormhole() {
 }
 
 function disableWormhole() {
+    // Hide both wormholes
     let portals = [document.getElementById("portal1"), document.getElementById("portal2")];
     for (let i = 0; i < 2; i++) {
         portals[i].style.display = "none";
@@ -588,6 +605,7 @@ function disableWormhole() {
 }
 
 function toggleWorm() {
+    // toggle wormhole mode
     if (document.getElementById("wormhole").checked) {
         disableWormhole();
     } else {
@@ -596,6 +614,7 @@ function toggleWorm() {
 }
 
 function dragDialog(elmnt) {
+    // Make elmnt freely draggable on screen
     var pos1 = 0,
         pos2 = 0,
         pos3 = 0,
@@ -633,24 +652,35 @@ function dragDialog(elmnt) {
 }
 
 function showLight() {
+    // Show the sunlight intensity tool
     light = document.getElementById("light");
     light.style.height = "70px";
     intensityMode = true;
-    // light.style.padding = "20px";
 }
 
 function hideLight() {
+    // Hide the sunlight intensity tool
     light = document.getElementById("light");
     light.style.height = "0px";
     intensityMode = false;
-    // light.style.padding = "0px";
 }
 
 
+// Initial Setup begins here...
 
+makeGrid();
+algoChange();
 disableWormhole();
-scrollBar(document.querySelector('.navcont'))
-
+scrollBar(document.querySelector('.navcont'));
+// Make the draggable elements actually draggable
+for (let elmnt of document.getElementsByClassName("draggable")) {
+    dragElement(elmnt);
+}
+// Dialogs can freely move without snapping to grid
+for (let elmnt of document.getElementsByClassName("dialog")) {
+    dragDialog(elmnt);
+}
+// Preloading the checkpoint images to avoid delay
 x = document.createElement("img")
 x.src = "images/yellow1.svg";
 x = document.createElement("img")
@@ -661,8 +691,7 @@ x = document.createElement("img")
 x.src = "images/yellow4.svg";
 x = document.createElement("img")
 x.src = "images/yellow5.svg";
-
-
+// When all content is loaded remove the loading overlay
 window.onload = () => {
     document.getElementById("loading").style.opacity = 0;
     setTimeout(() => {

@@ -150,7 +150,7 @@ nav button {
     min-width: 75%;
     margin-top: 10px;
     border-radius: 10px;
-    transform: translate(-50px,0px);
+    transform: translate(-50px, 0px);
 }
 
 nav button:active {
@@ -182,14 +182,14 @@ nav select {
     padding-left: 20px;
 }
 
-nav b{
+nav b {
     display: block;
     margin-top: 40px;
     margin-left: -20px;
     color: #999;
 }
 
-nav b:nth-child(2){
+nav b:nth-child(2) {
     margin-top: 0px;
 }
 
@@ -227,7 +227,7 @@ nav b:nth-child(2){
     opacity: 0.7 !important;
 }
 
-.final{
+.final {
     background-color: yellow !important;
     opacity: 0.7 !important;
 }
@@ -497,7 +497,7 @@ input:checked+.checklabel:after {
     transform: rotate(45deg);
 }
 
-.navcont{
+.navcont {
     display: block;
     position: relative;
     width: 100%;
@@ -505,12 +505,13 @@ input:checked+.checklabel:after {
     overflow-y: scroll;
     overflow-x: hidden;
 }
-.navcont:nth-child(4){
+
+.navcont:nth-child(4) {
     margin-top: 120px;
     max-height: calc(100% - 350px);
 }
 
-.scrolltrack{
+.scrolltrack {
     display: block;
     position: absolute;
     left: 0;
@@ -520,7 +521,7 @@ input:checked+.checklabel:after {
     height: 300px;
 }
 
-.scrollthumb{
+.scrollthumb {
     display: block;
     position: absolute;
     height: 25px;
@@ -529,14 +530,14 @@ input:checked+.checklabel:after {
     background-color: #666;
 }
 
-.radiolabel{
+.radiolabel {
     position: relative;
     display: block;
     margin: 10px;
     cursor: pointer;
 }
 
-.radiolabel:before{
+.radiolabel:before {
     content: '';
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -549,7 +550,8 @@ input:checked+.checklabel:after {
     cursor: pointer;
     margin-right: 5px;
 }
-input:checked+.radiolabel:before{
+
+input:checked+.radiolabel:before {
     background-color: white;
 }
 
@@ -566,7 +568,7 @@ input:checked+.radiolabel:after {
     transform: rotate(45deg);
 }
 
-.dialog{
+.dialog {
     display: block;
     position: fixed;
     background-color: #333;
@@ -575,7 +577,7 @@ input:checked+.radiolabel:after {
     padding: 0px;
     overflow: hidden;
     right: 30px;
-    top:30px;
+    top: 30px;
     cursor: grab;
     width: 200px;
     height: 0px;
@@ -583,6 +585,6 @@ input:checked+.radiolabel:after {
     z-index: 10000;
 }
 
-.dialog input{
+.dialog input {
     display: block;
 }
