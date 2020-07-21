@@ -1,0 +1,41 @@
+if(!document.cookie){
+    xhr = new XMLHttpRequest();
+    xhr.open("GET", "assets/popups.html");
+    xhr.onload = ()=>{
+            document.getElementById("popups").innerHTML = xhr.response;
+            let z = 8000;
+            var ppups = document.getElementsByClassName('ppup')
+            for(let elmnt of ppups){
+                if(z!=8000){
+                    elmnt.style.opacity = 0;
+                }
+                elmnt.style.zIndex = z;
+                z--;
+            }
+        };
+    xhr.send();
+}
+
+let currentPop = 0;
+
+function nextPop(){
+    var ppups = document.getElementsByClassName('ppup');
+    ppups[currentPop].style.opacity = "0";
+    setTimeout(()=>ppups[currentPop-1].style.display = "none", 500);
+    if(currentPop==ppups.length-1){
+        currentPop++;
+        return true;
+    }
+    ppups[currentPop+1].style.display = "block";
+    ppups[currentPop+1].style.opacity = "1";
+    currentPop++;
+}
+
+function prevPop(){
+    var ppups = document.getElementsByClassName('ppup');
+    ppups[currentPop].style.opacity = "0";
+    setTimeout(()=>ppups[currentPop+1].style.display = "none", 500);
+    ppups[currentPop-1].style.display = "block";
+    ppups[currentPop-1].style.opacity = "1";
+    currentPop--;
+}
