@@ -5,6 +5,18 @@ from collections import deque
 
 
 def idaStar(self, environment, threshold, targets):
+    
+    """
+    Performs one iteration of ida* based on agent's current state and threshold.
+    Args:
+        environment: The current environment
+        targets: The target agents
+        threshold: Maximum permissible f value.
+    Returns:
+        None
+    """
+
+    # Helper function to check if location is valid
     def valid(currentCell, x2, y2):
         x1, y1 = currentCell.location.x, currentCell.location.y
         if x2 < 0 or x2 >= environment.length or y2 < 0 or y2 >= environment.breadth:
@@ -21,9 +33,10 @@ def idaStar(self, environment, threshold, targets):
                     return False
         return True
 
+    # Clean the logs
     self.logs = []
 
-    # first iteration
+    # First iteration
     if self.waitList == None:
         self.waitList = deque()
         sourceCell = environment.grid[self.location.x][self.location.y]
@@ -34,10 +47,14 @@ def idaStar(self, environment, threshold, targets):
     # Exhausted all possible moves
     if len(self.waitList) == 0:
         return -1, -1
+
+    # Pop the top element and log the changes
     nextCell = self.waitList[-1][0]
     weight = self.waitList[-1][1]
     self.waitList.pop()
     fValue = weight + environment.bestHeuristic(nextCell, targets)
+
+    # Check if f value is within threshold
     if fValue > threshold:
         if nextCell in self.visited and self.visited[nextCell] == 'inRecursion':
             self.visited[nextCell] = 'outOfRecursion'
@@ -49,6 +66,7 @@ def idaStar(self, environment, threshold, targets):
     
     self.logs.append([self, nextCell, 'visited'])
     
+    # Iterate over valid neighbours
     for nx, ny in nextCell.location.neighbours:
         if not valid(nextCell, nx, ny):
             continue
@@ -58,6 +76,8 @@ def idaStar(self, environment, threshold, targets):
         neighbour = environment.grid[nx][ny]
         if neighbour == parent:
             continue
+        
+        # Add the neighbour to the queue and log the changes
         self.visited[nextCell] = 'inRecursion'
         self.waitList.append( (neighbour, weight + environment.distance(nextCell, neighbour)) )
         self.path[(neighbour, weight + environment.distance(nextCell, neighbour))] = (nextCell, weight)
