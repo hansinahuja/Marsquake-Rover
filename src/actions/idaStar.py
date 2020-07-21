@@ -12,8 +12,6 @@ def idaStar(self, environment, threshold, targets):
         environment: The current environment
         targets: The target agents
         threshold: Maximum permissible f value.
-    Returns:
-        None
     """
 
     # Helper function to check if location is valid

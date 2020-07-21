@@ -7,8 +7,6 @@ def bestFirstSearch(self, environment, targets):
     Args:
         environment: The current environment
         targets: The target agents
-    Returns:
-        None
     """
 
     # Clean the logs

@@ -8,8 +8,6 @@ def staticAStar(self, environment, targets, relaxation):
         environment: The current environment
         targets: The target agents
         relaxation: relaxation factor to calculate heuristics
-    Returns:
-        None
     """
 
     # Clean the logs

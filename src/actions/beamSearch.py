@@ -6,7 +6,7 @@ def switchLevel(level, beamWidth):
         level: The next beam level
         beamWidth: maximum allowable width of beam to limit space complexity
     Returns:
-        None
+        newLevel: The new beam level in focus.
     """
 
     newLevel = []
@@ -34,8 +34,6 @@ def beamSearch(self, environment, targets, beamWidth):
         environment: The current environment
         targets: The target agents
         beamWidth: maximum allowable width of beam to limit space complexity
-    Returns:
-        None
     """
     
     # Clean the logs

@@ -6,8 +6,6 @@ def uniformCostSearch(self, environment):
     Performs one iteration of uniform cost search based on agent's current state.
     Args:
         environment: The current environment
-    Returns:
-        None
     """
 
     # Clean the logs

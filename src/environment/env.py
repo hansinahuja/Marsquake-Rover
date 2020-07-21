@@ -30,8 +30,6 @@ class Environment:
         Arguments:
             config: Dictionary with all the configuration settings.
             agents: List of agents on the grid.
-        Returns:
-            None
         """
 
         # Extract and initialise all the environment properties

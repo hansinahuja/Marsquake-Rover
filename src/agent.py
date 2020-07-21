@@ -25,8 +25,6 @@ class Agent():
             location: Location of the agent
             _type: Type of the agent (source/destination)
             isMovingAgent: Whether the agent can move on the grid
-        Returns:
-            None
         """
 
         self.location = location

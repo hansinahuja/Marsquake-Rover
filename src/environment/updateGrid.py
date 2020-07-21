@@ -1,17 +1,29 @@
 def update(self, logs):
+
+    """
+    Updates states of grid cells.
+    Args:
+        logs: Changes registered in the last iteration.
+    Returns:
+        gridChanges: Colour changes required for display purposes.
+        intersectionPts: Intersection points for sources and destinations.
+    """
+
+    # Initialise required variables
     updates = {}
-    success = set()
+    intersectionPts = set()
     recursiveMode = False
     logs = list(filter(None, logs))
     gridChanges = []
     colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
 
     if len(logs) == 0:
-        return success, gridChanges
+        return intersectionPts, gridChanges
 
     if logs[0][2] == 'inRecursion' or logs[0][2] == 'outOfRecursion':
         recursiveMode = True
 
+    # Select just one update entry in case of clashes
     for log in logs:
         agent, cell, state = log
         if cell.type == 'wormholeEntry' or cell.type == 'wormholeExit':
@@ -23,6 +35,7 @@ def update(self, logs):
         elif recursiveMode and state == 'inRecursion' and updates[cell][2] != 'inRecursion':
             updates[cell] = log
 
+    # Update the cells based on entries selected
     for log in updates.values():
         agent, cell, state = log
         if cell.type != 'source' and cell.type != 'destination':
@@ -36,19 +49,21 @@ def update(self, logs):
                             'y': cell.location.y, 'color': colorDict[cell.type]}
             gridChanges.append(gridChange)
 
+        # Place the agents that reached first
         if agent.type == 'source' and cell.srcAgent == None:
             cell.srcAgent = agent
 
         if agent.type == 'destination' and cell.destAgent == None:
             cell.destAgent = agent
 
+        # Check for intersection points
         if not recursiveMode and state == 'visited' and cell.srcAgent != None and cell.destAgent != None:
-            success.add(cell)
+            intersectionPts.add(cell)
 
         if recursiveMode and cell.srcAgent != None and cell.destAgent != None:
-            success.add(cell)
+            intersectionPts.add(cell)
 
-    return success, gridChanges
+    return intersectionPts, gridChanges
 
 
 

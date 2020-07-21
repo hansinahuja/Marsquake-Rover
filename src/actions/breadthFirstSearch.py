@@ -6,8 +6,6 @@ def breadthFirstSearch(self, environment):
     Performs one iteration of breadth first search based on agent's current state.
     Args:
         environment: The current environment
-    Returns:
-        None
     """
 
     # Clean the logs

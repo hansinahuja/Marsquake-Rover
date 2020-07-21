@@ -9,8 +9,6 @@ def dynamicAStar(self, environment, targets, relaxation, maxDepth):
         targets: The target agents
         relaxation: relaxation factor to calculate heuristics
         maxDepth: maximum depth to calculate heuristics
-    Returns:
-        None
     """
 
     # Clean the logs

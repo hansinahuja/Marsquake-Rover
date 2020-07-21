@@ -5,8 +5,6 @@ def aStar(self, environment, targets):
     Args:
         environment: The current environment
         targets: The target agents
-    Returns:
-        None
     """
 
     # Call static A* with relaxation = 0
