@@ -4,7 +4,7 @@ from environment.env import Environment
 from environment.utils import Location
 
 def recursiveMaze(dict):
-        env = Environment(int(dict['length']), int(dict['breadth']))
+        env = Environment(dict, [])
         def randomOddNumber(low, high):
             low = low // 2 
             if high % 2:
@@ -70,12 +70,11 @@ def recursiveMaze(dict):
                         src = {'x': cell.location.x,
                             'y': cell.location.y}
         
-        # env.printInitial()
         return {'walls':gridChanges, 'source':src, 'destination':dst}
 
 
 def randomizedPrim(dict) :
-    env = Environment(int(dict['length']), int(dict['breadth']))
+    env = Environment(dict, [])
     def isValid(x, y):
         return x >=0 and y>=0 and x < env.length and y < env.breadth
     def mid(cellA, cellB):
@@ -143,21 +142,23 @@ def randomizedPrim(dict) :
                     src = {'x': cell.location.x,
                         'y': cell.location.y}
 
-    env.printInitial()
     return {'walls':gridChanges, 'source':src, 'destination':dst}
 
 def getMaze(dict):
+    length = int(dict['length'])
+    breadth = int(dict['breadth'])
+
+    maze = [ [ int(0) for i in range(breadth) ] for j in range(length) ]
+    weights = [ [ int(50) for i in range(breadth) ] for j in range(length) ]
+
+    config = {'maze': maze,
+              'weights': weights,
+              'allowDiagonals': 0,
+              'cutCorners': 0,
+              'heuristic': 0
+            }
+
     if int(dict['algo']) == 0:
-        return recursiveMaze(dict)
+        return recursiveMaze(config)
     else:
-        return randomizedPrim(dict)
-# dict = {
-# "algo":1,
-# "length":33,
-# "breadth":15
-# }
-# algo = 1
-# if algo == 0:
-#     print(recursiveMaze(dict))
-# else:
-#     print(randomizedPrim(dict))
+        return randomizedPrim(config)
