@@ -93,12 +93,15 @@ def nonCheckpointMode(config):
 
     # Driver for IDA*
     else:
+        # Initialize the threshold and other required variables
         threshold = env.bestHeuristic(sources[0], destinations)
-        newThreshold = 50000         # Large Value
-        itrCount = 0                 # IterationCount is necessary for tle
+        maxThreshold = 2 * env.length * env.breadth
+        newThreshold = maxThreshold     
+        itrCount = 0                 
         prevPath = []
-        while True and itrCount < 1000:
+        while True and itrCount < 100:
             logs = []
+            # Run the algorithm for all the movable agents and log the changes
             for src in sources:
                 if algo == 6:
                     X, Y = src.ida(env, threshold, destinations)
@@ -108,18 +111,27 @@ def nonCheckpointMode(config):
                 if X > threshold :
                     newThreshold = min(X, newThreshold)
                 else:
+                    # Update grid and check if destination is reached
                     intersectionPts, gridChange, prevPath = env.idaUpdate(logs, Y, prevPath)        
             gridChanges.extend(gridChange)
+
+            # If reached destination, get final path and break
             if len(intersectionPts) > 0:
                 intersectionPt = intersectionPts.pop()
                 path = env.getIDAPath(intersectionPt)
                 break
+
+            # Otherwise update threshold if possible
             if len(src.logs) == 0 and len(sources[0].waitList) == 0:
-                if newThreshold == 50000:     # No Path exists
+
+                # Updating threshold not possible, no path exists
+                if newThreshold == maxThreshold:     
                     break
+
+                # Update threshold
                 threshold = newThreshold
                 itrCount += 1
-                newThreshold = 50000
+                newThreshold = maxThreshold
                 for agent in sources + destinations:
                     agent.visited.clear()
                     agent.waitList = None
@@ -127,9 +139,8 @@ def nonCheckpointMode(config):
                     agent.logs = []
                     agent.distances = {}
 
+        # Get currently activated cells for grid cleanup, and return output
         activatedCells = env.getActivatedCells_IDA(path)
-        # print(path)
         output = {'gridChanges': gridChanges,
                   'path': path, 'activatedCells': activatedCells}
-        # print(gridChanges)
         return output
