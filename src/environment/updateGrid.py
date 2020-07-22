@@ -150,7 +150,7 @@ def getActivatedCells_IDA(self, path):
     """
     
     activatedCells = []
-    for c in path:
+    for cell in path:
         activatedCells.append(
-            {'x': c['x'], 'y': c['y'], 'color': 0})
+            {'x': cell['x'], 'y': cell['y'], 'color': 0})
     return activatedCells
