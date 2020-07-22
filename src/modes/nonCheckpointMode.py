@@ -26,8 +26,6 @@ def nonCheckpointMode(config):
     gridChanges = []
     path = []
     algo = int(config['algo'])
-
-    #  ------------- Original Driver
     
     if algo != 6 and algo != 7:
         while True:
@@ -98,8 +96,6 @@ def nonCheckpointMode(config):
         # print(output)
         # print(path)
         return output
-
-    # ----------------------------- Temporary ida and ida* Driver
 
     else:
         threshold = env.bestHeuristic(sources[0], destinations)
