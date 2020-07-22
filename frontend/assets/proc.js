@@ -51,6 +51,9 @@ function drawPath(path) {
     function drawLine() {
         point1 = path[i];
         point2 = path[i + 1];
+        if(point2.x == -1){
+            document.getElementById(point1.x + "x" + point1.y).classList.add("final");
+        }
         if (point1.x == -1 || point2.x == -1) {
             i++;
             return true;
