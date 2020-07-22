@@ -130,6 +130,11 @@ def idaupdate(self, logs, weight, prevPath):
     return success , gridChanges, newPath
 
 def getActivatedCells(self):
+
+    """
+    Returns list of activated cells in the environment.
+    """
+
     activatedCells = []
     for row in self.grid:
         for cell in row:
@@ -137,7 +142,13 @@ def getActivatedCells(self):
                 activatedCells.append(
                     {'x': cell.location.x, 'y': cell.location.y, 'color': 0})
     return activatedCells
+
 def getActivatedCells_IDA(self, path):
+
+    """
+    Returns list of activated cells in the environment during IDA*.
+    """
+    
     activatedCells = []
     for c in path:
         activatedCells.append(

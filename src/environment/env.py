@@ -12,15 +12,15 @@ class Environment:
         allowDiagonals: Whether diagonal movement of agents is possible.
         cutCorners: Whether agents are allowed to cut corners of walls.
     Methods:
-        update: 
+        update: Updates states of grid cells.
         idaupdate: 
-        getActivatedCells: 
-        getActivatedCells_IDA: 
-        getPaths: 
-        getJpsPaths: 
-        getIDAPath: 
-        bestHeuristic: 
-        distance: 
+        getActivatedCells: Returns list of activated cells in the environment.
+        getActivatedCells_IDA: Returns list of activated cells in the environment during IDA*.
+        getPath: Gets the final path from source to destination.
+        getJpsPath: Gets the final path from source to destination for jump point search.
+        getIDAPath: Gets the final path from source to destination for IDA*.
+        bestHeuristic: Returns best heuristic from source to any destination.
+        distance: Returns cost of travelling from one cell to another.
     """
 
     def __init__(self, config, agents):

@@ -56,7 +56,7 @@ def getPath(self, intersectionPt):
 def getIDAPath(self, destination):                          
 
     """
-    Gets the final path from source to destination.
+    Gets the final path from source to destination for IDA*.
     Args:
         destination: destination point.
     Returns:
@@ -109,7 +109,7 @@ def getIDAPath(self, destination):
 def getJpsPath(self, intersectionPt): 
 
     """
-    Gets the final path from source to destination.
+    Gets the final path from source to destination for jump point search.
     Args:
         intersectionPt: Point at which the source and destination meet.
     Returns:

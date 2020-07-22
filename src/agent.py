@@ -29,8 +29,8 @@ class Agent():
         """
 
         self.location = location
-        self.type = _type                       # type = source/destination
-        self.isMovingAgent = isMovingAgent      # does this agent move?
+        self.type = _type                      
+        self.isMovingAgent = isMovingAgent  
         self.waitList = None
         self.visited = set()
         self.path = {}
