@@ -1,42 +1,276 @@
 <div class="ppup">
     <div class="popup">
         <div class="left">
-            <img src="images/bg.jpg">
-            <img src="images/bg.jpg">
+            <img src="images/welcome.gif" height="auto">
         </div>
         <div class="right">
-            <h2>Algorithms</h2>
+            <h2>Welcome to the Marsquake Rover project!</h2>
             <p>
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
+                <i>"I would like to die on Mars. Just not on impact."</i>
             </p>
+            <p>The year is 2043, and we're looking to land on the fourth rock from the Sun in the near future.
+                Buuuut, we need some serious planning for that. 
+            </p>
+            <p>Test out the Marsquake Rover simulator for a successful mission, and help out our 
+                little robot on the red planet!</p>
         </div>
         <div class="buttons">
             <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
         </div>
     </div>
 </div>
+
 <div class="ppup">
     <div class="popup">
         <div class="left">
-            <img src="images/bg.jpg">
-            <img src="images/bg.jpg">
+            <img src="images/dragdrop.gif">
+        </div>
+        <div class="right">
+            <h2>Drag and drop</h2>
+            <p>
+                <i>"Ignoring the signs is a good way to end up at the wrong destination."</i>
+            </p>
+            <p>The green flag is our rover's landing site, and we've found evidence 
+                of water at the red flag! (Cool stuff, right?)
+            </p>
+            <p>Drag and drop any flag to test out several different locations for our source and destination.</p>
+        </div>
+        <div class="buttons">
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/walls.gif">
+        </div>
+        <div class="right">
+            <h2>Obstacles</h2>
+            <p>
+                <i>"Obstacles. Most can be overcome by the appropriate use of explosives."</i>
+            </p>
+            <p>Something not at home can be something that's hostile. 
+                Mars is full of high hills and low valleys and all sorts of crazy terrains.
+            </p>
+            <p>Left click and move your mouse over unoccupied cells to add these obstacles. 
+                Our rover won't be able to move over these spots :(
+            </p>
+        </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/algo.gif">
         </div>
         <div class="right">
             <h2>Algorithms</h2>
             <p>
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
-                Lorem Ipsum Dolor Sit Amet 
+                <i>"A word used by programmers when they don't want to explain what they did."</i>
             </p>
+            <p>Open the side panel and explore 11 different algorithms that our rover can follow.</p>
+             <p>Note that some nice algorithms will always find the shortest path (like A*), and 
+                 some not-so-nice algorithms will take a longer walk (like beam search).
+             </p>
         </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/modes1.gif">
+            <img src="images/modes2.gif">
+        </div>
+        <div class="right">
+            <h2>Modes</h2>
+            <p>
+                <i>"To be or not to be? I want to know where to be."</i>
+            </p>
+            <p><b>Multiple sources:</b> Test out several possible landing sites by placing multiple sources.<br>
+            <b>Multiple destinations:</b> Find out the nearest water reservoir by placing multiple destinations.<br>
+            <b>Checkpoints:</b> Need a detour? Place checkpoints and our rover will visit them in order.</p>
+
+             <p>Right click to add or remove these extra flags from any mode. 
+                 Note that our fine rover will find the nearest source-destination pair in the first two modes!</p>
+        </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/config1.gif">
+            <img src="images/config2.gif">
+        </div>
+        <div class="right">
+            <h2>Configurations</h2>
+            <p>
+                <i>"Variety is the spice of life. And algorithms as well."</i>
+            </p>
+            <p>
+                Tinker around with different settings in our simulator. Note that some of
+                    these might be disabled based on the algorithm and other configurations.
+            </p>
+            <p><b>Allow diagonals:</b> Whether the rover is allowed to move diagonally.<br>
+            <b>Cut corners:</b> Whether the rover is allowed to cut the corner of an obstacle.<br>
+            <b>Bidirectional:</b> We lost a rover on Mars in the 2034 mission, and now the two rovers
+                need to find each other!</p>
+
+        </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/heuristic.gif">
+            <img src="images/slider.gif">
+        </div>
+        <div class="right">
+            <h2>Configurations</h2>
+            <p>
+                <i>"Variety is the spice of life. And algorithms as well."</i>
+            </p>
+            <p>
+                Tinker around with different settings in our simulator. Note that some of
+                    these might be disabled based on the algorithm and other configurations.
+            </p>
+            <p><b>Heuristic:</b> Which heuristic should our rover follow for guided algorithms?<br>
+            <b>Beam width:</b> Maximum beam size for beam search.<br>
+            <b>Relaxation:</b> Relaxation factor for static and dynamic A*.</p>
+
+        </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/sun.gif">
+        </div>
+        <div class="right">
+            <h2>Define sunlight</h2>
+            <p>
+                <i>"A day without sunshine is like, you know, night."</i>
+            </p>
+            <p>
+                Our rover runs on solar energy and would prefer walking on sunshine.
+            </p>
+            <p>Click on define sunlight and move the slider to adjust intensity. 
+                Left click and move over any area to assign the chosen intensity.
+            </p>
+            <p>Note that unweighted graph algorithms like jump point search will be unaffected by this setting.</p>
+
+        </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/wormhole.gif">
+        </div>
+        <div class="right">
+            <h2>Wormholes</h2>
+            <p>
+                <i>"If I could teleport, I'd probably still be late."</i>
+            </p>
+            <p>
+                One of our engineers is a big sci-fi fan, and hopes to find teleportation wormholes on Mars someday.
+            </p>
+            <p>
+                Sometimes our destination might be unreachable, but don't you worry! Play around with 
+                our wormhole feature to teleport from one place to another.
+            </p>
+
+        </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/maze.gif">
+        </div>
+        <div class="right">
+            <h2>Random mazes</h2>
+            <p>
+                <i>"So much of life is determined by pure randomness."</i>
+            </p>
+            <p>
+                Sometimes the journey can be unpredictable and we need to prepare for that.
+            </p>
+            <p>
+                Select one of our maze generation algorithms and click on Random Maze to generate a random terrain.
+            </p>
+
+        </div>
+        <div class="buttons">
+            <input type="checkbox" id="nevershow">
+            <!-- <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label> -->
+            <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Next</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="ppup">
+    <div class="popup">
+        <div class="left">
+            <img src="images/logo1.PNG">
+        </div>
+        <div class="right">
+            <h2>Let's go!</h2>
+            <p>
+                <i>"Shoot for the stars and you'll land on Mars."</i>
+            </p>
+            <p>
+                Click on Find Route to get going, and Reset Grid to restore the default settings.
+            </p>
+            <p>
+                Go forth and conquer, Martian. Make us proud.
+            </p>
+
+        </div> 
         <div class="buttons">
             <input type="checkbox" id="nevershow">
             <label onclick="document.cookie=!document.getElementById('nevershow').checked" class="checklabel" for="nevershow">Don't show again.</label>

@@ -632,7 +632,7 @@ input:checked+.radiolabel:after {
 }
 .left img{
     max-width: 90%;
-    max-height: 45%;
+    /* max-height: 45%; */
     border-radius: 10px;
 }
 
