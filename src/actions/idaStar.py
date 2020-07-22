@@ -30,7 +30,7 @@ def idaStar(self, environment, threshold, targets):
                 if environment.grid[x1][y2].type == 'wall' or environment.grid[x2][y1].type == 'wall':
                     return False
             else:
-                if environment.grid[x1][y2].type == 'wall' or environment.grid[x2][y1].type == 'wall':
+                if environment.grid[x1][y2].type == 'wall' and environment.grid[x2][y1].type == 'wall':
                     return False
         return True
 
