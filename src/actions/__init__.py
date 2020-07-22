@@ -7,7 +7,6 @@ from actions.breadthFirstSearch import breadthFirstSearch
 from actions.depthFirstSearch import depthFirstSearch
 from actions.dijkstra import dijkstra
 from actions.dynamicAStar import dynamicAStar
-from actions.ida import ida
 from actions.idaStar import idaStar
 from actions.jumpPointSearch import jumpPointSearch
 from actions.staticAStar import staticAStar

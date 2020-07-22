@@ -103,22 +103,19 @@ def nonCheckpointMode(config):
             logs = []
             # Run the algorithm for all the movable agents and log the changes
             for src in sources:
-                if algo == 6:
-                    X, Y = src.ida(env, threshold, destinations)
-                if algo == 7:
-                    X, Y = src.idaStar(env, threshold, destinations)
+                X, Y = src.idaStar(env, threshold, destinations)
                 logs.extend(src.logs)
                 if X > threshold :
                     newThreshold = min(X, newThreshold)
                 else:
                     # Update grid and check if destination is reached
-                    intersectionPts, gridChange, prevPath = env.idaUpdate(logs, Y, prevPath)        
+                    destinationPts , gridChange, prevPath = env.idaUpdate(logs, Y, prevPath)        
             gridChanges.extend(gridChange)
 
             # If reached destination, get final path and break
-            if len(intersectionPts) > 0:
-                intersectionPt = intersectionPts.pop()
-                path = env.getIDAPath(intersectionPt)
+            if len(destinationPts) > 0:
+                destinationPt = destinationPts.pop()
+                path = env.getIDAPath(destinationPt)
                 break
 
             # Otherwise update threshold if possible
