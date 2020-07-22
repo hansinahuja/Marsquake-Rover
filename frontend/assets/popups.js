@@ -3,10 +3,10 @@ if(!document.cookie){
     xhr.open("GET", "assets/popups.html");
     xhr.onload = ()=>{
             document.getElementById("popups").innerHTML = xhr.response;
-            let z = 8000;
+            let z = 1500;
             var ppups = document.getElementsByClassName('ppup')
             for(let elmnt of ppups){
-                if(z!=8000){
+                if(z!=1500){
                     elmnt.style.opacity = 0;
                 }
                 elmnt.style.zIndex = z;

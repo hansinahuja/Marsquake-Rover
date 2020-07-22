@@ -9,6 +9,10 @@ function makeChanges(resp, changes) {
     // This functions is called automatically after AnimationTime delay
     function color() {
         change = changes[i];
+        if(change.x==-1){
+            i++;
+            return true;
+        }
         c = document.getElementById(change.x + "x" + change.y);
         if (change.color == 0) {
             c.classList.remove("inqueue");
