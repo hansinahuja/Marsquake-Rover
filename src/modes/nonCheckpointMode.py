@@ -4,7 +4,16 @@ from environment.utils import Location
 
 
 def nonCheckpointMode(config):
-    
+
+    """
+    Simulates path-finding in multistart and multidestination mode.
+    Args:
+        config: Dictionary with all the configuration settings.
+    Returns:
+        output: Final path taken and list of changes on the grid.
+    """
+
+    # Extract all the sources and destinations from congig
     sources = []
     destinations = []
 
@@ -19,84 +28,70 @@ def nonCheckpointMode(config):
         else:
             destinations.append(Agent(Location(checkpoint['x'], checkpoint['y']), 'destination', int(config['biDirectional'])))
 
+    # Initialise the environment
     env = Environment(config, sources + destinations)
 
-    
-    maxDepth = 1000
     gridChanges = []
     path = []
     algo = int(config['algo'])
     
+    # For all algorithms other than IDA*
     if algo != 6 and algo != 7:
+
+        # Run till a path is found
         while True:
             logs = []
-            for src in sources:
-                if algo == 0:
-                    src.aStar(env, destinations)
-                if algo == 1:
-                    src.staticAStar(env, destinations, float(config['relaxation']))
-                if algo == 2:
-                    src.dynamicAStar(env, destinations, float(config['relaxation']), maxDepth)
-                if algo == 3:
-                    src.beamSearch(env, destinations, int(config['beamWidth']))
-                if algo == 4:
-                    src.bestFirstSearch(env, destinations)
-                if algo == 5:
-                    src.breadthFirstSearch(env)
-                if algo == 8:
-                    src.depthFirstSearch(env)
-                if algo == 9:
-                    src.dijkstra(env)
-                if algo == 10:
-                    src.jumpPointSearch(env, destinations)
-                if algo == 11:
-                    src.uniformCostSearch(env)
-                logs.extend(src.logs)
-            for dest in destinations:
-                if dest.isMovingAgent:
+
+            # Run the correct algorithm for all the movable agents and log the changes
+            for agent in sources + destinations:
+                targets = destinations if agent in sources else sources
+                if agent.isMovingAgent: 
                     if algo == 0:
-                        dest.aStar(env, sources)
+                        agent.aStar(env, targets)
                     if algo == 1:
-                        dest.staticAStar(env, sources, float(config['relaxation']))
+                        agent.staticAStar(env, targets, float(config['relaxation']))
                     if algo == 2:
-                        dest.dynamicAStar(env, destinations, float(config['relaxation']), maxDepth)
+                        agent.dynamicAStar(env, targets, float(config['relaxation']), 1000)
                     if algo == 3:
-                        dest.beamSearch(env, sources, int(config['beamWidth']))
+                        agent.beamSearch(env, targets, int(config['beamWidth']))
                     if algo == 4:
-                        dest.bestFirstSearch(env, sources)
+                        agent.bestFirstSearch(env, targets)
                     if algo == 5:
-                        dest.breadthFirstSearch(env)
+                        agent.breadthFirstSearch(env)
                     if algo == 8:
-                        dest.depthFirstSearch(env)
+                        agent.depthFirstSearch(env)
                     if algo == 9:
-                        dest.dijkstra(env)
+                        agent.dijkstra(env)
                     if algo == 10:
-                        dest.jumpPointSearch(env, sources)
+                        agent.jumpPointSearch(env, targets)
                     if algo == 11:
-                        dest.uniformCostSearch(env)
-                logs.extend(dest.logs)
+                        agent.uniformCostSearch(env)
+                    logs.extend(agent.logs)
+
+            # Update grid and check for intersection points
             intersectionPts, gridChange = env.update(logs)
-            # env.print()
-            # print(gridChange)
             gridChanges.extend(gridChange)
+
+            # If intersection point found, get final path and break
             if len(intersectionPts) > 0:
                 intersectionPt = intersectionPts.pop()
                 if algo == 10:
                     path = env.getJpsPath(intersectionPt)
                 else:
                     path = env.getPath(intersectionPt)
-                # print('Path:', path)
                 break
-            if len(src.logs) == 0 and len(dest.logs) == 0:
+
+            # If no changes being registered, break
+            if len(logs) == 0:
                 break
-        # print(path)
+        
+        # Get currently activated cells for grid cleanup, and return output
         activatedCells = env.getActivatedCells()
         output = {'gridChanges': gridChanges,
                   'path': path, 'activatedCells': activatedCells}
-        # print(output)
-        # print(path)
         return output
 
+    # Driver for IDA*
     else:
         threshold = env.bestHeuristic(sources[0], destinations)
         newThreshold = 50000         # Large Value
@@ -113,7 +108,7 @@ def nonCheckpointMode(config):
                 if X > threshold :
                     newThreshold = min(X, newThreshold)
                 else:
-                    intersectionPts, gridChange, prevPath = env.idaupdate(logs, Y, prevPath)        
+                    intersectionPts, gridChange, prevPath = env.idaUpdate(logs, Y, prevPath)        
             gridChanges.extend(gridChange)
             if len(intersectionPts) > 0:
                 intersectionPt = intersectionPts.pop()

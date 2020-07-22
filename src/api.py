@@ -3,7 +3,7 @@ import re
 import flask
 import json
 from flask import request, jsonify, send_from_directory, render_template
-from driver_2 import driver
+from findPath import findPath
 from getMaze import getMaze
 
 template_dir = os.path.abspath('../frontend')
@@ -34,7 +34,7 @@ def findpath():
     s = re.sub("\\\\\"","\"",s)
     s = json.loads(s)
     try:
-        return jsonify(driver(s))
+        return jsonify(findPath(s))
     except Exception as e:
         return jsonify({"error":True, "msg":str(e)})
 

@@ -1,5 +1,4 @@
 from math import sqrt
-from environment.utils import Location
 
 def distance(self, src, dest):
 

@@ -13,7 +13,7 @@ class Environment:
         cutCorners: Whether agents are allowed to cut corners of walls.
     Methods:
         update: Updates states of grid cells.
-        idaupdate: 
+        idaUpdate: Updates states of grid cells during IDA*.
         getActivatedCells: Returns list of activated cells in the environment.
         getActivatedCells_IDA: Returns list of activated cells in the environment during IDA*.
         getPath: Gets the final path from source to destination.
@@ -76,7 +76,7 @@ class Environment:
     # Import member functions
     from environment.heuristics import bestHeuristic, distance
     from environment.drawPath import getPath, getJpsPath, getIDAPath
-    from environment.updateGrid import update, idaupdate, getActivatedCells, getActivatedCells_IDA
+    from environment.updateGrid import update, idaUpdate, getActivatedCells, getActivatedCells_IDA
 
     # For debugging
     def print(self):

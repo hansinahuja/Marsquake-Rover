@@ -68,7 +68,7 @@ def update(self, logs):
 
 
 
-def idaupdate(self, logs, weight, prevPath):
+def idaUpdate(self, logs, weight, prevPath):
     
     """
     Updates states of grid cells during IDA*.
@@ -88,7 +88,6 @@ def idaupdate(self, logs, weight, prevPath):
     recursiveMode = False
     logs = list(filter(None, logs))
     gridChanges = []
-    colorDict = {'free': 0, 'visited': 1, 'waitList': 2}
 
     if len(logs) == 0:
         return intersectionPts , gridChanges, []

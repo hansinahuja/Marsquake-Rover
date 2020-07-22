@@ -1,17 +1,22 @@
-from agent import Agent
-from environment.env import Environment
-from environment.utils import Location
-from modes.checkpointMode import checkpointMode
-from modes.nonCheckpointMode import nonCheckpointMode
+from modes import checkpointMode, nonCheckpointMode
 
+def findPath(config):
 
-def driver(dict):
+    """"
+    Driver function to run the required mode of operation.
+    Args:
+        config: Dictionary with all the configuration settings.
+    returns:
+        The final path and changes in the grid throughout the run.
+    """
 
-    if (int(dict['multistart']) == 0 and int(dict['multidest']) == 0):
-        return checkpointMode(dict)
+    # Check the flags and run the required mode
+    
+    if (int(config['multistart']) == 0 and int(config['multidest']) == 0):
+        return checkpointMode(config)
 
     else:
-        return nonCheckpointMode(dict)
+        return nonCheckpointMode(config)
 
 
 # dict = {
