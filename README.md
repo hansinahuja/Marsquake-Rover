@@ -1,5 +1,17 @@
 # Marsquake-Rover
 
+## Table of contents
+
+  * [Features](features)
+        * [Supported algorithms](#supported-algorithms)
+        * [Obstacles](#obstacles)
+        * [Modes](#modes)
+        * [Configurations](#configurations)
+        * [Cell weights](#cell-weights)
+        * [Random mazes](#random-mazes)
+        * [Wormholes](#wormholes)
+   * [Future work](#future-work)
+
 ## Features
 
 ### Supported algorithms
