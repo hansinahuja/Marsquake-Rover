@@ -195,8 +195,8 @@ body {
     position: fixed;
     pointer-events: none;
     top: 0px;
-    height: 150px;
-    right: 0px;
+    height: 100px;
+    right: 50px;
     opacity: 0.5;
     z-index: 1;
 }
