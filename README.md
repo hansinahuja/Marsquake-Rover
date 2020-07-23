@@ -57,5 +57,6 @@ The path finder has 3 modes:
 ### Wormholes
 * When an agent steps on cell marked as the wormhole entry, it moves to the wormhole exit with 0 cost.
 * The cell marked as wormhole entry can be thought of as being disconnected with its physical neighbours, and its only neighbour becomes the wormhole exit.
+* Note that for informed algorithms, wormholes will not be treated as destination nodes. For example, if a wormhole exit is located close to the destination, the algorithm will not be able to account for this non-physical proximity. This can alter the usual properties of any given algorithm.
 
 ## Future work
