@@ -40,7 +40,7 @@ function makeChanges(resp, changes) {
 function drawPath(path) {
     // Draw the path at the end
     var i = 0,
-        int = 0;
+        int = 0, color="#FF0000", off=0;
     // Error handling
     if (path.length < 2) {
         if (document.getElementById("algorithm").value == "1") {
@@ -62,6 +62,12 @@ function drawPath(path) {
             i++;
             return true;
         }
+        if(point1.x == -2 || point2.x == -2){
+            color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+            off += 1;
+            i++;
+            return true;
+        }
         if (i)
             document.getElementById(point1.x + "x" + point1.y).classList.add("final");
         var dx = point2.y - point1.y;
@@ -71,8 +77,9 @@ function drawPath(path) {
             x.style.transformOrigin = "left";
             x.className = "path";
             x.style.transform = "rotate(" + ((2 - dx) * dy * 45) + "deg)";
-            x.style.top = 40 * point1.x + 20 + "px";
-            x.style.left = 40 * point1.y + margin + 20 + "px";
+            x.style.top = 40 * point1.x + 20 - off + "px";
+            x.style.left = 40 * point1.y + margin + 20 - off + "px";
+            x.style.backgroundColor = color;
             document.body.appendChild(x);
             setTimeout(() => {
                 x.style.width = "59px";
@@ -90,8 +97,9 @@ function drawPath(path) {
             } else if (dx == 0 && dy == -1) {
                 x.style.transform = "rotate(270deg)";
             }
-            x.style.top = 40 * point1.x + 20 + "px";
-            x.style.left = 40 * point1.y + margin + 20 + "px";
+            x.style.top = 40 * point1.x + 20 - off + "px";
+            x.style.left = 40 * point1.y + margin + 20 - off + "px";
+            x.style.backgroundColor = color;
             document.body.appendChild(x);
             setTimeout(() => {
                 x.style.width = "42px";
