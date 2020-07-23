@@ -37,7 +37,7 @@ function algoChange() {
         document.getElementById("beamwidthl").style.color = "#FFF";
     }
     // Jump Point Search
-    if (algo == "10") {
+    if (algo == "9") {
         document.getElementById("cutcorners").checked = true;
         document.getElementById("cutcorners").disabled = true;
         document.getElementById("cutcornersl").style.opacity = "0.3";
@@ -65,13 +65,15 @@ function algoChange() {
         document.getElementById("relaxationl").style.color = "#555";
     }
     // BFS, DFS, Dijkstra and UCS
-    if (algo == "5" || algo == "8" || algo == "9" || algo == "11") {
+    if (algo == "5" || algo == "7" || algo == "8" || algo == "10") {
         document.getElementById("heuristic").disabled = true;
+        document.getElementById("heuristic").style.opacity = "0.3";
     } else {
         document.getElementById("heuristic").disabled = false;
+        document.getElementById("heuristic").style.opacity = "1";
     }
     // IDA*
-    if (algo == "7") {
+    if (algo == "6") {
         AnimationTime = 1;
         document.getElementById("bidirec").disabled = true;
         document.getElementById("bidirecl").style.opacity = "0.3";
