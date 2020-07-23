@@ -3,6 +3,10 @@
 var AnimationTime = 10; // How fast the visualisation proceeds
 
 function makeChanges(resp, changes) {
+    if(!changes.length){
+        alert("No path found!!");
+        return true;
+    }
     // Make the changes returned by the API as an animation
     var i = 0,
         int = 0;
@@ -40,7 +44,7 @@ function drawPath(path) {
     // Error handling
     if (path.length < 2) {
         if (document.getElementById("algorithm").value == "1") {
-            alert("No path found! Try increasing the Beam Size.");
+            alert("No path found! Try increasing the Beam Width. If already maxed out, this terrain is a little too tough for our rover :(");
         } else {
             alert("No path found!!");
         }
