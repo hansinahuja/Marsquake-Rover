@@ -43,6 +43,14 @@ The path finder has 3 modes:
 1. **Bidirectional:** Specify whether the destination is a moving agent or not. This feature is disabled in checkpoint mode and IDA* algorithm.
 
 ### Cell weights
+* Cell weights have been implemented in the form of the sunlight feature. Low sunlight corresponds to high cell weight and vice versa.
+* In terms of weighted edges of a directed graph, the cost of moving from one cell to another is the weight of the destination cell.
+* The cost of movement is multiplied by a factor of sqrt(2) in case of diagonal movement.
+* The cell weight is representated on a scale of 0 to 2. The default sunlight is 50%, corresponding to a weight of 1.
+* The cost of using a wormhole is 0, which can be thought of as the wormhole exit point having a weight of 0.
+* The cost of moving from one cell to another is:
+![equation1](https://latex.codecogs.com/gif.latex?cost(x,&space;y)&space;=&space;sqrt(manhattanDistance(x,&space;y))&space;*&space;cellWeight(y))
+![equation2](https://latex.codecogs.com/gif.latex?cellWeight(y)&space;=&space;((100&space;-&space;sunlightIntensity(y))&space;/&space;100&space;)&space;*&space;2)
 
 ### Random mazes
 
