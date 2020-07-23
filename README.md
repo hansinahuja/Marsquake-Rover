@@ -10,7 +10,7 @@
   * [Cell weights](#Cell-weights)
   * [Random mazes](#Random-mazes)
   * [Wormholes](#Wormholes)
-* [Future work](#Future-work)
+* [Tasks](#tasks)
 
 ## Features
 
@@ -73,7 +73,7 @@ The path finder has 2 maze generation algorithms. Both generate a completely ran
 * The cell marked as wormhole entry can be thought of as being disconnected with its physical neighbours, and its only neighbour becomes the wormhole exit.
 * Note that for informed algorithms, wormholes will not be treated as destination nodes. For example, if a wormhole exit is located close to the destination, the algorithm will not be able to account for this non-physical proximity. This can alter the usual properties of any given algorithm.
 
-## Future work
+## Tasks
 - [X] Expand browser support.
 - [X] Provide an option to change drawing speed.
 - [X] Change path colour after reaching a checkpoint.
