@@ -19,35 +19,35 @@ def findPath(config):
         return nonCheckpointMode(config)
 
 
-dict = {
-    "algo": 7,
-    "start": [{"x": 0, "y": 0}],
-    "stop": [{"x": 0, "y": 4}],
-    "checkpoints": [ ],
-    # "wormhole": [{'x': 2, 'y': 0}, {'x': 2, 'y': 4}],
-    "multistart": '0',
-    "relaxation": '3',
-    "maxDepth": '8',
-    "multidest": '1',
-    "cutCorners": 1,
-    "heuristic": 0,
-    "allowDiagonals": 1,
-    "biDirectional": 0,
-    "beamWidth": 2,
-    "maze":
-    [[0, 0, 1, 0, 0],
-     [0, 0, 1, 0, 0],
-     [0, 0, 0, 0, 0],
-     [0, 0, 1, 0, 0],
-     [0, 0, 1, 0, 0],
-     ],
-     "weights": 
-     [[50, 50, 50, 50, 50],
-     [50, 50, 50, 50, 50],
-     [50, 50, 50, 50, 50],
-     [50, 50, 50, 50, 50],
-     [50, 50, 50, 50, 50],
-     ],
-}
+# dict = {
+#     "algo": 7,
+#     "start": [{"x": 0, "y": 0}],
+#     "stop": [{"x": 0, "y": 4}],
+#     "checkpoints": [ ],
+#     # "wormhole": [{'x': 2, 'y': 0}, {'x': 2, 'y': 4}],
+#     "multistart": '0',
+#     "relaxation": '3',
+#     "maxDepth": '8',
+#     "multidest": '1',
+#     "cutCorners": 1,
+#     "heuristic": 0,
+#     "allowDiagonals": 1,
+#     "biDirectional": 0,
+#     "beamWidth": 2,
+#     "maze":
+#     [[0, 0, 1, 0, 0],
+#      [0, 0, 1, 0, 0],
+#      [0, 0, 0, 0, 0],
+#      [0, 0, 1, 0, 0],
+#      [0, 0, 1, 0, 0],
+#      ],
+#      "weights": 
+#      [[50, 50, 50, 50, 50],
+#      [50, 50, 50, 50, 50],
+#      [50, 50, 50, 50, 50],
+#      [50, 50, 50, 50, 50],
+#      [50, 50, 50, 50, 50],
+#      ],
+# }
 
-print(findPath(dict)['timeTaken'])
+# print(findPath(dict)['timeTaken'])

@@ -40,7 +40,7 @@ def nonCheckpointMode(config):
     algo = int(config['algo'])
     
     # For all algorithms other than IDA*
-    if algo != 7:
+    if algo != 6:
 
         # Run till a path is found
         while True:
@@ -62,13 +62,13 @@ def nonCheckpointMode(config):
                         agent.bestFirstSearch(env, targets)
                     if algo == 5:
                         agent.breadthFirstSearch(env)
-                    if algo == 8:
+                    if algo == 7:
                         agent.depthFirstSearch(env)
-                    if algo == 9:
+                    if algo == 8:
                         agent.dijkstra(env)
-                    if algo == 10:
+                    if algo == 9:
                         agent.jumpPointSearch(env, targets)
-                    if algo == 11:
+                    if algo == 10:
                         agent.uniformCostSearch(env)
                     logs.extend(agent.logs)
 
@@ -79,7 +79,7 @@ def nonCheckpointMode(config):
             # If intersection point found, get final path and break
             if len(intersectionPts) > 0:
                 intersectionPt = intersectionPts.pop()
-                if algo == 10:
+                if algo == 9:
                     path = env.getJpsPath(intersectionPt)
                 else:
                     path = env.getPath(intersectionPt)
@@ -100,6 +100,7 @@ def nonCheckpointMode(config):
 
     # Driver for IDA*
     else:
+        
         # Initialize the threshold and other required variables
         threshold = env.bestHeuristic(sources[0], destinations)
         maxThreshold = 2 * env.length * env.breadth
