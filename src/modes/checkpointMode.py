@@ -38,6 +38,7 @@ def checkpointMode(config):
 
         # Break if no path is found
         if len(result['path']) == 0:
+            path = []
             break
         else:
             path.extend(result['path'])
