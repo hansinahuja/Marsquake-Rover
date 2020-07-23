@@ -104,7 +104,7 @@ function drawPath(path) {
 
 function gatherData() {
     // Gather the data required for the API call from the environment
-    var start, stop, maze = [],
+    var start, stop, maze = [], w = [],
         checkpoints = [];
     start = document.getElementById("start");
     start = {
@@ -128,13 +128,16 @@ function gatherData() {
     };
     for (var j = 0; j < m; j++) {
         temp = [];
+        temp1 = [];
         for (var i = 0; i < n; i++) {
+            temp1.push(weights[j][i]);
             if (box[j][i] == 2) {
                 temp.push(1);
             } else {
                 temp.push(0);
             }
         }
+        w.push(temp1);
         maze.push(temp);
     }
     for (var i = 0; i < 5; i++) {
@@ -162,7 +165,7 @@ function gatherData() {
     data.append('beamWidth', document.getElementById("beamwidth").value);
     data.append('checkpoints', JSON.stringify(checkpoints));
     data.append('maze', JSON.stringify(maze));
-    data.append('weights', JSON.stringify(weights));
+    data.append('weights', JSON.stringify(w));
     return data;
 }
 
