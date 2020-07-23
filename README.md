@@ -6,19 +6,25 @@
 
 Here is a summary of all the algorithms we support:
 
-| Algorithm  | Shortest path guaranteed | Informed search | For weighted graphs |
-| :-------------: | :-------------: | :-------------: | :-------------: |
-| A*  | ✓  | ✓ | ✓ |
-| Statically Weighted A*  | ✗  | ✓ | ✓ |
-| Dynamically Weighted A*  | ✗  | ✓ | ✓ |
-| Beam Search  | ✗  | ✗ | ✗ |
-| Best First Search  | ✗  | ✓ |  ✗  |
-| Breadth First Search  | ✓  | ✗  | ✗  |
-| Depth First Search  | ✗  | ✗  | ✗  |
-| Dijkstra  | ✓  | ✗  | ✓  |
-| Jump Point Search  | ✓   | ✓ | ✗  |
-| Uniform Cost Search  | ✓  | ✗  | ✗  |
-| IDA*  | ✓   | ✓ | ✓ |
+| Algorithm  | Shortest path guaranteed | Informed search | For weighted graphs | Bidirectional | Supports wormholes |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-----------: | :-------: |
+| A*  | ✓  | ✓ | ✓ |  ✓ | ✓ |
+| Statically Weighted A*  | ✗  | ✓ | ✓ | ✓ | ✓ |
+| Dynamically Weighted A*  | ✗  | ✓ | ✓ | ✓ | ✓ |
+| Beam Search  | ✗  | ✗ | ✗ | ✓ | ✓ |
+| Best First Search  | ✗  | ✓ |  ✗  | ✓ | ✓ |
+| Breadth First Search  | ✓  | ✗  | ✗  | ✓ | ✓ |
+| Depth First Search  | ✗  | ✗  | ✗  | ✓ | ✓ |
+| Dijkstra  | ✓  | ✗  | ✓  | ✓ | ✓ |
+| Jump Point Search  | ✓   | ✓ | ✗  | ✓ | ✗ |
+| Uniform Cost Search  | ✓  | ✗  | ✗  | ✓ | ✓ |
+| IDA*  | ✓   | ✓ | ✓ | ✓ | ✗ | ✓ |
+
+* IDA* requires iterative update of a threshold value, which cannot remain uniform between a source and a destination. Hence, it does not support bidirectional search.
+* Jump point search requires a regular two dimensional grid, and hence does not support the wormhole feature.
+* Algorithms which are not meant for weighted graphs will be unaffected by cell weights (the sunlight feature).
+* Informed search algorithms take into account various heuristics during path-finding.
+* Beam search might not always produce a path even when one is possible at the cost of its space optimization. Increasing the beam width might help in such a scenario.
 
 ### Obstacles
 
