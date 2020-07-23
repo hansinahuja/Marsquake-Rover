@@ -27,6 +27,9 @@ Here is a summary of all the algorithms we support:
 * Beam search might not always produce a path even when one is possible at the cost of its space optimization. Increasing the beam width might help in such a scenario.
 
 ### Obstacles
+* Obstacles are cells over which an agent cannot travel.
+* We create a boundary of obstacles around the grid so that the algorithms are bounded to the visible screen.
+* If you resize your screen, the old boundaries will be retained. Click of Reset Grid to generate a new boundary.
 
 ### Modes
 The path finder has 3 modes:
