@@ -697,6 +697,7 @@ x = document.createElement("img")
 x.src = "images/yellow4.svg";
 x = document.createElement("img")
 x.src = "images/yellow5.svg";
+multiSource();
 // When all content is loaded remove the loading overlay
 window.onload = () => {
     document.getElementById("loading").style.opacity = 0;
