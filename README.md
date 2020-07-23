@@ -32,7 +32,7 @@ Here is a summary of all the algorithms we support:
 | Uniform Cost Search  | ✓  | ✗  | ✗  | ✓ | ✓ |
 | IDA*  | ✓   | ✓ | ✓ | ✗ | ✓ |
 
-* IDA* requires iterative update of a threshold value, which cannot remain uniform between a source and a destination. Hence, it does not support bidirectional search.
+* IDA* requires iterative update of a threshold value, which cannot remain uniform across multiple moving agents. Hence, it does not support bidirectional search or multisource mode.
 * Jump point search requires a regular two dimensional grid, and hence does not support the wormhole feature.
 * Algorithms which are not meant for weighted graphs will be unaffected by cell weights (the sunlight feature).
 * Informed search algorithms take into account various heuristics during path-finding.
