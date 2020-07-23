@@ -118,6 +118,12 @@
             <label for="mazealgo0" class="radiolabel">Recursive Maze</label>
             <input type="radio" id="mazealgo1" value="1" name="mazealgo">
             <label for="mazealgo1" class="radiolabel">Randomized Prim</label>
+            <b>Animation Speed:</b>
+            <select id="speed" onchange="AnimationTime = parseInt(this.value); console.log(AnimationTime);" style="position: relative; top:10px; transform: translate(calc(-50% - 40px), 0); margin-bottom: 30px;">
+                <option value="25">Slow</option>
+                <option value="10" selected>Medium</option>
+                <option value="1">Fast</option>
+            </select>
         </div>
         <div class="navcont">
             <center>

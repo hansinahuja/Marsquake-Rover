@@ -1,4 +1,11 @@
-if(!document.cookie){
+function getCookieValue(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+}
+
+let show = getCookieValue("show");
+
+if(!show || show=='true'){
     xhr = new XMLHttpRequest();
     xhr.open("GET", "assets/popups.html");
     xhr.onload = ()=>{

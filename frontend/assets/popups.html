@@ -257,7 +257,11 @@
         </div> 
         <div class="buttons">
             <input type="checkbox" id="nevershow">
-            <label onclick="document.cookie=!document.getElementById('nevershow').checked;" class="checklabel" for="nevershow">Don't show again.</label>
+            <label onclick="
+                let date = new Date(Date.now() + 7*86400e3);
+                date = date.toUTCString();
+                document.cookie='show='+document.getElementById('nevershow').checked+'; expires='+date;
+            " class="checklabel" for="nevershow">Don't show again.</label>
             <button onclick="prevPop();">Previous</button><button onclick="nextPop();">Finish</button>
         </div>
     </div>

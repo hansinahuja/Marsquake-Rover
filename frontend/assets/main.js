@@ -74,11 +74,9 @@ function algoChange() {
     }
     // IDA*
     if (algo == "6") {
-        AnimationTime = 1;
         document.getElementById("bidirec").disabled = true;
         document.getElementById("bidirecl").style.opacity = "0.3";
     } else {
-        AnimationTime = 10;
         if(chid==0 || multistart || multidest){
             document.getElementById("bidirec").disabled = false;
             document.getElementById("bidirecl").style.opacity = "1";
