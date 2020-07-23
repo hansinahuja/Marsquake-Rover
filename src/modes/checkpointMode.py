@@ -47,9 +47,9 @@ def checkpointMode(config):
             if(len(points) > 2):
                 gridChanges.extend(result['activatedCells'])
 
-            # To remove repeated points in path
+            # Add a colour change indicator
             if i < len(points)-2:
-                path.pop()
+                path.append({'x': -2, 'y': -2})
 
     # Calculate time taken in milliseconds
     timeTaken = int((time.time() - startTime)*1000)
