@@ -603,6 +603,7 @@ input:checked+.radiolabel:after {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
+    padding: 20px;
     background-color: #444;
     overflow: hidden;
     box-shadow: 2px 2px 8px #111;
@@ -629,7 +630,13 @@ input:checked+.radiolabel:after {
     width: 40%;
     vertical-align: middle;
     padding-right: 20px;
+    color: #EEE;
 }
+
+.right b, .right i, .right h2{
+    color: #FFF;
+}
+
 .left img{
     max-width: 90%;
     /* max-height: 45%; */
@@ -667,5 +674,11 @@ input:checked+.radiolabel:after {
 @media only screen and (max-width: 770px) {
     .popup{
         width: 90vw;
+    }
+}
+
+@media only screen and (max-width: 860px) {
+    .popup{
+        height: 80vh;
     }
 }
