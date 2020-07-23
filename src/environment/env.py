@@ -37,10 +37,12 @@ class Environment:
         self.breadth = len(config['maze'][0])
         self.grid = [[Cell(Location(x, y)) for y in range(self.breadth)]
                      for x in range(self.length)]
-        heuristicDict = {0: 'manhattan', 1: 'euclidean', 2: 'octile', 3: 'chebyshev'}
-        self.heuristic = heuristicDict[int(config['heuristic'])]
         self.allowDiagonals = int(config['allowDiagonals'])
         self.cutCorners = int(config['cutCorners'])
+        
+        if 'heuristic' in config:
+            heuristicDict = {0: 'manhattan', 1: 'euclidean', 2: 'octile', 3: 'chebyshev'}
+            self.heuristic = heuristicDict[int(config['heuristic'])]
 
         # Set up walls and cell weights
         for row in self.grid:
