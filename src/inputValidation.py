@@ -122,7 +122,7 @@ def validateInput(config):
         if 'relaxation' not in config:
             raise Exception('relaxation not provided.')
 
-        if not config['relaxation'].isnumeric():
+        if not config['relaxation'].replace('.', '', 1).isdigit():
             raise Exception('relaxation must be a numeric value.') 
 
     # For beam width
