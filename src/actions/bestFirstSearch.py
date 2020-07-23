@@ -37,13 +37,12 @@ def bestFirstSearch(self, environment, targets):
 
         # Check if a better path is possible
         neighbour = environment.grid[nx][ny]
-        newDistance = self.distances[nextCell] + environment.distance(nextCell, neighbour)
+        newDistance = environment.bestHeuristic(neighbour, targets)
         if neighbour in self.distances and self.distances[neighbour] <= newDistance:
             continue
         
         # Add the neighbour to the heap and log the changes
-        heuristic = environment.bestHeuristic(neighbour, targets)
-        heapq.heappush(self.waitList, (heuristic, neighbour))
+        heapq.heappush(self.waitList, (newDistance, neighbour))
         self.path[neighbour] = nextCell
         self.distances[neighbour] = newDistance
         self.logs.append([self, neighbour, 'waitList'])
