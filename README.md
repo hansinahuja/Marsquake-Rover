@@ -2,15 +2,15 @@
 
 ## Table of contents
 
-  * [Features](features)
-        * [Supported algorithms](#supported-algorithms)
-        * [Obstacles](#obstacles)
-        * [Modes](#modes)
-        * [Configurations](#configurations)
-        * [Cell weights](#cell-weights)
-        * [Random mazes](#random-mazes)
-        * [Wormholes](#wormholes)
-   * [Future work](#future-work)
+* [Features](#features)
+  * [Supported algorithms](#supported-algorithms)
+  * [Obstacles](#Obstacles)
+  * [Modes](#Modes)
+  * [Configurations](#Configurations)
+  * [Cell weights](#Cell-weights)
+  * [Random mazes](#Random-mazes)
+  * [Wormholes](#Wormholes)
+* [Future work](#Future-work)
 
 ## Features
 
