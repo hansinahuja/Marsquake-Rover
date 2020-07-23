@@ -12,7 +12,7 @@ Here is a summary of all the algorithms we support:
 | Statically Weighted A*  | ✗  | ✓ | ✓ |
 | Dynamically Weighted A*  | ✗  | ✓ | ✓ |
 | Beam Search  | ✗  | ✗ | ✗ |
-| Best First Search  | ✗  | ✓ |  ✗  
+| Best First Search  | ✗  | ✓ |  ✗  |
 | Breadth First Search  | ✓  | ✗  | ✗  |
 | Depth First Search  | ✗  | ✗  | ✗  |
 | Dijkstra  | ✓  | ✗  | ✓  |
