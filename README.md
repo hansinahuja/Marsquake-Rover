@@ -66,7 +66,7 @@ The path finder has 3 modes:
 
 ### Random mazes
 The path finder has 2 maze generation algorithms. Both generate a completely random maze which has a possible path between any two cells.
-1. **Recursive Maze Algorithm:** Randomly divides the grid into two parts with a wall which contains a randomly poisitioned free cell, then recursively repeat for sub-grids.
+1. **Recursive Maze Algorithm:** Randomly divides the grid into two parts with a wall which contains a randomly poisitioned free cell, then recursively repeats for sub-grids.
 1. **Randomized Prim's Algorithm:** Represents the grid as a graph and generates a random  minimum spanning tree (MST).
 ### Wormholes
 * When an agent steps on cell marked as the wormhole entry, it moves to the wormhole exit with 0 cost.
