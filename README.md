@@ -74,3 +74,10 @@ The path finder has 2 maze generation algorithms. Both generate a completely ran
 * Note that for informed algorithms, wormholes will not be treated as destination nodes. For example, if a wormhole exit is located close to the destination, the algorithm will not be able to account for this non-physical proximity. This can alter the usual properties of any given algorithm.
 
 ## Future work
+- [X] Expand browser support.
+- [X] Provide an option to change drawing speed.
+- [X] Change path colour after reaching a checkpoint.
+- [X] Display statistics such as time taken, path length, etc.
+- [ ] Provide an option to pause visualisation.
+- [ ] Provide bidirectional wormholes.
+- [ ] Provide an option to alter cell size.
