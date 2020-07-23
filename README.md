@@ -38,9 +38,9 @@ The path finder has 3 modes:
 1. **Checkpoints:** The path starts from source and ends at destination, visiting all checkpoints in the given order.
 
 ### Configurations
-1) Cut corners- Disable to prevent path from touching the corners of obstacle cells during diagonal movement. This feature cannot be enabled if diagonal movement is not allowed, and cannot be disabled during jump point search.
-2) Allow diagonals- Specify whether diagonal movement is allowed. This feature cannot be disabled in jump point search.
-3) Bidirectional- Specify whether the destination is a moving agent or not. This feature is disabled in checkpoint mode and IDA* algorithm.
+1. **Cut corners:** Disable to prevent path from touching the corners of obstacle cells during diagonal movement. This feature cannot be enabled if diagonal movement is not allowed, and cannot be disabled during jump point search.
+1. **Allow diagonals:** Specify whether diagonal movement is allowed. This feature cannot be disabled in jump point search.
+1. **Bidirectional:** Specify whether the destination is a moving agent or not. This feature is disabled in checkpoint mode and IDA* algorithm.
 
 ### Cell weights
 
