@@ -488,7 +488,7 @@ input[type=range]::-moz-range-track {
     background: #FFF;
     height: 10px;
     border-radius: 10px; 
-}z
+}
 
 .checklabel {
     position: relative;
