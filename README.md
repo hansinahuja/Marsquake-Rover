@@ -48,8 +48,8 @@ The path finder has 3 modes:
 * The cost of movement is multiplied by a factor of sqrt(2) in case of diagonal movement.
 * The cell weight is representated on a scale of 0 to 2. The default sunlight is 50%, corresponding to a weight of 1.
 * The cost of using a wormhole is 0, which can be thought of as the wormhole exit point having a weight of 0.
-* The cost of moving from one cell to another is: <br/>
-![equation1](https://latex.codecogs.com/gif.latex?cost(x,&space;y)&space;=&space;sqrt(manhattanDistance(x,&space;y))&space;*&space;cellWeight(y)) <br/>
+* The cost of moving from one cell to another is: <br/><br/>
+![equation1](https://latex.codecogs.com/gif.latex?cost(x,&space;y)&space;=&space;sqrt(manhattanDistance(x,&space;y))&space;*&space;cellWeight(y)) <br/><br/>
 ![equation2](https://latex.codecogs.com/gif.latex?cellWeight(y)&space;=&space;((100&space;-&space;sunlightIntensity(y))&space;/&space;100&space;)&space;*&space;2)
 
 ### Random mazes
