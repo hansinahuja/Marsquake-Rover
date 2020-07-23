@@ -1,4 +1,5 @@
 from modes.nonCheckpointMode import nonCheckpointMode
+import time
 
 def checkpointMode(config):
 
@@ -9,6 +10,9 @@ def checkpointMode(config):
     Returns:
         output: Final path taken and list of changes on the grid.
     """
+
+    # Register starting time
+    startTime = time.time()
 
     # Extract points to be visited in order.
     points = []
@@ -46,5 +50,8 @@ def checkpointMode(config):
             if i < len(points)-2:
                 path.pop()
 
-    output = {'gridChanges': gridChanges, 'path': path}
+    # Calculate time taken in milliseconds
+    timeTaken = int((time.time() - startTime)*1000)
+
+    output = {'gridChanges': gridChanges, 'path': path, 'timeTaken': timeTaken}
     return output

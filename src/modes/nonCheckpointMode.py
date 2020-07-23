@@ -1,3 +1,4 @@
+import time
 from agent import Agent
 from environment.env import Environment
 from environment.utils import Location
@@ -12,6 +13,9 @@ def nonCheckpointMode(config):
     Returns:
         output: Final path taken and list of changes on the grid.
     """
+
+    # Register starting time
+    startTime = time.time()
 
     # Extract all the sources and destinations from congig
     sources = []
@@ -36,7 +40,7 @@ def nonCheckpointMode(config):
     algo = int(config['algo'])
     
     # For all algorithms other than IDA*
-    if algo != 6 and algo != 7:
+    if algo != 7:
 
         # Run till a path is found
         while True:
@@ -85,10 +89,13 @@ def nonCheckpointMode(config):
             if len(logs) == 0:
                 break
         
-        # Get currently activated cells for grid cleanup, and return output
+        # Get currently activated cells for grid cleanup
         activatedCells = env.getActivatedCells()
+
+        # Calculate time taken in milliseconds and return output
+        timeTaken = int((time.time() - startTime)*1000)
         output = {'gridChanges': gridChanges,
-                  'path': path, 'activatedCells': activatedCells}
+                  'path': path, 'activatedCells': activatedCells, 'timeTaken': timeTaken}
         return output
 
     # Driver for IDA*
@@ -136,8 +143,11 @@ def nonCheckpointMode(config):
                     agent.logs = []
                     agent.distances = {}
 
-        # Get currently activated cells for grid cleanup, and return output
+        # Get currently activated cells for grid cleanup
         activatedCells = env.getActivatedCells_IDA(path)
+
+        # Calculate time taken in milliseconds and return output
+        timeTaken = int((time.time() - startTime)*1000)
         output = {'gridChanges': gridChanges,
-                  'path': path, 'activatedCells': activatedCells}
+                  'path': path, 'activatedCells': activatedCells, 'timeTaken': timeTaken}
         return output
