@@ -84,12 +84,12 @@
                 <option value="3">Chebyshev</option>
             </select>
             <b>Mode: </b>
-            <input name="mode" type="radio" id="multistart">
+            <input name="mode" type="radio" id="multistart" checked>
             <label onclick="multiSource()" class="radiolabel" for="multistart" id="multistartl">Multiple Sources</label>
             <input name="mode" type="radio" id="multidest">
             <label onclick="multiDest()" class="radiolabel" for="multidest" id="multidestl">Multiple
                 Destinations</label>
-            <input name="mode" type="radio" id="checkp" checked>
+            <input name="mode" type="radio" id="checkp">
             <label onclick="checkpointMode()" class="radiolabel" for="checkp" id="checkpl">Checkpoints</label>
             <b>Configuration:</b>
             <input type="checkbox" id="cutcorners">
@@ -129,10 +129,10 @@
             <center>
                 <button onclick="hideNav(); showLight()">Define Sunlight</button>
                 <button onclick="randomMaze()">Random Maze</button>
-                <button onclick="find()" style="background: red;">Find Route!</button><br>
+                <button onclick="find()" style="background: tomato;">Find Route!</button><br>
                 <button
                     onclick="deleteCheckpoints(); clearGrid(); makeGrid(); hideNav(); disableWormhole(); document.getElementById('wormhole').checked=false;"
-                    style="background: royalblue;">Reset Grid</button>
+                    style="background: rgb(0, 99, 228);">Reset Grid</button>
             </center>
         </div>
     </nav>
