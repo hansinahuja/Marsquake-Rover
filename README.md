@@ -53,7 +53,9 @@ The path finder has 3 modes:
 ![equation2](https://latex.codecogs.com/gif.latex?cellWeight(y)&space;=&space;((100&space;-&space;sunlightIntensity(y))&space;/&space;100&space;)&space;*&space;2)
 
 ### Random mazes
-
+The path finder has 2 maze generation algorithms. Both generate a completely random maze which has a possible path between any two cells.
+1. **Recursive Maze Algorithm**
+1. **Randomized Prim's Algorithm**
 ### Wormholes
 * When an agent steps on cell marked as the wormhole entry, it moves to the wormhole exit with 0 cost.
 * The cell marked as wormhole entry can be thought of as being disconnected with its physical neighbours, and its only neighbour becomes the wormhole exit.
