@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+* [How to run](#how-to-run)
 * [Features](#features)
   * [Supported algorithms](#supported-algorithms)
   * [Obstacles](#Obstacles)
@@ -11,6 +12,10 @@
   * [Random mazes](#Random-mazes)
   * [Wormholes](#Wormholes)
 * [Tasks](#tasks)
+
+## How to run
+The application has been deployed [here.](http://marsquake.azurewebsites.net)
+To run locally, 
 
 ## Features
 
