@@ -18,7 +18,7 @@ Here is a summary of all the algorithms we support:
 | Dijkstra  | ✓  | ✗  | ✓  | ✓ | ✓ |
 | Jump Point Search  | ✓   | ✓ | ✗  | ✓ | ✗ |
 | Uniform Cost Search  | ✓  | ✗  | ✗  | ✓ | ✓ |
-| IDA*  | ✓   | ✓ | ✓ | ✓ | ✗ | ✓ |
+| IDA*  | ✓   | ✓ | ✓ | ✗ | ✓ |
 
 * IDA* requires iterative update of a threshold value, which cannot remain uniform between a source and a destination. Hence, it does not support bidirectional search.
 * Jump point search requires a regular two dimensional grid, and hence does not support the wormhole feature.
