@@ -13,8 +13,8 @@ class Agent():
         distances: Minimum distances to reach different cells.
     Methods:
         isValidMove: To check if a particular movement is valid.
-        breadthFirstSearch, depthFirstSearch, dijkstra, uniformCostSearch: unguided search algorithms
-        aStar, beamSearch, bestFirstSearch, dynamicAStar, idaStar, jumpPointSearch, staticAStar: guided search algorithms
+        breadthFirstSearch, depthFirstSearch, dijkstra, uniformCostSearch: uninformed search algorithms
+        aStar, beamSearch, bestFirstSearch, dynamicAStar, idaStar, jumpPointSearch, staticAStar: informed search algorithms
     """
 
 

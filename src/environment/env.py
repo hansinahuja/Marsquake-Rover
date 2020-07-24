@@ -8,7 +8,7 @@ class Environment:
         length: Length of the grid. 
         breadth: Breadth of the grid.
         grid: Two-dimensional array of Cells representing the grid.
-        heuristic: Heuristic function for guided algorithms.
+        heuristic: Heuristic function for informed algorithms.
         allowDiagonals: Whether diagonal movement of agents is possible.
         cutCorners: Whether agents are allowed to cut corners of walls.
     Methods:
