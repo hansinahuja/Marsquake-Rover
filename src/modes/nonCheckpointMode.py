@@ -105,9 +105,9 @@ def nonCheckpointMode(config):
         threshold = env.bestHeuristic(sources[0], destinations)
         maxThreshold = 2 * env.length * env.breadth
         newThreshold = maxThreshold     
-        itrCount = 0                 
+        t_end = time.time() + 0.1
         prevPath = []
-        while True and itrCount < 100:
+        while time.time() <= t_end:
             logs = []
             # Run the algorithm for all the movable agents and log the changes
             for src in sources:
@@ -135,7 +135,6 @@ def nonCheckpointMode(config):
 
                 # Update threshold
                 threshold = newThreshold
-                itrCount += 1
                 newThreshold = maxThreshold
                 for agent in sources + destinations:
                     agent.visited.clear()
