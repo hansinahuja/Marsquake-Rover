@@ -90,7 +90,7 @@ def idaUpdate(self, logs, weight, prevPath):
     gridChanges = []
 
     if len(logs) == 0:
-        return intersectionPts , gridChanges, []
+        return intersectionPts , gridChanges, prevPath
     
      # Select just one update entry in case of clashes
     for log in logs:
@@ -129,7 +129,7 @@ def idaUpdate(self, logs, weight, prevPath):
             gridChange = {'x': prevPath[i]['x'],
                         'y': prevPath[i]['y'], 'color': 0}
             gridChanges.append(gridChange)
-        for i in range(lenNew):
+        for i in range(commonLen, lenNew):
             gridChange = {'x': newPath[i]['x'],
                         'y': newPath[i]['y'], 'color': 2}
             gridChanges.append(gridChange)

@@ -62,10 +62,14 @@ def idaStar(self, environment, threshold, targets):
         return fValue, weight
     
     self.logs.append([self, nextCell, 'visited'])
-    
+    nextCell.srcAgent = self
+    path = environment.getIDAPath(nextCell)
     # Iterate over valid neighbours
     for nx, ny in nextCell.location.neighbours:
         if not valid(nextCell, nx, ny):
+            continue
+        point = {'x': nx, 'y': ny}
+        if point in path:
             continue
         parent = nextCell
         if (nextCell, weight) in self.path:
