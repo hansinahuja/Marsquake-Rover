@@ -1,6 +1,8 @@
 // Functions related to Path Finding and Path Drawing
 
 var AnimationTime = 10; // How fast the visualisation proceeds
+var messageWindow = document.querySelector(".message");
+var timeout1 = NaN, timeout2 = NaN;
 
 function makeChanges(resp, changes) {
     if(!changes.length){
@@ -40,7 +42,10 @@ function makeChanges(resp, changes) {
 function drawPath(path) {
     // Draw the path at the end
     var i = 0,
-        int = 0, color="#FF0000", off=0;
+        int = 0, color=0, off=0, colors = ['#FF0000', "#0000FF", "#00FF00", "#FF00FF", "#000000", "#FFF"];
+    if(!multidest && !multistart){
+        off = -chid;
+    }
     // Error handling
     if (path.length < 2) {
         if (document.getElementById("algorithm").value == "1") {
@@ -63,7 +68,7 @@ function drawPath(path) {
             return true;
         }
         if(point1.x == -2 || point2.x == -2){
-            color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+            color += 0.5;
             off += 1;
             i++;
             return true;
@@ -79,7 +84,7 @@ function drawPath(path) {
             x.style.transform = "rotate(" + ((2 - dx) * dy * 45) + "deg)";
             x.style.top = 40 * point1.x + 20 - off + "px";
             x.style.left = 40 * point1.y + margin + 20 - off + "px";
-            x.style.backgroundColor = color;
+            x.style.backgroundColor = colors[color];
             document.body.appendChild(x);
             setTimeout(() => {
                 x.style.width = "59px";
@@ -99,7 +104,7 @@ function drawPath(path) {
             }
             x.style.top = 40 * point1.x + 20 - off + "px";
             x.style.left = 40 * point1.y + margin + 20 - off + "px";
-            x.style.backgroundColor = color;
+            x.style.backgroundColor = colors[color];
             document.body.appendChild(x);
             setTimeout(() => {
                 x.style.width = "42px";
@@ -195,6 +200,21 @@ function find() {
     xhr.onload = () => {
         // When the server responds, make the changes and draw the path
         resp = JSON.parse(xhr.response);
+        messageWindow.innerText = "Time Taken: "+resp.timeTaken+"ms";
+        messageWindow.style.display = "block";
+        messageWindow.style.opacity = "1";
+        clearTimeout(timeout1);
+        clearTimeout(timeout2);
+        timeout1 = setTimeout(
+            ()=>{
+                messageWindow.style.opacity = "0";
+            }, 5000
+        );
+        timeout2 = setTimeout(
+            ()=>{
+                messageWindow.style.display = "none";
+            }, 5500
+        );
         over.style.display = "none";
         document.body.style.pointerEvents = "none";
         makeChanges(resp, resp.gridChanges);

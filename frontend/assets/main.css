@@ -705,3 +705,18 @@ input:checked+.radiolabel:after {
         height: 80vh;
     }
 }
+
+.message{
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    transition: 0.5s;
+    padding: 20px;
+    background-color: #222;
+    color: #FFF;
+    overflow: hidden;
+    opacity: 0;
+    z-index: 1502;
+    box-shadow: 2px 2px 8px #111;
+}

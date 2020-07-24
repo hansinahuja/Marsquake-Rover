@@ -76,11 +76,20 @@ function algoChange() {
     if (algo == "6") {
         document.getElementById("bidirec").disabled = true;
         document.getElementById("bidirecl").style.opacity = "0.3";
+        if(document.getElementById("multistart").checked){
+            document.getElementById("multistart").checked = false;
+            document.getElementById("multidest").checked = true;
+            multiDest();
+        }
+        document.getElementById("multistart").disabled = true;
+        document.getElementById("multistartl").style.opacity = "0.3";
     } else {
         if(chid==0 || multistart || multidest){
             document.getElementById("bidirec").disabled = false;
             document.getElementById("bidirecl").style.opacity = "1";
         }
+        document.getElementById("multistart").disabled = false;
+        document.getElementById("multistartl").style.opacity = "1";
     }
 }
 
