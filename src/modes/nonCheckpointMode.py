@@ -17,7 +17,7 @@ def nonCheckpointMode(config):
     # Register starting time
     startTime = time.time()
 
-    # Extract all the sources and destinations from congig
+    # Extract all the sources and destinations from config
     sources = []
     destinations = []
 

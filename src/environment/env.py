@@ -27,7 +27,7 @@ class Environment:
 
         """
         Constructor for class Environment.
-        Arguments:
+        Args:
             config: Dictionary with all the configuration settings.
             agents: List of agents on the grid.
         """

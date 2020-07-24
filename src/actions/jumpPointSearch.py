@@ -266,8 +266,6 @@ def jumpPointSearch(self, environment, targets):
     if self.waitList == None:
         sourceCell = environment.grid[self.location.x][self.location.y]
         self.visited.add(sourceCell)
-        x = sourceCell.location.x
-        y = sourceCell.location.y
         self.distances[sourceCell] = 0
         self.waitList = []
         directions = [ 'right', 'left', 'up', 'down', 'right-up', 'right-down', 'left-up', 'left-down']
