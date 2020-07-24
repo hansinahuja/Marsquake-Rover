@@ -17,7 +17,7 @@ def nonCheckpointMode(config):
     # Register starting time
     startTime = time.time()
 
-    # Extract all the sources and destinations from congig
+    # Extract all the sources and destinations from config
     sources = []
     destinations = []
 
@@ -105,9 +105,9 @@ def nonCheckpointMode(config):
         threshold = env.bestHeuristic(sources[0], destinations)
         maxThreshold = 2 * env.length * env.breadth
         newThreshold = maxThreshold     
-        itrCount = 0                 
+        t_end = time.time() + 0.1
         prevPath = []
-        while True and itrCount < 100:
+        while time.time() <= t_end:
             logs = []
             # Run the algorithm for all the movable agents and log the changes
             for src in sources:
@@ -135,7 +135,6 @@ def nonCheckpointMode(config):
 
                 # Update threshold
                 threshold = newThreshold
-                itrCount += 1
                 newThreshold = maxThreshold
                 for agent in sources + destinations:
                     agent.visited.clear()
@@ -147,8 +146,17 @@ def nonCheckpointMode(config):
         # Get currently activated cells for grid cleanup
         activatedCells = env.getActivatedCells_IDA(path)
 
-        # Calculate time taken in milliseconds and return output
+        # Calculate time taken in milliseconds
         timeTaken = int((time.time() - startTime)*1000)
+
+
         output = {'gridChanges': gridChanges,
-                  'path': path, 'activatedCells': activatedCells, 'timeTaken': timeTaken}
+                  'path': path, 
+                  'activatedCells': activatedCells, 
+                  'timeTaken': timeTaken}
+
+        # Do not return activated cells if called by findPath()
+        if int(config['multistart']) != 0 or int(config['multidest']) != 0:
+            del output['activatedCells']
+
         return output

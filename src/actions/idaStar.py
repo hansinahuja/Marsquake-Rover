@@ -1,9 +1,5 @@
 from collections import deque
 
-
-# def reset(self, environment):
-
-
 def idaStar(self, environment, threshold, targets):
     
     """

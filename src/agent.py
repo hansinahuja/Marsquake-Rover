@@ -12,7 +12,7 @@ class Agent():
         logs: Changes registered in the last iteration.
         distances: Minimum distances to reach different cells.
     Methods:
-        isValdiMove: To check if a particular movement is valid.
+        isValidMove: To check if a particular movement is valid.
         breadthFirstSearch, depthFirstSearch, dijkstra, uniformCostSearch: unguided search algorithms
         aStar, beamSearch, bestFirstSearch, dynamicAStar, idaStar, jumpPointSearch, staticAStar: guided search algorithms
     """

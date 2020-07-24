@@ -15,7 +15,36 @@
 
 ## How to run
 The application has been deployed [here.](http://marsquake.azurewebsites.net)
-To run locally, 
+To run locally,
+
+Install all the required libraries (Currently just Flask) with
+
+
+    pip install -r requirements.txt
+ 
+ After cloning this repository, the flask server can be started by the following commands
+ 
+For Windows Command Prompt,
+
+    cd Marsquake-Rover\src
+    set FLASK_APP=api
+    flask run
+
+For Windows PowerShell,
+
+    cd Marsquake-Rover\src
+    $env:FLASK_APP = "api"
+    flask run
+ 
+For Linux / Mac Terminal,
+ 
+    cd Marsquake-Rover/src
+    export FLASK_APP=api
+    flask run
+
+Now, type `localhost:PORT` in the address bar of the browser. Make sure to replace `PORT` with the actual port the server is running on.
+
+The port is set to 5000 by default and can be verified in the output of the last command.
 
 ## Features
 
@@ -82,7 +111,7 @@ The path finder has 2 maze generation algorithms. Both generate a completely ran
 - [X] Expand browser support.
 - [X] Provide an option to change drawing speed.
 - [X] Change path colour after reaching a checkpoint.
-- [X] Display statistics such as time taken, path length, etc.
+- [X] Display the time taken.
 - [ ] Provide an option to pause visualisation.
 - [ ] Provide bidirectional wormholes.
 - [ ] Provide an option to alter cell size.
