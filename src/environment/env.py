@@ -79,30 +79,4 @@ class Environment:
     from environment.heuristics import bestHeuristic, distance
     from environment.drawPath import getPath, getJpsPath, getIDAPath
     from environment.updateGrid import update, idaUpdate, getActivatedCells, getActivatedCells_IDA
-
-    # For debugging
-    def print(self):
-        for row in self.grid:
-            for cell in row:
-                if cell.type == 'waitList':
-                    print('i', end=' ')
-                else:
-                    print(cell.type[0], end=' ')
-            print()
-        print()
-
-    # For debugging
-    def printInitial(self):
-        for row in self.grid:
-            for cell in row:
-                if(cell.type == 'wall'):
-                    print('#', end='')
-                elif(cell.type == 'destination'):
-                    print('X', end='')
-                elif(cell.type == 'source'):
-                    print('O', end='')
-                else:
-                    print('.', end='')
-            print()
-        print()
     
