@@ -129,6 +129,7 @@ def idaUpdate(self, logs, weight, prevPath):
             gridChange = {'x': prevPath[i]['x'],
                         'y': prevPath[i]['y'], 'color': 0}
             gridChanges.append(gridChange)
+        gridChanges = gridChanges[::-1]
         for i in range(commonLen, lenNew):
             gridChange = {'x': newPath[i]['x'],
                         'y': newPath[i]['y'], 'color': 2}
