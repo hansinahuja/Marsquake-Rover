@@ -76,7 +76,7 @@ function algoChange() {
     if (algo == "6") {
         document.getElementById("bidirec").disabled = true;
         document.getElementById("bidirecl").style.opacity = "0.3";
-        if(document.getElementById("multistart").checked){
+        if (document.getElementById("multistart").checked) {
             document.getElementById("multistart").checked = false;
             document.getElementById("multidest").checked = true;
             multiDest();
@@ -84,7 +84,7 @@ function algoChange() {
         document.getElementById("multistart").disabled = true;
         document.getElementById("multistartl").style.opacity = "0.3";
     } else {
-        if(chid==0 || multistart || multidest){
+        if (chid == 0 || multistart || multidest) {
             document.getElementById("bidirec").disabled = false;
             document.getElementById("bidirecl").style.opacity = "1";
         }
@@ -586,9 +586,9 @@ function enableWormhole() {
     portals[0].style.display = "block";
     portals[1].style.display = "block";
     let k = 0;
-    for (let o = Math.floor(3.5*(box[0].length)); o < (box.length)*(box[0].length); o++) {
-        i = o%(box[0].length);
-        j = Math.floor(o/(box[0].length))
+    for (let o = Math.floor(3.5 * (box[0].length)); o < (box.length) * (box[0].length); o++) {
+        i = o % (box[0].length);
+        j = Math.floor(o / (box[0].length))
         if (!box[j][i]) {
             box[j][i] = 1;
             portals[k].style.left = 40 * i + 20 + 'px';

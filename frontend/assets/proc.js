@@ -2,10 +2,11 @@
 
 var AnimationTime = 10; // How fast the visualisation proceeds
 var messageWindow = document.querySelector(".message");
-var timeout1 = NaN, timeout2 = NaN;
+var timeout1 = NaN,
+    timeout2 = NaN;
 
 function makeChanges(resp, changes) {
-    if(!changes.length){
+    if (!changes.length) {
         alert("No path found!!");
         return true;
     }
@@ -15,7 +16,7 @@ function makeChanges(resp, changes) {
     // This functions is called automatically after AnimationTime delay
     function color() {
         change = changes[i];
-        if(change.x==-1){
+        if (change.x == -1) {
             i++;
             return true;
         }
@@ -42,8 +43,11 @@ function makeChanges(resp, changes) {
 function drawPath(path) {
     // Draw the path at the end
     var i = 0,
-        int = 0, color=0, off=0, colors = ['#FF0000', "#0000FF", "#00FF00", "#FF00FF", "#000000", "#FFF"];
-    if(!multidest && !multistart){
+        int = 0,
+        color = 0,
+        off = 0,
+        colors = ['#FF0000', "#0000FF", "#00FF00", "#FF00FF", "#000000", "#FFF"];
+    if (!multidest && !multistart) {
         off = -chid;
     }
     // Error handling
@@ -60,14 +64,14 @@ function drawPath(path) {
     function drawLine() {
         point1 = path[i];
         point2 = path[i + 1];
-        if(point2.x == -1){
+        if (point2.x == -1) {
             document.getElementById(point1.x + "x" + point1.y).classList.add("final");
         }
         if (point1.x == -1 || point2.x == -1) {
             i++;
             return true;
         }
-        if(point1.x == -2 || point2.x == -2){
+        if (point1.x == -2 || point2.x == -2) {
             color += 0.5;
             off += 1;
             i++;
@@ -121,7 +125,8 @@ function drawPath(path) {
 
 function gatherData() {
     // Gather the data required for the API call from the environment
-    var start, stop, maze = [], w = [],
+    var start, stop, maze = [],
+        w = [],
         checkpoints = [];
     start = document.getElementById("start");
     start = {
@@ -200,18 +205,18 @@ function find() {
     xhr.onload = () => {
         // When the server responds, make the changes and draw the path
         resp = JSON.parse(xhr.response);
-        messageWindow.innerText = "Time Taken: "+resp.timeTaken+"ms";
+        messageWindow.innerText = "Time Taken: " + resp.timeTaken + "ms";
         messageWindow.style.display = "block";
         messageWindow.style.opacity = "1";
         clearTimeout(timeout1);
         clearTimeout(timeout2);
         timeout1 = setTimeout(
-            ()=>{
+            () => {
                 messageWindow.style.opacity = "0";
             }, 5000
         );
         timeout2 = setTimeout(
-            ()=>{
+            () => {
                 messageWindow.style.display = "none";
             }, 5500
         );

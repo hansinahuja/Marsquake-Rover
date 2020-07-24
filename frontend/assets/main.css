@@ -15,7 +15,7 @@ body {
     overflow: hidden;
     image-rendering: crisp-edges;
     image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges; 
+    image-rendering: -o-crisp-edges;
     image-rendering: -webkit-optimize-contrast;
     -ms-interpolation-mode: nearest-neighbor;
 }
@@ -416,7 +416,7 @@ nav b:nth-child(2) {
     transition: width 0.01s linear;
 }
 
-#overlay{
+#overlay {
     z-index: 10001;
 }
 
@@ -469,16 +469,16 @@ input {
     cursor: pointer;
 }
 
-input[type=range]{
+input[type=range] {
     background: none;
 }
 
-input[type=range]::-moz-range-thumb{
+input[type=range]::-moz-range-thumb {
     background: blue;
     border: none;
 }
 
-input[type=range]::-moz-range-progress{
+input[type=range]::-moz-range-progress {
     background: royalblue;
     height: 10px;
     border-radius: 10px;
@@ -487,7 +487,7 @@ input[type=range]::-moz-range-progress{
 input[type=range]::-moz-range-track {
     background: #FFF;
     height: 10px;
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 
 .checklabel {
@@ -619,7 +619,7 @@ input:checked+.radiolabel:after {
     display: block;
 }
 
-.ppup{
+.ppup {
     display: block;
     position: fixed;
     top: 50%;
@@ -633,13 +633,13 @@ input:checked+.radiolabel:after {
     transition: 0.5s;
 }
 
-.popup{
+.popup {
     display: table;
     height: 60vh;
     width: 60vw;
 }
 
-.left{
+.left {
     display: table-cell;
     height: 100%;
     width: 50%;
@@ -647,7 +647,8 @@ input:checked+.radiolabel:after {
     vertical-align: middle;
     padding-left: 20px;
 }
-.right{
+
+.right {
     display: table-cell;
     height: 100%;
     width: 40%;
@@ -656,24 +657,26 @@ input:checked+.radiolabel:after {
     color: #EEE;
 }
 
-.right b, .right i, .right h2{
+.right b,
+.right i,
+.right h2 {
     color: #FFF;
 }
 
-.left img{
+.left img {
     max-width: 90%;
     /* max-height: 45%; */
     border-radius: 10px;
 }
 
-.buttons{
+.buttons {
     display: block;
     position: absolute;
     bottom: 20px;
     right: 20px;
 }
 
-.buttons button{
+.buttons button {
     outline: none;
     cursor: pointer;
     background-color: rgb(0, 99, 228);
@@ -686,27 +689,28 @@ input:checked+.radiolabel:after {
 }
 
 @media only screen and (max-width: 1130px) {
-    .popup{
+    .popup {
         width: 80vw;
     }
-    .right{
+
+    .right {
         width: 50%;
     }
 }
 
 @media only screen and (max-width: 770px) {
-    .popup{
+    .popup {
         width: 90vw;
     }
 }
 
 @media only screen and (max-width: 860px) {
-    .popup{
+    .popup {
         height: 80vh;
     }
 }
 
-.message{
+.message {
     display: none;
     position: fixed;
     right: 20px;
