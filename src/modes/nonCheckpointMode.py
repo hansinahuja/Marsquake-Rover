@@ -95,7 +95,15 @@ def nonCheckpointMode(config):
         # Calculate time taken in milliseconds and return output
         timeTaken = int((time.time() - startTime)*1000)
         output = {'gridChanges': gridChanges,
-                  'path': path, 'activatedCells': activatedCells, 'timeTaken': timeTaken}
+                  'path': path, 
+                  'activatedCells': activatedCells, 
+                  'timeTaken': timeTaken}
+
+        # Do not return activated cells if called by findPath()
+        if int(config['multistart']) != 0 or int(config['multidest']) != 0:
+            del output['activatedCells']
+
+        print(path)
         return output
 
     # Driver for IDA*

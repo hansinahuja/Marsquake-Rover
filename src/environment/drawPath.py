@@ -43,6 +43,10 @@ def getPath(self, intersectionPt):
         if cell1.type == 'wormholeEntry' and cell2.type == 'wormholeExit':
             wormholeOutIndex = i
             break
+        if cell2.type == 'wormholeEntry' and cell1.type == 'wormholeExit':
+            wormholeOutIndex = i
+            break
+
 
     # If wormhole was taken, add an indicator entry
     if wormholeOutIndex != -1:
@@ -93,6 +97,9 @@ def getIDAPath(self, destination):
         x2, y2 = path[i]['x'], path[i]['y']
         cell1, cell2 = self.grid[x1][y1], self.grid[x2][y2]
         if cell1.type == 'wormholeEntry' and cell2.type == 'wormholeExit':
+            wormholeOutIndex = i
+            break
+        if cell2.type == 'wormholeEntry' and cell1.type == 'wormholeExit':
             wormholeOutIndex = i
             break
 
