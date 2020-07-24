@@ -74,6 +74,7 @@ function algoChange() {
     }
     // IDA*
     if (algo == "6") {
+        document.getElementById("bidirec").checked = false;
         document.getElementById("bidirec").disabled = true;
         document.getElementById("bidirecl").style.opacity = "0.3";
         if (document.getElementById("multistart").checked) {
@@ -85,8 +86,10 @@ function algoChange() {
         document.getElementById("multistartl").style.opacity = "0.3";
     } else {
         if (chid == 0 || multistart || multidest) {
-            document.getElementById("bidirec").disabled = false;
-            document.getElementById("bidirecl").style.opacity = "1";
+            if(document.getElementById("algorithm").value!="6"){
+                document.getElementById("bidirec").disabled = false;
+                document.getElementById("bidirecl").style.opacity = "1";
+            }
         }
         document.getElementById("multistart").disabled = false;
         document.getElementById("multistartl").style.opacity = "1";
@@ -96,8 +99,10 @@ function algoChange() {
 function multiDest() {
     // Setup multi destination mode
     // Enable bidirectional search
-    document.getElementById("bidirec").disabled = false;
-    document.getElementById("bidirecl").style.opacity = "1";
+    if(document.getElementById("algorithm").value!="6"){
+        document.getElementById("bidirec").disabled = false;
+        document.getElementById("bidirecl").style.opacity = "1";
+    }
     multistart = false;
     multidest = true;
     // Change checkpoint icons
@@ -137,8 +142,10 @@ function multiSource() {
     multistart = true;
     multidest = false;
     // Enable bidirectional search
-    document.getElementById("bidirec").disabled = false;
-    document.getElementById("bidirecl").style.opacity = "1";
+    if(document.getElementById("algorithm").value!="6"){
+        document.getElementById("bidirec").disabled = false;
+        document.getElementById("bidirecl").style.opacity = "1";
+    }
     // Change checkpoint icons
     for (let elmnt of document.getElementsByClassName("checkpoint")) {
         t = Math.floor(elmnt.offsetTop / 40);
@@ -180,8 +187,10 @@ function hideNav() {
 
 function deleteCheckpoints() {
     // Remove all the checkpoints
-    document.getElementById("bidirec").disabled = false;
-    document.getElementById("bidirecl").style.opacity = "1";
+    if(document.getElementById("algorithm").value!="6"){
+        document.getElementById("bidirec").disabled = false;
+        document.getElementById("bidirecl").style.opacity = "1";
+    }
     while (chid) {
         ch = document.getElementById("checkpoint" + (chid - 1));
         i = ch.style.left;
@@ -333,8 +342,10 @@ function removeCheckpoint(id) {
         }
         // Enable Bidirectional search if n(checkpoints)==0
         if (chid == 1 && !multidest && !multistart) {
-            document.getElementById("bidirec").disabled = false;
-            document.getElementById("bidirecl").style.opacity = "1";
+            if(document.getElementById("algorithm").value!="6"){
+                document.getElementById("bidirec").disabled = false;
+                document.getElementById("bidirecl").style.opacity = "1";
+            }
         }
         e.preventDefault();
         ch = document.getElementById("checkpoint" + id);
