@@ -103,7 +103,6 @@ def nonCheckpointMode(config):
         if int(config['multistart']) != 0 or int(config['multidest']) != 0:
             del output['activatedCells']
 
-        print(path)
         return output
 
     # Driver for IDA*
@@ -113,7 +112,7 @@ def nonCheckpointMode(config):
         threshold = env.bestHeuristic(sources[0], destinations)
         maxThreshold = 2 * env.length * env.breadth
         newThreshold = maxThreshold     
-        t_end = time.time() + 0.1
+        t_end = time.time() + 1
         prevPath = []
         while time.time() <= t_end:
             logs = []

@@ -95,8 +95,6 @@ def idaUpdate(self, logs, weight, prevPath):
      # Select just one update entry in case of clashes
     for log in logs:
         agent, cell, state = log
-        if cell.type == 'wormholeEntry' or cell.type == 'wormholeExit':
-            continue
         if cell not in updates:
             updates[cell] = log
         elif not recursiveMode and state == 'visited' and updates[cell][2] != 'visited':
