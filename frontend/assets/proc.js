@@ -46,7 +46,7 @@ function drawPath(path) {
         int = 0,
         color = 0,
         off = 0,
-        colors = ['#FF0000', "#18008f", "#06a600", "#66008f", "#000000", "#FFF"];
+        colors = ['#FF0000', "#18008f", "#06a600", "#66008f", "#000000", "#d16200"];
     if (!multidest && !multistart) {
         off = -chid;
     }
