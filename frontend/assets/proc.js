@@ -54,6 +54,8 @@ function drawPath(path) {
     if (path.length < 2) {
         if (document.getElementById("algorithm").value == "3") {
             alert("No path found! Try increasing the Beam Width. If already maxed out, this terrain is a little too tough for our rover :(");
+        }else if (document.getElementById("algorithm").value == "6") {
+            alert("No path found! IDA* is a relatively slow algorithm and might've timed out :(");
         } else {
             alert("No path found!");
         }
