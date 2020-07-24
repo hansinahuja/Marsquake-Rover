@@ -1,4 +1,9 @@
-# Marsquake-Rover
+# Marsquake Rover
+Welcome to the Marsquake Rover! This is a path-finding visualiser with several algorithms and configurations to play around with. The visualiser has been hosted [here,](http://marsquake.azurewebsites.net) and we hope you have fun using it.
+
+The app waks you through the main features we've implemented. For some comprehensive algorithmic details, check out the technical documentation in this repository.
+
+The app is supported on all major web browsers, but we recommend using it on Google Chrome.
 
 ## Table of contents
 
