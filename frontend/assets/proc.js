@@ -7,7 +7,7 @@ var timeout1 = NaN,
 
 function makeChanges(resp, changes) {
     if (!changes.length) {
-        alert("No path found!!");
+        drawPath(resp.path);
         return true;
     }
     // Make the changes returned by the API as an animation
@@ -46,16 +46,16 @@ function drawPath(path) {
         int = 0,
         color = 0,
         off = 0,
-        colors = ['#FF0000', "#0000FF", "#00FF00", "#FF00FF", "#000000", "#FFF"];
+        colors = ['#FF0000', "#18008f", "#06a600", "#66008f", "#000000", "#FFF"];
     if (!multidest && !multistart) {
         off = -chid;
     }
     // Error handling
     if (path.length < 2) {
-        if (document.getElementById("algorithm").value == "1") {
+        if (document.getElementById("algorithm").value == "3") {
             alert("No path found! Try increasing the Beam Width. If already maxed out, this terrain is a little too tough for our rover :(");
         } else {
-            alert("No path found!!");
+            alert("No path found!");
         }
         document.body.style.pointerEvents = "";
         return 0;
